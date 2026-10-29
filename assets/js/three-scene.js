@@ -1,171 +1,222 @@
 /* ============================================================
-   观复文明 · 全屏三维背景（three.js）
-   恒星 · 戴森云环 · 崩溃残环 · 重建光柱 —— 随滚动演进
+   观复文明 · 三维场景引擎（增强版）
+   太阳与光晕 · 旋转星环 · 行星轨道 · 崩坏粒子 · 重建塔影
+   由分幕控制器通过 go(p) 驱动状态过渡
    ============================================================ */
 (function () {
   'use strict';
-  if (!window.THREE) { document.body.classList.add('no-three'); return; }
   var canvas = document.getElementById('space');
-  if (!canvas) return;
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var mobile = window.innerWidth < 720;
-
-  var scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x03050A, 0.00035);
-  var camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 4000);
-  camera.position.set(0, 0, 600);
-
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !mobile });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2));
-  renderer.setClearColor(0x03050A, 1);
-
-  /* ---- 圆贴图生成器 ---- */
-  function radialTex(inner, outer, stops) {
-    var c = document.createElement('canvas'); c.width = c.height = 256;
-    var g = c.getContext('2d');
-    var grad = g.createRadialGradient(128, 128, inner, 128, 128, outer);
-    for (var i = 0; i < stops.length; i++) grad.addColorStop(stops[i][0], stops[i][1]);
-    g.fillStyle = grad; g.fillRect(0, 0, 256, 256);
-    var t = new THREE.CanvasTexture(c); return t;
+  if (!canvas || !window.THREE) {
+    document.body.classList.add('no-three');
+    return;
   }
-  var glowTex = radialTex(0, 128, [[0, 'rgba(255,246,222,1)'],[0.25, 'rgba(240,212,138,.55)'],[0.6, 'rgba(217,164,65,.12)'],[1, 'rgba(217,164,65,0)']]);
+  var mobile = window.innerWidth < 720;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- 背景星尘 ---- */
-  var starCount = mobile ? 750 : 1500;
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !mobile, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 1, 3000);
+  camera.position.set(0, 42, 175);
+  camera.lookAt(0, 18, -80);
+
+  function seg(p, a, b, v0, v1) {
+    if (p <= a) return v0;
+    if (p >= b) return v1;
+    return v0 + (v1 - v0) * (p - a) / (b - a);
+  }
+
+  /* ---- 背景星尘（2000 点，整体缓慢自转） ---- */
   var starGeo = new THREE.BufferGeometry();
-  var starPos = new Float32Array(starCount * 3);
-  for (var i = 0; i < starCount; i++) {
-    starPos[i*3]   = (Math.random() - .5) * 2000;
-    starPos[i*3+1] = (Math.random() - .5) * 1200;
-    starPos[i*3+2] = (Math.random() - .5) * 1200 - 300;
+  var starN = 2000, starPos = new Float32Array(starN * 3), starCol = new Float32Array(starN * 3);
+  for (var i = 0; i < starN; i++) {
+    var r = 120 + Math.random() * 320;
+    var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+    starPos[i*3] = r * Math.sin(ph) * Math.cos(th);
+    starPos[i*3+1] = r * Math.cos(ph) * 0.6;
+    starPos[i*3+2] = r * Math.sin(ph) * Math.sin(th) - 80;
+    var bri = 0.45 + Math.random() * 0.55;
+    starCol[i*3] = bri; starCol[i*3+1] = bri; starCol[i*3+2] = bri;
   }
   starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-  var starMat = new THREE.PointsMaterial({ color: 0x9FB8D8, size: 1.5, transparent: true, opacity: .65, blending: THREE.AdditiveBlending, depthWrite: false });
+  var starMat = new THREE.PointsMaterial({ size: 2.1, vertexColors: true, transparent: true, opacity: 1, depthWrite: false });
   var stars = new THREE.Points(starGeo, starMat);
   scene.add(stars);
 
-  /* ---- 恒星 ---- */
-  var sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xD9A441, transparent: true, opacity: .95, blending: THREE.AdditiveBlending, depthWrite: false }));
-  sunGlow.scale.set(520, 520, 1);
-  var sunCore = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xFFF0C2, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false }));
-  sunCore.scale.set(150, 150, 1);
-  var sunG = new THREE.Group();
-  sunG.add(sunGlow); sunG.add(sunCore);
-  sunG.position.set(0, 30, -160);
-  scene.add(sunG);
+  /* ---- 太阳组 ---- */
+  var sunGroup = new THREE.Group();
+  scene.add(sunGroup);
+  var sunCore = new THREE.Mesh(
+    new THREE.SphereGeometry(13, 48, 48),
+    new THREE.MeshBasicMaterial({ color: 0xF5D48A, transparent: true })
+  );
+  sunGroup.add(sunCore);
+  var glowTex = (function () {
+    var c = document.createElement('canvas'); c.width = c.height = 256;
+    var g = c.getContext('2d');
+    var gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+    gr.addColorStop(0, 'rgba(240,212,138,1)');
+    gr.addColorStop(0.25, 'rgba(217,164,65,.55)');
+    gr.addColorStop(0.6, 'rgba(217,164,65,.12)');
+    gr.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+    return new THREE.CanvasTexture(c);
+  })();
+  var sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false }));
+  sunGlow.scale.set(200, 200, 1); sunGroup.add(sunGlow);
+  var sunHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }));
+  sunHalo.scale.set(400, 400, 1); sunGroup.add(sunHalo);
+  /* 辐射射线 */
+  var rayN = 14, rayPos = new Float32Array(rayN * 6);
+  for (var ri = 0; ri < rayN; ri++) {
+    var a = ri / rayN * Math.PI * 2 + 0.2;
+    var r1 = 16.5, r2 = 19 + (ri % 3) * 2.4;
+    rayPos[ri*6] = Math.cos(a) * r1; rayPos[ri*6+1] = Math.sin(a) * r1; rayPos[ri*6+2] = 0;
+    rayPos[ri*6+3] = Math.cos(a) * r2; rayPos[ri*6+4] = Math.sin(a) * r2; rayPos[ri*6+5] = 0;
+  }
+  var raysGeo = new THREE.BufferGeometry();
+  raysGeo.setAttribute('position', new THREE.BufferAttribute(rayPos, 3));
+  var rays = new THREE.LineSegments(raysGeo, new THREE.LineBasicMaterial({ color: 0xF0D48A, transparent: true, opacity: 0.8 }));
+  sunGroup.add(rays);
 
-  /* ---- 戴森云环 A（辉煌） ---- */
-  function makeRing(count, rMin, rMax, thickness, color, tilt) {
-    var g = new THREE.Group();
-    var geo = new THREE.BufferGeometry();
-    var pos = new Float32Array(count * 3);
-    for (var i = 0; i < count; i++) {
+  /* ---- 星环 A（金色，倾角）与细环 ---- */
+  function makeRing(rIn, rOut, n, hue) {
+    var g = new THREE.BufferGeometry(), p = new Float32Array(n * 3);
+    for (var i = 0; i < n; i++) {
       var a = Math.random() * Math.PI * 2;
-      var r = rMin + Math.random() * (rMax - rMin);
-      var tiltY = (Math.random() - .5) * thickness;
-      pos[i*3]   = Math.cos(a) * r;
-      pos[i*3+1] = Math.sin(a) * r * 0.28 + tiltY;
-      pos[i*3+2] = (Math.random() - .5) * thickness * 0.6;
+      var r = rIn + Math.random() * (rOut - rIn);
+      p[i*3] = Math.cos(a) * r; p[i*3+1] = Math.sin(a) * r; p[i*3+2] = 0;
     }
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    var mat = new THREE.PointsMaterial({ color: color, size: mobile ? 2.2 : 2.6, transparent: true, opacity: .85, blending: THREE.AdditiveBlending, depthWrite: false });
-    var p = new THREE.Points(geo, mat);
-    g.add(p);
-    g.rotation.x = tilt;
-    return g;
+    g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+    return new THREE.Points(g, new THREE.PointsMaterial({ color: hue, size: 1.5, transparent: true, opacity: 1, depthWrite: false }));
   }
-  var ringA = makeRing(mobile ? 900 : 1900, 330, 420, 26, 0xD9A441, 1.05);
-  ringA.position.z = -140;
-  scene.add(ringA);
+  var ringGroup = new THREE.Group();
+  ringGroup.rotation.x = 1.12; ringGroup.position.y = 6;
+  scene.add(ringGroup);
+  var ringA = new THREE.Group();
+  var ringA1 = makeRing(44, 62, 1500, 0xD9A441);
+  var ringA2 = makeRing(64, 66, 240, 0xF0D48A);
+  ringA.add(ringA1); ringA.add(ringA2);
+  ringGroup.add(ringA);
+  /* 残环 B（锈色，崩溃段） */
+  var ringB = makeRing(34, 46, 700, 0xA34A2C);
+  ringB.material.opacity = 0;
+  ringGroup.add(ringB);
 
-  /* ---- 残环 B（崩溃遗留，初始不可见） ---- */
-  var ringB = makeRing(mobile ? 700 : 1400, 330, 430, 40, 0xB05A38, 0.9);
-  ringB.position.z = -140;
-  ringB.rotation.y = 0.7;
-  ringB.children[0].material.opacity = 0;
-  scene.add(ringB);
-
-  /* ---- 重建光柱（粒子 + 柱体） ---- */
-  var pillarGeo = new THREE.CylinderGeometry(30, 40, 430, 28, 1, true);
-  var pillarMat = new THREE.MeshBasicMaterial({ color: 0xD9A441, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending });
-  var pillar = new THREE.Mesh(pillarGeo, pillarMat);
-  pillar.position.set(0, -60, -170);
-  scene.add(pillar);
-
-  var upCount = mobile ? 220 : 420;
-  var upGeo = new THREE.BufferGeometry();
-  var upPos = new Float32Array(upCount * 3);
-  for (var j = 0; j < upCount; j++) {
-    upPos[j*3]   = (Math.random() - .5) * 60;
-    upPos[j*3+1] = -200 + Math.random() * 420;
-    upPos[j*3+2] = (Math.random() - .5) * 40 - 170;
+  /* ---- 轨道与行星 ---- */
+  var orbitGroup = new THREE.Group();
+  scene.add(orbitGroup);
+  function makeOrbit(r, tilt) {
+    var pts = [];
+    for (var i = 0; i <= 128; i++) {
+      var a = i / 128 * Math.PI * 2;
+      pts.push(new THREE.Vector3(Math.cos(a) * r, 0, Math.sin(a) * r));
+    }
+    var g = new THREE.BufferGeometry().setFromPoints(pts);
+    var l = new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x8FB6E8, transparent: true, opacity: 0.28, depthWrite: false }));
+    l.rotation.x = tilt; l.rotation.z = 0.35;
+    return l;
   }
-  upGeo.setAttribute('position', new THREE.BufferAttribute(upPos, 3));
-  var upMat = new THREE.PointsMaterial({ color: 0xF0D48A, size: 2.4, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
-  var upPoints = new THREE.Points(upGeo, upMat);
-  scene.add(upPoints);
+  var orbit1 = makeOrbit(82, 0.16); orbitGroup.add(orbit1);
+  var orbit2 = makeOrbit(104, 0.3); orbit2.material.color.setHex(0xD9A441); orbit2.material.opacity = 0.16; orbitGroup.add(orbit2);
+  var planets = [];
+  var pdefs = [
+    { r: 82, ph: 0.6, size: 3.2, color: 0xE0B45A, tilt: 0.16 },
+    { r: 104, ph: 2.4, size: 2.6, color: 0x8FB6E8, tilt: 0.3 },
+    { r: 82, ph: 4.1, size: 1.8, color: 0xE0603A, tilt: 0.16 }
+  ];
+  pdefs.forEach(function (pd) {
+    var m = new THREE.Mesh(
+      new THREE.SphereGeometry(pd.size, 16, 16),
+      new THREE.MeshBasicMaterial({ color: pd.color, transparent: true })
+    );
+    m.userData = pd;
+    orbitGroup.add(m);
+    planets.push(m);
+  });
 
-  /* ---- 废墟地平线（底部剪影） ---- */
-  var ruinsGeo = new THREE.BufferGeometry();
-  var rp = [];
-  var x = -700;
-  while (x < 700) { rp.push(x, -300, -600); x += 40; if (Math.random() < .4) x += 14; }
-  var rArr = new Float32Array(rp.length);
-  for (var k = 0; k < rp.length; k++) rArr[k] = rp[k];
-  ruinsGeo.setAttribute('position', new THREE.BufferAttribute(rArr, 3));
-  var ruinsMat = new THREE.PointsMaterial({ color: 0x27344A, size: 3, transparent: true, opacity: .4 });
-  var ruins = new THREE.Points(ruinsGeo, ruinsMat);
-  ruins.position.y = 330;
+  /* ---- 崩坏粒子（红锈，大寂灭段） ---- */
+  var bitsGeo = new THREE.BufferGeometry();
+  var bitsN = 320, bitsPos = new Float32Array(bitsN * 3), bitsSpd = new Float32Array(bitsN);
+  for (var bi = 0; bi < bitsN; bi++) {
+    var a = Math.random() * Math.PI * 2, r = 28 + Math.random() * 44;
+    bitsPos[bi*3] = Math.cos(a) * r; bitsPos[bi*3+1] = Math.sin(a) * r * 0.5; bitsPos[bi*3+2] = 0;
+    bitsSpd[bi] = 4 + Math.random() * 10;
+  }
+  bitsGeo.setAttribute('position', new THREE.BufferAttribute(bitsPos, 3));
+  var bitsMat = new THREE.PointsMaterial({ color: 0xE0603A, size: 1.4, transparent: true, opacity: 0, depthWrite: false });
+  var bits = new THREE.Points(bitsGeo, bitsMat);
+  ringGroup.add(bits);
+
+  /* ---- 废墟点阵（地面） ---- */
+  var ruinGeo = new THREE.BufferGeometry();
+  var ruinN = 420, ruinPos = new Float32Array(ruinN * 3);
+  for (var rui = 0; rui < ruinN; rui++) {
+    var x = (Math.random() - 0.5) * 220, z = (Math.random() - 0.5) * 220;
+    ruinPos[rui*3] = x; ruinPos[rui*3+1] = -34 + Math.random() * 5; ruinPos[rui*3+2] = z - 60;
+  }
+  ruinGeo.setAttribute('position', new THREE.BufferAttribute(ruinPos, 3));
+  var ruinMat = new THREE.PointsMaterial({ color: 0x8A6A2A, size: 1.1, transparent: true, opacity: 0.12, depthWrite: false });
+  var ruins = new THREE.Points(ruinGeo, ruinMat);
   scene.add(ruins);
 
-  /* ---- 滚动状态 ---- */
-  function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
-  function phase(p, a, b, c, d) { var t = a >= b ? 0 : clamp01((p - a) / (b - a)); return c + (d - c) * t; }
-  function smooth(t) { return t * t * (3 - 2 * t); }
-  function seg(p, a, b, c, d) { return c + (d - c) * smooth(clamp01((p - a) / (b - a))); }
+  /* ---- 重建：光柱 + 上升粒子 + 大图书馆塔影 ---- */
+  var pillarMat = new THREE.MeshBasicMaterial({ color: 0xF0D48A, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide });
+  var pillar = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 8, 130, 24, 1, true), pillarMat);
+  pillar.position.set(0, 35, -60);
+  scene.add(pillar);
+  var pillarGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+  pillarGlow.scale.set(160, 260, 1);
+  pillarGlow.position.set(0, 38, -60);
+  scene.add(pillarGlow);
+  var upGeo = new THREE.BufferGeometry();
+  var upN = 550, upPos = new Float32Array(upN * 3);
+  for (var ui = 0; ui < upN; ui++) {
+    upPos[ui*3] = (Math.random() - 0.5) * 16;
+    upPos[ui*3+1] = -60 + Math.random() * 140;
+    upPos[ui*3+2] = -60 + (Math.random() - 0.5) * 10;
+  }
+  upGeo.setAttribute('position', new THREE.BufferAttribute(upPos, 3));
+  var upMat = new THREE.PointsMaterial({ color: 0xF0D48A, size: 1.3, transparent: true, opacity: 0, depthWrite: false });
+  var ups = new THREE.Points(upGeo, upMat);
+  scene.add(ups);
+  /* 大图书馆塔影：7 座线框塔 */
+  var towers = [];
+  for (var ti = 0; ti < 7; ti++) {
+    var tw = 4 + Math.random() * 5, th = 26 + Math.random() * 42, td = 4 + Math.random() * 5;
+    var box = new THREE.Mesh(new THREE.BoxGeometry(tw, th, td), new THREE.MeshBasicMaterial({ color: 0xD9A441, transparent: true, opacity: 0, wireframe: true }));
+    var x = (ti - 3) * 16 + (Math.random() - 0.5) * 8;
+    box.position.set(x, -10 + th / 2, -58 + (Math.random() - 0.5) * 16);
+    box.userData.base = box.position.y;
+    scene.add(box);
+    towers.push(box);
+  }
 
-  var cur = { sun: 1, ra: 1, rb: 0, pillar: 0, up: 0, speed: .006, starCol: 1 };
-  var progress = 0;
+  /* ---- 状态 ---- */
+  var cur = { sun: 1, ra: 1, speed: 0.55, rb: 0, pillar: 0, up: 0, starCol: 1, collapse: 0, ruin: 0, towers: 0 };
   function setProgress(p) {
-    p = clamp01(p);
-    progress = p;
-    /* 恒星亮度：辉煌 → 暗(崩溃) → 回升(重建) → 微暗(星尘) */
-    cur.sun = p < 0.16 ? 1
-      : p < 0.32 ? seg(p, 0.16, 0.32, 1, 0.22)
-      : p < 0.54 ? seg(p, 0.32, 0.54, 0.22, 0.85)
-      : p < 0.72 ? 0.85
-      : seg(p, 0.72, 0.9, 0.85, 0.5);
-    /* 环 A：亮 → 暗/缓 → 恢复 */
-    cur.ra = p < 0.16 ? 1
-      : p < 0.32 ? seg(p, 0.16, 0.32, 1, 0.35)
-      : p < 0.54 ? seg(p, 0.32, 0.54, 0.35, 0.85)
-      : 0.85;
-    cur.speed = p < 0.16 ? 0.006
-      : p < 0.32 ? 0.0016
-      : p < 0.54 ? 0.004
-      : p < 0.72 ? 0.0032
-      : 0.002;
-    /* 残环 B：崩溃段显现，后渐隐 */
-    cur.rb = seg(p, 0.18, 0.36, 0, 1) - seg(p, 0.6, 0.85, 0, 0.55);
-    cur.rb = Math.max(0, cur.rb);
-    /* 光柱：重建段显现 */
-    cur.pillar = seg(p, 0.34, 0.52, 0, 1) - seg(p, 0.78, 0.95, 0, 0.6);
-    cur.pillar = Math.max(0, cur.pillar);
-    cur.up = cur.pillar;
-    /* 星尘色调：蓝 → 锈(崩溃) → 回蓝 */
-    cur.starCol = p < 0.16 ? 1 : p < 0.32 ? 1 - seg(p, 0.16, 0.32, 0, 0.55) : p < 0.54 ? seg(p, 0.32, 0.54, 0.45, 1) : 1;
+    p = Math.max(0, Math.min(1, p));
+    var c = cur;
+    c.sun = p < 0.2 ? 1 : p < 0.34 ? 1 - seg(p, 0.2, 0.34, 0, 1) : p < 0.6 ? 0 : seg(p, 0.6, 0.72, 0, 0.6);
+    c.ra = p < 0.2 ? 1 : p < 0.34 ? Math.max(0.06, 1 - seg(p, 0.2, 0.34, 0, 1)) : p < 0.6 ? 0.08 : seg(p, 0.6, 0.75, 0.08, 0.92);
+    c.speed = p < 0.2 ? 0.6 : p < 0.34 ? 0.6 * (1 - seg(p, 0.2, 0.34, 0, 0.9)) : p < 0.6 ? 0.02 : seg(p, 0.6, 0.75, 0.02, 0.42);
+    c.rb = Math.max(0, seg(p, 0.2, 0.36, 0, 1) - seg(p, 0.62, 0.85, 0, 0.5));
+    c.collapse = Math.max(0, seg(p, 0.24, 0.38, 0, 1) - seg(p, 0.5, 0.66, 0, 0.75));
+    c.ruin = Math.max(0, seg(p, 0.3, 0.46, 0, 1) - seg(p, 0.7, 0.9, 0, 0.6));
+    c.pillar = Math.max(0, seg(p, 0.34, 0.52, 0, 1) - seg(p, 0.8, 0.97, 0, 0.45));
+    c.up = c.pillar;
+    c.towers = Math.max(0, seg(p, 0.38, 0.58, 0, 1) - seg(p, 0.82, 0.97, 0, 0.4));
+    c.starCol = p < 0.2 ? 1 : p < 0.34 ? 1 - seg(p, 0.2, 0.34, 0, 0.55) : p < 0.6 ? seg(p, 0.34, 0.6, 0.45, 1) : 1;
   }
 
   /* ---- 幕驱动：目标进度 + 平滑过渡 ---- */
   var curP = 0, targetP = 0;
-  function go(p, dur) {
+  function go(p) {
     targetP = Math.max(0, Math.min(1, p));
-    if (reduced) { curP = targetP; setProgress(curP); render(); }
+    if (reduced) { curP = targetP; setProgress(curP); }
   }
-
-  window.__guanfuSpace = { go: go, setProgress: setProgress, render: render, getP: function () { return curP; } };
+  window.__guanfuSpace = { go: go, setProgress: setProgress, getP: function () { return curP; } };
 
   /* ---- 视差 ---- */
   var mx = 0, my = 0, tx = 0, ty = 0;
@@ -178,35 +229,74 @@
 
   /* ---- 主循环 ---- */
   var clock = new THREE.Clock();
-  var t = 0;
+  var t = 0, planetT = 0;
+  var starColArr = [1, 1, 1];
   function render() {
     if (!reduced) {
       var dt = clock.getDelta();
       t += dt;
-      /* 恒星脉动 */
-      var pulse = 1 + Math.sin(t * 0.7) * 0.03;
-      sunGlow.material.opacity = cur.sun * (0.8 + pulse * 0.18);
-      /* 环旋转 */
-      ringA.rotation.z += cur.speed;
-      ringB.rotation.z -= cur.speed * 0.4;
-      /* 星尘上升 */
-      var upArr = upGeo.attributes.position.array;
-      for (var i = 0; i < upCount; i++) {
-        upArr[i*3+1] += dt * (18 + (i % 7) * 2.4);
-        if (upArr[i*3+1] > 220) upArr[i*3+1] = -200;
+      /* 太阳脉动与光晕 */
+      var pulse = 1 + Math.sin(t * 0.8) * 0.035;
+      sunCore.material.opacity = Math.min(1, cur.sun * 1.15);
+      sunGlow.material.opacity = cur.sun * (0.9 + pulse * 0.1);
+      sunHalo.material.opacity = cur.sun * (0.35 + pulse * 0.12);
+      rays.rotation.z += dt * 0.25 * (0.3 + cur.sun);
+      rays.material.opacity = 0.8 * cur.sun;
+      /* 星环旋转 */
+      ringA.rotation.z += dt * cur.speed;
+      ringB.rotation.z -= dt * cur.speed * 0.35;
+      ringB.material.opacity = cur.rb * 0.55;
+      /* 行星轨道（崩溃段坠落） */
+      var fall = Math.max(0, cur.collapse);
+      planetT += dt * 0.35 * (0.2 + cur.speed * 1.1);
+      planets.forEach(function (pl) {
+        var pd = pl.userData;
+        pl.material.opacity = 1 - fall * 0.85;
+        var yBase = Math.sin(planetT + pd.ph) * 6 + 8;
+        var y = yBase - fall * 46;
+        pl.position.set(Math.cos(planetT + pd.ph) * pd.r, Math.max(-40, y), Math.sin(planetT + pd.ph) * pd.r);
+      });
+      orbit1.rotation.z += dt * 0.02; orbit2.rotation.z -= dt * 0.014;
+      /* 崩坏粒子下落 */
+      if (cur.collapse > 0) {
+        var bArr = bitsGeo.attributes.position.array;
+        for (var bi2 = 0; bi2 < bitsN; bi2++) {
+          bArr[bi2*3+1] -= dt * bitsSpd[bi2];
+          if (bArr[bi2*3+1] < -70) { bArr[bi2*3+1] = 30; }
+        }
+        bitsGeo.attributes.position.needsUpdate = true;
       }
-      upGeo.attributes.position.needsUpdate = true;
-      /* 视差平滑 */
+      bits.material.opacity = cur.collapse * 0.8;
+      ruins.material.opacity = 0.1 + cur.ruin * 0.55;
+      /* 上升粒子 */
+      if (cur.up > 0) {
+        var upArr = upGeo.attributes.position.array;
+        for (var ui2 = 0; ui2 < upN; ui2++) {
+          upArr[ui2*3+1] += dt * (22 + (ui2 % 7) * 3.2);
+          if (upArr[ui2*3+1] > 105) upArr[ui2*3+1] = -58;
+        }
+        upGeo.attributes.position.needsUpdate = true;
+      }
+      upMat.opacity = cur.up * 0.8;
+      pillar.material.opacity = cur.pillar * 0.3;
+      pillarGlow.material.opacity = cur.pillar * (0.5 + pulse * 0.15);
+      /* 塔影升起 */
+      towers.forEach(function (tw, i) {
+        var k = Math.max(0, cur.towers - i * 0.04);
+        tw.material.opacity = k * 0.55;
+        tw.position.y = tw.userData.base - 46 + k * 46;
+      });
+      /* 星尘颜色过渡 + 自转 */
+      var mix = 1 - cur.starCol;
+      starColArr[0] = 1 - mix * 0.5; starColArr[1] = 1 - mix * 0.62; starColArr[2] = 1 - mix * 0.85;
+      starMat.color.setRGB(starColArr[0], starColArr[1], starColArr[2]);
+      stars.rotation.y += dt * 0.006;
+      /* 视差 */
       mx += (tx - mx) * 0.04; my += (ty - my) * 0.04;
-      camera.position.x = mx * 46;
-      camera.position.y = my * 34;
+      camera.position.x = mx * 40;
+      camera.position.y = 42 + my * 30;
     }
-    sunCore.material.opacity = Math.min(1, cur.sun * 1.1);
-    ringA.children[0].material.opacity = cur.ra;
-    ringB.children[0].material.opacity = cur.rb;
-    pillar.material.opacity = cur.pillar * 0.32;
-    upMat.opacity = cur.up * 0.7;
-    camera.lookAt(0, 20, -160);
+    camera.lookAt(0, 18, -80);
     renderer.render(scene, camera);
   }
 
@@ -223,8 +313,7 @@
   }
   if (reduced) { setProgress(0); render(); }
   else { tick(); }
-  /* 初始幕 */
-  go(0.05);
+  go(0.02);
 
   /* ---- 尺寸适配 ---- */
   function onResize() {
