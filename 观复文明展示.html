@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>观复文明 · 建立在事实上的王权</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='16' rx='11' ry='4.4' stroke='%23D9A441' stroke-width='2.2' fill='none'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23F0D48A'/%3E%3C/svg%3E">
+<style>
+/* ===== 色板：深空 · 先纪金 · 废墟锈 ===== */
+:root{
+  --bg0:#04060B; --bg1:#0A0F1A; --bg2:#111A29; --bg3:#16233A;
+  --gold:#D9A441; --gold2:#F0D48A; --goldD:rgba(217,164,65,.4);
+  --star:#C9D8F0; --ink:#EAF0FA; --ink2:#A7B3C6; --ink3:#68758C;
+  --rust:#A34A2C; --ember:#E0603A; --ice:#8FB6E8;
+  --line:rgba(234,240,250,.13); --line2:rgba(234,240,250,.24);
+  --serif:Georgia,"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg0);color:var(--ink);font-family:var(--sans);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(217,164,65,.35)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+img,svg{display:block}
+a{color:var(--ice)}
+
+/* ===== 顶部导航 + 进度 ===== */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--ice));z-index:60;transition:width .15s linear}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:linear-gradient(rgba(4,6,11,.92),rgba(4,6,11,.55) 70%,transparent)}
+.topnav .brand{display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-weight:700;letter-spacing:.08em;color:var(--gold2)}
+.topnav .brand small{font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:.28em;color:var(--ice);text-transform:uppercase}
+.topnav nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.topnav nav::-webkit-scrollbar{display:none}
+.topnav nav a{color:var(--ink3);text-decoration:none;font-size:13px;padding:6px 9px;border-radius:6px;transition:color .25s,background .25s;white-space:nowrap}
+.topnav nav a.on{color:var(--gold2);background:rgba(217,164,65,.12)}
+@media (max-width:767px){
+  .topnav nav a span{display:none}
+  .topnav nav a{padding:3px 5px;font-size:11px}
+  .topnav nav{gap:0}
+}
+
+/* ===== 布局 ===== */
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative}
+.sec{padding:110px 0;position:relative}
+.sec.alt{background:var(--bg1);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sec-head{margin-bottom:42px}
+.sec-kicker{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+.sec-kicker::before{content:"";width:34px;height:1px;background:var(--gold)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(28px,4.4vw,42px);font-weight:700;letter-spacing:.02em;margin-top:12px;color:var(--ink);text-wrap:balance}
+.sec-head .lede{max-width:780px;margin-top:14px;color:var(--ink2);font-size:17px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+.note{display:inline-block;font-size:12.5px;color:var(--ink3);border:1px solid var(--line);border-radius:999px;padding:3px 12px;margin-top:18px;letter-spacing:.04em}
+
+/* ===== HERO：先纪辉煌 → 崩溃 → 废土 → 单点光 ===== */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero svg.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,rgba(4,6,11,.06),rgba(4,6,11,.5) 62%,rgba(4,6,11,.92))}
+.hero .stage{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:980px}
+.hero .stage .kick{font-size:12px;letter-spacing:.5em;color:var(--ice);text-transform:uppercase;opacity:0;animation:ti 1s ease 12.6s forwards}
+.hero .stage h1{font-family:var(--serif);font-size:clamp(56px,11vw,128px);font-weight:700;letter-spacing:.1em;line-height:1.04;color:var(--gold2);text-shadow:0 0 40px rgba(217,164,65,.35);opacity:0;transform:translateY(24px);animation:ti 1.1s cubic-bezier(.22,1,.36,1) 13.4s forwards}
+.hero .stage .en{font-size:clamp(13px,1.9vw,20px);letter-spacing:.66em;text-transform:uppercase;color:var(--gold);margin-top:16px;opacity:0;transform:translateY(14px);animation:ti 1s cubic-bezier(.22,1,.36,1) 14.2s forwards}
+.hero .stage .sub{margin-top:24px;color:var(--ink2);font-size:clamp(15px,2vw,19px);letter-spacing:.05em;opacity:0;transform:translateY(14px);animation:ti 1s cubic-bezier(.22,1,.36,1) 14.9s forwards}
+.hero .stage .sub b{color:var(--gold2);font-weight:600}
+.hero .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;color:var(--ink3);font-size:12px;letter-spacing:.24em;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:ti 1s ease 16s forwards}
+.hero .scroll-hint::after{content:"";width:1px;height:34px;background:linear-gradient(var(--ink3),transparent);animation:hint 1.8s ease-in-out infinite}
+@keyframes ti{to{opacity:1;transform:none}}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:bottom}}
+/* 星空闪烁（氛围循环） */
+.star{fill:#C9D8F0;opacity:.25;animation:tw 3.4s ease-in-out infinite alternate}
+.star.s2{animation-duration:4.1s}.star.s3{animation-duration:2.7s}
+@keyframes tw{from{opacity:.12}to{opacity:.85}}
+/* 恒星点燃 */
+.sun-group{transform-box:fill-box;transform-origin:center;animation:sunIn 1.2s cubic-bezier(.22,1,.36,1) .5s forwards;opacity:0}
+@keyframes sunIn{to{opacity:1;transform:scale(1)}
+  from{opacity:0;transform:scale(.2)}
+}
+/* 环带绘制 + 辉煌 */
+.ring-g{animation:ringDraw 1.6s ease 1.1s forwards}
+.ring-line{stroke:var(--gold);stroke-width:2.5;fill:none;stroke-dasharray:1200;stroke-dashoffset:1200}
+.ring-dots{stroke:var(--gold2);stroke-width:2;fill:none;stroke-dasharray:4 26;opacity:0;transform-box:fill-box;transform-origin:720px 430px;animation:ringSpin 34s linear infinite}
+@keyframes ringDraw{to{stroke-dashoffset:0}}
+@keyframes ringSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.ring-glow{opacity:0;animation:glowPulse 1s ease-in-out 3s 3 alternate}
+@keyframes glowPulse{from{opacity:0}to{opacity:1}}
+/* 崩溃：环断裂、色变、星灭 */
+.collapse{opacity:0;animation:colIn 1.4s ease 6.2s forwards}
+.broken-a,.broken-b{fill:none;stroke:var(--ember);stroke-width:3;stroke-linecap:round;opacity:0;animation:colIn 1.2s ease 6.4s forwards}
+.broken-a{stroke-dasharray:420 340;stroke-dashoffset:0}
+.broken-b{stroke-dasharray:260 500;stroke-dashoffset:-200;animation-delay:6.7s}
+@keyframes colIn{to{opacity:1}}
+.dim-sun{opacity:0;animation:dimIn 1.6s ease 6.4s forwards}
+.dim-sun circle{fill:#4A2A22}
+@keyframes dimIn{to{opacity:.85}}
+.fade-earlier{opacity:0;animation:fe 1.3s ease 6.1s forwards}
+@keyframes fe{to{opacity:0}}
+/* 废土地平线 + 废墟剪影 */
+.ruins{opacity:0;animation:ruinsUp 1.5s cubic-bezier(.22,1,.36,1) 8.4s forwards}
+@keyframes ruinsUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+/* 单点光柱 */
+.pillar-wrap{transform-box:fill-box;transform-origin:50% 100%;animation:pillarUp 1.8s cubic-bezier(.22,1,.36,1) 10.8s forwards;opacity:0}
+@keyframes pillarUp{to{opacity:1;transform:scaleY(1)}
+  from{opacity:0;transform:scaleY(0)}
+}
+.pillar-core{animation:pillarBreath 3.8s ease-in-out 12.8s infinite alternate}
+@keyframes pillarBreath{from{opacity:.55}to{opacity:1}}
+.pillar-tip{animation:tipGlow 2.6s ease-in-out 13.4s infinite alternate}
+@keyframes tipGlow{from{opacity:.75;transform:scale(1)}to{opacity:1;transform:scale(1.15)}}
+.hero.paused .star,.hero.paused .ring-dots,.hero.paused .pillar-core,.hero.paused .pillar-tip{animation-play-state:paused}
+
+/* ===== 章节01：时间线 ===== */
+.tl{display:grid;grid-template-columns:1fr;gap:0;position:relative}
+@media (min-width:860px){.tl{grid-template-columns:1fr 1fr 1fr;gap:26px}}
+.tl .era{position:relative;padding:22px 22px 24px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);overflow:hidden}
+.tl .era::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.tl .era.e1::before{background:var(--gold)}
+.tl .era.e2::before{background:var(--ember)}
+.tl .era.e3::before{background:var(--ice)}
+.tl .era .when{font-size:12px;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase}
+.tl .era.e1 .when{color:var(--gold)}
+.tl .era.e2 .when{color:var(--ember)}
+.tl .era.e3 .when{color:var(--ice)}
+.tl .era h3{font-family:var(--serif);font-size:21px;margin:10px 0 8px;color:var(--ink)}
+.tl .era p{font-size:14.5px;color:var(--ink2);line-height:1.75}
+.tl .era .chip{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:.1em;color:var(--ink3);border:1px solid var(--line);border-radius:999px;padding:3px 12px}
+.tl .bridge{display:none}
+@media (min-width:860px){
+  .tl{grid-template-columns:1fr 1fr 1fr}
+  .tl .era{display:flex;flex-direction:column}
+}
+.tl-take{margin-top:26px;padding:18px 22px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 12px 12px 0;color:var(--ink2);font-size:15.5px}
+.tl-take b{color:var(--gold2)}
+
+/* ===== 章节02：先纪名词墙 ===== */
+.wall{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:640px){.wall{grid-template-columns:1fr 1fr}}
+@media (min-width:1024px){.wall{grid-template-columns:1fr 1fr 1fr}}
+.wordcard{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:18px 20px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.wordcard:hover{border-color:var(--goldD);transform:translateY(-2px)}
+.wordcard::after{content:"";position:absolute;right:-30px;top:-30px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(217,164,65,.08),transparent 70%);pointer-events:none}
+.wordcard h4{font-family:var(--serif);font-size:19px;color:var(--gold2);letter-spacing:.04em}
+.wordcard .en{font-size:11px;letter-spacing:.3em;color:var(--ink3);text-transform:uppercase;margin-top:3px}
+.wordcard p{margin-top:10px;font-size:14px;color:var(--ink2);line-height:1.75}
+
+/* ===== 章节03：大寂灭 / 级联崩溃演示 ===== */
+.cascade-grid{display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:920px){.cascade-grid{grid-template-columns:1fr 1fr;align-items:start}}
+.cascade-box{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative}
+.cascade-box svg{width:100%;height:auto}
+.cascade-ctl{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.cascade-ctl button{appearance:none;border:1px solid var(--ember);background:rgba(224,96,58,.1);color:var(--ember);font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;font-family:var(--sans);letter-spacing:.08em;transition:all .25s}
+.cascade-ctl button:hover{background:rgba(224,96,58,.22)}
+.cascade-ctl .cpos{font-size:12px;color:var(--ink3);letter-spacing:.1em;font-variant-numeric:tabular-nums}
+.cascade-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.cascade-legend span{font-size:11.5px;color:var(--ink3);letter-spacing:.04em;border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.cnode{stroke:var(--gold);stroke-width:1.5;fill:#0A0F1A;transition:fill .4s,stroke .4s}
+.cline{stroke:rgba(217,164,65,.35);stroke-width:1;opacity:1;transition:stroke .4s,opacity .4s}
+.cnode.die{fill:#1A1210;stroke:#3A2A22}
+.cline.die{stroke:#3A2A22;opacity:.15}
+.cnode.hot{fill:#2A1C0E;stroke:var(--gold2)}
+.cnode.live{fill:rgba(217,164,65,.16)}
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:14px 18px;font-size:14px;color:var(--ink2);line-height:1.7;opacity:.55;transition:opacity .4s,border-color .4s}
+.step b{color:var(--ink)}
+.step.act{opacity:1;border-color:var(--ember)}
+.step.act b{color:var(--ember)}
+.step .no{display:inline-flex;width:20px;height:20px;border-radius:50%;border:1px solid var(--line2);color:var(--ink3);align-items:center;justify-content:center;font-size:11px;margin-right:8px;flex:none}
+.step.act .no{border-color:var(--ember);color:var(--ember)}
+
+/* ===== 章节04：单点缺陷置换 ===== */
+.audit{display:grid;grid-template-columns:1fr;gap:26px}
+@media (min-width:980px){.audit{grid-template-columns:1fr 1fr;align-items:start}}
+.death-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--bg2);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.death-table th,.death-table td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line)}
+.death-table th{font-size:12px;letter-spacing:.14em;color:var(--ink3);font-weight:600;text-transform:uppercase;background:var(--bg3)}
+.death-table td{color:var(--ink2)}
+.death-table td:first-child{color:var(--ink);font-weight:600}
+.death-table tr.die-row td{color:var(--ember)}
+.death-table tr.die-row td:first-child{color:var(--ember)}
+.death-table tr:last-child td{border-bottom:none}
+.pillar-fig{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:16px;position:sticky;top:90px}
+.pillar-fig svg{width:100%;height:auto}
+.pillar-fig .cap{font-size:12.5px;color:var(--ink3);margin-top:10px;letter-spacing:.03em;text-align:center}
+.quote{position:relative;margin-top:30px;padding:24px 26px 24px 30px;border:1px solid var(--goldD);border-radius:14px;background:linear-gradient(135deg,rgba(217,164,65,.07),rgba(217,164,65,.02));color:var(--ink2);font-size:15.5px;line-height:1.85}
+.quote::before{content:"“";position:absolute;left:10px;top:4px;font-family:var(--serif);font-size:52px;color:var(--gold);line-height:1}
+.quote b{color:var(--gold2)}
+
+/* ===== 章节05：王权论 ===== */
+.royal{display:flex;flex-direction:column;gap:16px}
+.royal-row{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg2)}
+@media (min-width:840px){.royal-row{grid-template-columns:200px 1fr}}
+.royal-row .axis{grid-column:1/-1;padding:13px 18px;background:var(--bg3);font-size:14.5px;font-weight:600;color:var(--gold2);letter-spacing:.05em;display:flex;align-items:center;gap:10px}
+@media (min-width:840px){.royal-row .axis{grid-column:auto;align-items:center;justify-content:center;text-align:center;font-size:13.5px}}
+.royal-row .body{padding:16px 20px;font-size:14.5px;color:var(--ink2);line-height:1.8}
+.royal-row .body b{color:var(--ink)}
+.royal-row.wrong .body{color:var(--ink3)}
+.royal-row.wrong .body b{color:var(--ink3)}
+.royal-row.right .body b{color:var(--gold2)}
+.royal-row.right{border-color:var(--goldD)}
+.wrong-tag,.right-tag{display:inline-block;font-size:11px;letter-spacing:.16em;padding:2px 10px;border-radius:999px;margin-left:10px;vertical-align:2px;flex:none}
+.wrong-tag{color:var(--ink3);border:1px solid var(--line2)}
+.right-tag{color:var(--gold2);border:1px solid var(--goldD)}
+.core-claim{margin-top:28px;padding:26px 28px;border-radius:14px;background:linear-gradient(135deg,rgba(217,164,65,.1),rgba(143,182,232,.05));border:1px solid var(--goldD);text-align:center}
+.core-claim .c1{font-family:var(--serif);font-size:clamp(20px,3vw,28px);color:var(--gold2);line-height:1.5;letter-spacing:.03em}
+.core-claim .c2{margin-top:12px;color:var(--ink2);font-size:15px}
+
+/* ===== 章节06：时间宗教 ===== */
+.relig{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:720px){.relig{grid-template-columns:1fr 1fr}}
+.relig .rc{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:18px 20px}
+.relig .rc h4{font-size:15.5px;color:var(--ice);letter-spacing:.03em;display:flex;align-items:center;gap:10px}
+.relig .rc h4 .n{font-family:var(--serif);color:var(--gold);font-size:14px}
+.relig .rc p{margin-top:8px;font-size:14px;color:var(--ink2);line-height:1.75}
+.relig .rc.wide{grid-column:1/-1}
+
+/* ===== 章节07：十条对照 ===== */
+.c10-groups{display:flex;flex-direction:column;gap:36px}
+.c10-group .gname{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.18em;color:var(--gold);margin-bottom:14px}
+.c10-group .gname::after{content:"";flex:1;height:1px;background:var(--line)}
+.c10-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:720px){.c10-grid{grid-template-columns:1fr 1fr}}
+.c10-card{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:15px 18px;cursor:pointer;transition:border-color .3s,background .3s}
+.c10-card:hover{border-color:var(--line2)}
+.c10-card.open{border-color:var(--goldD)}
+.c10-card .top{display:flex;align-items:flex-start;gap:12px}
+.c10-card .no{font-family:var(--serif);font-size:15px;color:var(--gold);padding-top:2px;flex:none;width:26px}
+.c10-card h4{font-size:15.5px;color:var(--ink);font-weight:600;letter-spacing:.02em}
+.c10-card .brief{margin-top:5px;font-size:14px;color:var(--ink2);line-height:1.7}
+.c10-card .detail{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,1,.36,1);font-size:14px;color:var(--ink2);line-height:1.75}
+.c10-card .detail div{border-top:1px dashed var(--line);margin-top:11px;padding-top:11px}
+.c10-card.open .detail{max-height:280px}
+.c10-ctl{margin-top:20px}
+.c10-ctl button{appearance:none;background:none;border:1px solid var(--line2);color:var(--ink2);font-size:13px;padding:7px 16px;border-radius:999px;cursor:pointer;font-family:var(--sans);transition:all .25s}
+.c10-ctl button:hover{border-color:var(--gold);color:var(--gold)}
+.c10-foot{margin-top:24px;padding:16px 20px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 12px 12px 0;font-size:15px;color:var(--ink2)}
+.c10-foot b{color:var(--gold2)}
+
+/* ===== 章节08：裂缝 ===== */
+.fissures{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:640px){.fissures{grid-template-columns:1fr 1fr}}
+@media (min-width:1024px){.fissures{grid-template-columns:1fr 1fr 1fr}}
+.fiss{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:18px 20px;position:relative;overflow:hidden;transition:border-color .3s}
+.fiss:hover{border-color:rgba(224,96,58,.45)}
+.fiss::before{content:"";position:absolute;top:0;left:18px;right:18px;height:2px;background:linear-gradient(90deg,transparent,var(--ember),transparent);opacity:.5}
+.fiss .fn{font-family:var(--serif);font-size:13px;color:var(--ember);letter-spacing:.18em}
+.fiss h4{font-size:16px;color:var(--ink);margin:8px 0 8px;line-height:1.5}
+.fiss p{font-size:14px;color:var(--ink2);line-height:1.75}
+.fiss p b{color:var(--ink)}
+
+/* ===== 结尾 ===== */
+.end-block{margin-top:56px;text-align:center;padding:60px 24px;border-top:1px solid var(--line)}
+.end-block .big{font-family:var(--serif);font-size:clamp(21px,3.6vw,34px);color:var(--gold2);letter-spacing:.04em;line-height:1.6;text-wrap:balance}
+.end-block .small{margin-top:16px;color:var(--ink3);font-size:13.5px;letter-spacing:.14em}
+footer.page-foot{padding:40px 24px 54px;text-align:center;color:var(--ink3);font-size:12.5px;letter-spacing:.06em;border-top:1px solid var(--line)}
+footer.page-foot .sep{color:var(--dim);padding:0 8px}
+
+/* ===== 章节09：故事引擎 ===== */
+.scene-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:900px){.scene-grid{grid-template-columns:1fr 1fr 1fr}}
+.scene{border:1px solid var(--line);border-radius:14px;background:var(--bg2);padding:20px 22px;display:flex;flex-direction:column;gap:10px;transition:border-color .3s}
+.scene:hover{border-color:rgba(224,96,58,.4)}
+.scene .sno{font-family:var(--serif);font-size:13px;color:var(--ember);letter-spacing:.2em}
+.scene h4{font-size:17px;color:var(--ink);letter-spacing:.02em}
+.scene .who{font-size:12.5px;color:var(--ice);letter-spacing:.06em;border-bottom:1px dashed var(--line);padding-bottom:10px}
+.scene p{font-size:14px;color:var(--ink2);line-height:1.75}
+.scene p b{color:var(--ink)}
+.scene .land{margin-top:auto;padding-top:10px;border-top:1px solid var(--line);font-size:13.5px;color:var(--gold2);line-height:1.7}
+.trigger{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}
+@media (min-width:720px){.trigger{grid-template-columns:1fr 1fr 1fr}}
+.trigger .tg{border:1px solid var(--line);border-radius:12px;background:var(--bg1);padding:16px 18px;font-size:13.5px;color:var(--ink2);line-height:1.75}
+.trigger .tg b{color:var(--ink)}
+.trigger .tg .tt{display:block;font-size:11px;letter-spacing:.2em;color:var(--ember);margin-bottom:6px;text-transform:uppercase}
+.radio-msg{margin-top:22px;padding:24px 26px;border:1px solid var(--goldD);border-radius:14px;background:linear-gradient(135deg,rgba(217,164,65,.08),rgba(4,6,11,.2));font-family:var(--serif);font-size:17px;color:var(--gold2);text-align:center;line-height:1.7}
+
+/* ===== 章节11：短篇故事 ===== */
+.story{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.act{border-left:2px solid var(--goldD);border-radius:0 12px 12px 0;background:var(--bg1);padding:18px 22px}
+.act .act-no{font-size:11px;letter-spacing:.25em;color:var(--ember);text-transform:uppercase;margin-bottom:6px}
+.act h4{font-size:16px;color:var(--ink);margin-bottom:8px;letter-spacing:.02em}
+.act p{font-size:14px;color:var(--ink2);line-height:1.85}
+.act p+p{margin-top:8px}
+.act .line{margin-top:10px;font-family:var(--serif);color:var(--gold2);font-size:14.5px;border-top:1px dashed var(--line);padding-top:10px}
+.arch-tbl{margin-top:22px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg1)}
+.arch-tbl table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.arch-tbl th{background:var(--bg2);color:var(--gold2);text-align:left;padding:9px 12px;font-weight:600}
+.arch-tbl td{padding:8px 12px;border-top:1px solid var(--line);color:var(--ink2);line-height:1.6;vertical-align:top}
+.arch-tbl td:first-child{color:var(--ink);width:34%}
+
+/* ===== 低动效 ===== */
+@media (prefers-reduced-motion: reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .hero .stage .kick,.hero .stage h1,.hero .stage .en,.hero .stage .sub,.hero .scroll-hint{opacity:1;transform:none;animation:none}
+  .star,.ring-dots,.pillar-core,.pillar-tip{animation:none}
+  .sun-group,.ring-g,.ring-glow,.collapse,.broken-a,.broken-b,.dim-sun,.fade-earlier,.ruins,.pillar-wrap{animation:none;opacity:1}
+  .ring-line{stroke-dashoffset:0}
+  .pillar-wrap{transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="topnav">
+  <div class="brand">观复<small>Guanfu</small></div>
+  <nav id="nav">
+    <a href="#s01"><b>01</b><span>&nbsp;时间线</span></a>
+    <a href="#s02"><b>02</b><span>&nbsp;先纪</span></a>
+    <a href="#s03"><b>03</b><span>&nbsp;寂灭</span></a>
+    <a href="#s04"><b>04</b><span>&nbsp;制度</span></a>
+    <a href="#s05"><b>05</b><span>&nbsp;王权</span></a>
+    <a href="#s06"><b>06</b><span>&nbsp;宗教</span></a>
+    <a href="#s07"><b>07</b><span>&nbsp;十条</span></a>
+    <a href="#s08"><b>08</b><span>&nbsp;裂缝</span></a>
+    <a href="#s09"><b>09</b><span>&nbsp;故事</span></a>
+    <a href="#s10"><b>10</b><span>&nbsp;外部</span></a>
+    <a href="#s11"><b>11</b><span>&nbsp;短篇</span></a>
+  </nav>
+</header>
+<main>
+
+<!-- ===== 开场 ===== -->
+<section class="hero" id="s-hero">
+  <svg class="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03050A"/><stop offset="1" stop-color="#0A1426"/></linearGradient>
+      <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#FFF6DE"/><stop offset=".35" stop-color="#F0D48A"/><stop offset=".7" stop-color="#D9A441" stop-opacity=".6"/><stop offset="1" stop-color="#D9A441" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="sunGlo" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#D9A441" stop-opacity=".5"/><stop offset="1" stop-color="#D9A441" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="pillG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#F0D48A" stop-opacity=".95"/><stop offset="1" stop-color="#D9A441" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#sp)"/>
+    <!-- 星空 -->
+    <g class="stars">
+      <circle class="star" cx="120" cy="90" r="1.6"/><circle class="star s2" cx="300" cy="180" r="1.2"/>
+      <circle class="star s3" cx="480" cy="70" r="1.8"/><circle class="star" cx="640" cy="150" r="1.1"/>
+      <circle class="star s2" cx="820" cy="80" r="1.5"/><circle class="star" cx="1000" cy="170" r="1.3"/>
+      <circle class="star s3" cx="1150" cy="90" r="1.7"/><circle class="star" cx="1330" cy="140" r="1.2"/>
+      <circle class="star s2" cx="200" cy="300" r="1.1"/><circle class="star" cx="1500" cy="240" r="1.4"/>
+      <circle class="star s3" cx="60" cy="220" r="1.2"/><circle class="star" cx="1280" cy="300" r="1.1"/>
+      <circle class="star s2" cx="560" cy="250" r="1.3"/><circle class="star" cx="920" cy="280" r="1.2"/>
+      <circle class="star" cx="60" cy="360" r="1.1"/><circle class="star s3" cx="1380" cy="380" r="1.5"/>
+    </g>
+    <!-- 恒星 + 光晕（先纪辉煌） -->
+    <g class="sun-group">
+      <circle cx="720" cy="430" r="240" fill="url(#sunGlo)"/>
+      <circle cx="720" cy="430" r="110" fill="url(#sunG)"/>
+    </g>
+    <g class="ring-g">
+      <ellipse class="ring-line" cx="720" cy="430" rx="310" ry="118"/>
+      <ellipse class="ring-glow" cx="720" cy="430" rx="330" ry="132" fill="none" stroke="rgba(217,164,65,.28)" stroke-width="1"/>
+    </g>
+    <ellipse class="ring-dots" cx="720" cy="430" rx="310" ry="118"/>
+    <!-- 崩溃（延迟显现） -->
+    <g class="collapse">
+      <g class="dim-sun"><circle cx="720" cy="430" r="110" fill="none"/></g>
+      <path class="broken-a" d="M410,430 A310,118 0 0 1 720,312 A310,118 0 0 1 1030,430"/>
+      <path class="broken-b" d="M1030,430 A310,118 0 0 1 720,548 A310,118 0 0 1 410,430"/>
+    </g>
+    <!-- 废墟剪影（底部升起） -->
+    <g class="ruins">
+      <path d="M0,900 L0,806 L90,790 L150,812 L240,776 L320,800 L420,760 L520,796 L620,768 L720,804 L820,772 L920,798 L1020,758 L1120,792 L1220,770 L1320,800 L1440,782 L1440,900 Z" fill="#0B0E14"/>
+      <path d="M0,900 L0,826 L110,812 L200,830 L320,800 L450,826 L580,804 L720,828 L860,806 L1000,830 L1140,810 L1280,828 L1440,814 L1440,900 Z" fill="#07090E"/>
+      <line x1="0" y1="806" x2="1440" y2="806" stroke="rgba(234,240,250,.06)"/>
+    </g>
+    <!-- 单点光柱 -->
+    <g class="pillar-wrap">
+      <rect class="pillar-core" x="706" y="470" width="28" height="330" rx="14" fill="url(#pillG)"/>
+      <circle class="pillar-tip" cx="720" cy="462" r="14" fill="#F0D48A"/>
+      <circle class="pillar-tip" cx="720" cy="462" r="34" fill="url(#sunGlo)" style="animation-delay:.6s"/>
+    </g>
+  </svg>
+  <div class="shade"></div>
+  <div class="stage">
+    <div class="kick">以柴尔德"城市革命"十条为基石 · 星际废土 · 合并设定</div>
+    <h1>观复文明</h1>
+    <div class="en">Guanfu · The Recursion</div>
+    <p class="sub">一个文明在废墟上重建，把全部权力押在<b>一个用能力证明自己、而非被制度任命</b>的哲人王身上。</p>
+  </div>
+  <div class="scroll-hint">向下滚动 · 进入观复</div>
+</section>
+
+<!-- ===== 01 时间线 ===== -->
+<section class="sec" id="s01">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">01 · 时间线</div>
+      <h2>三个时代，一次崩溃，一个答案</h2>
+      <p class="lede">先纪用恒星剩余长出了城市文明；大寂灭教会了幸存者一件事——多头共治会内耗到死；新纪元据此立下一条不可修改的宪法。</p>
+    </div>
+    <div class="tl">
+      <div class="era e1 rv">
+        <div class="when">约 1200 年前 — 大寂灭</div>
+        <h3>先纪 · 环日城邦</h3>
+        <p>世代飞船结束"游猎"，回头对母恒星做集约化改造：主环城、戴森云、契文、冰路。剩余能量第一次多到"喂不完"，恒星尺度的城市革命发生。鼎盛期后期，九执堂共治成型。</p>
+        <span class="chip">金色 · 恒星剩余 · 协调者自居</span>
+      </div>
+      <div class="era e2 rv">
+        <div class="when">大寂灭</div>
+        <h3>崩溃 · 文明死于自己的机构</h3>
+        <p>禁复清单之争分裂九执堂，时间基准分裂、轨道调度错乱、采掘舰队断供——千年机器在无人协调的级联中失效。幸存者记录只有一句："我们输给了自己的机构。"</p>
+        <span class="chip">锈色 · 协调失效 · 级联崩溃</span>
+      </div>
+      <div class="era e3 rv">
+        <div class="when">重建纪元 · 现在</div>
+        <h3>新纪元 · 观复文明</h3>
+        <p>残存的解经人在大图书馆遗址上重建。制度审计后，他们立下一条不可修改的宪法：王不受任何约束，王的意志即法。单点承重，各司其职。</p>
+        <span class="chip">辉光 · 单点承重 · 事实性王权</span>
+      </div>
+    </div>
+    <div class="tl-take rv">柴尔德的十条在星际尺度上一条都不用改，只需要换算单位：<b>把"剩余粮食"换成"剩余能量"，把"冲积平原"换成"引力井"——然后，把整份答卷交给一场灾难来批改。</b></div>
+  </div>
+</section>
+
+<!-- ===== 02 先纪 · 环日城邦 ===== -->
+<section class="sec alt" id="s02">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">02 · 先纪</div>
+      <h2>环日城邦：恒星尺度的城市革命</h2>
+      <p class="lede">柴尔德说的"农业剩余养得起不干活的人"，在先纪被换算成一句话：<b style="color:var(--gold2)">剩余能量养得起整颗恒星</b>。六个名词，就是它辉煌期的全部骨架。</p>
+    </div>
+    <div class="wall">
+      <div class="wordcard rv">
+        <h4>主环城</h4>
+        <div class="en">Primary Ring</div>
+        <p>环绕恒星的巨型居住环带，上千个旋转筒体城段衔接而成，常驻人口以亿计。政治、金融与轨道调度的中枢——所有航线和配额都在这里清算。</p>
+      </div>
+      <div class="wordcard rv">
+        <h4>戴森云阵列</h4>
+        <div class="en">Dyson Swarm</div>
+        <p>在宜居带榨取恒星能源的初期阵列——先纪的"农田"。剩余能量第一次多到"喂不完"，城市革命因此发生。</p>
+      </div>
+      <div class="wordcard rv">
+        <h4>冰路</h4>
+        <div class="en">Ice Roads</div>
+        <p>从柯伊伯带与外星系彗星群到主环城的固定补给航道：水冰、金属、同位素常年流动，如同两河的雪松与青金石贸易。</p>
+      </div>
+      <div class="wordcard rv">
+        <h4>契文</h4>
+        <div class="en">Qiewen</div>
+        <p>全文明统一的光信令协议与链式共识账本。最初只为记清"谁给谁发了多少吨氦-3"，后来才长出文学、法典与史书。</p>
+      </div>
+      <div class="wordcard rv">
+        <h4>日冕锚塔</h4>
+        <div class="en">Coronal Anchor</div>
+        <p>需要三百年工期、十代人接力的恒星工程。纪念性建筑的功能从来不是实用，是证明有组织暴力和长期信用的存在。</p>
+      </div>
+      <div class="wordcard rv">
+        <h4>日冕歌剧</h4>
+        <div class="en">Coronal Opera</div>
+        <p>调动整片卫星阵列，按乐谱变换反照率，让恒星在数光分外呈现规律的明暗呼吸——用一颗恒星演奏。艺术的第一赞助人，依然是统治阶级。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 大寂灭：级联崩溃 ===== -->
+<section class="sec" id="s03">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">03 · 大寂灭</div>
+      <h2>文明死于自己的机构</h2>
+      <p class="lede">先纪鼎盛期后期，九执堂——九个领域执政者共治——自诩最强的能力是"协调"。崩溃不是战争，不是技术失效，是<b style="color:var(--ember)">协调失效的级联</b>。按"重演级联"，看九执堂如何一环一环地熄灭。</p>
+    </div>
+    <div class="cascade-grid">
+      <div class="cascade-box rv">
+        <svg viewBox="0 0 560 330" role="img" aria-label="九执堂协调网络级联崩溃示意">
+          <defs>
+            <radialGradient id="emberG" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#E0603A"/><stop offset="1" stop-color="#E0603A" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- 协调网络连线 -->
+          <g class="nets">
+            <line class="cline" x1="140" y1="95" x2="280" y2="70"/>
+            <line class="cline" x1="280" y1="70" x2="420" y2="95"/>
+            <line class="cline" x1="140" y1="95" x2="90" y2="185"/>
+            <line class="cline" x1="140" y1="95" x2="280" y2="165"/>
+            <line class="cline" x1="280" y1="70" x2="280" y2="165"/>
+            <line class="cline" x1="280" y1="70" x2="470" y2="185"/>
+            <line class="cline" x1="420" y1="95" x2="470" y2="185"/>
+            <line class="cline" x1="90" y1="185" x2="140" y2="275"/>
+            <line class="cline" x1="90" y1="185" x2="280" y2="255"/>
+            <line class="cline" x1="280" y1="165" x2="140" y2="275"/>
+            <line class="cline" x1="280" y1="165" x2="470" y2="275"/>
+            <line class="cline" x1="280" y1="165" x2="420" y2="275"/>
+            <line class="cline" x1="470" y1="185" x2="420" y2="275"/>
+          </g>
+          <!-- 节点 -->
+          <g class="nodes" id="cascadeNodes">
+            <g><circle class="cnode live" cx="140" cy="95" r="15"/><text x="140" y="126" text-anchor="middle" fill="#68758C" font-size="10">守典·甲</text></g>
+            <g><circle class="cnode live" cx="280" cy="70" r="15"/><text x="280" y="101" text-anchor="middle" fill="#68758C" font-size="10">科学院</text></g>
+            <g><circle class="cnode live" cx="420" cy="95" r="15"/><text x="420" y="126" text-anchor="middle" fill="#68758C" font-size="10">守典·乙</text></g>
+            <g><circle class="cnode live" cx="90" cy="185" r="15"/><text x="90" y="216" text-anchor="middle" fill="#68758C" font-size="10">动量世家</text></g>
+            <g><circle class="cnode live" cx="280" cy="165" r="15"/><text x="280" y="196" text-anchor="middle" fill="#68758C" font-size="10">轨道局</text></g>
+            <g><circle class="cnode live" cx="470" cy="185" r="15"/><text x="470" y="216" text-anchor="middle" fill="#68758C" font-size="10">冰路商会</text></g>
+            <g><circle class="cnode live" cx="140" cy="275" r="15"/><text x="140" y="306" text-anchor="middle" fill="#68758C" font-size="10">采掘舰队</text></g>
+            <g><circle class="cnode live" cx="280" cy="255" r="15"/><text x="280" y="286" text-anchor="middle" fill="#68758C" font-size="10">遗传·生物</text></g>
+            <g><circle class="cnode live" cx="420" cy="275" r="15"/><text x="420" y="306" text-anchor="middle" fill="#68758C" font-size="10">伦理院</text></g>
+          </g>
+          <!-- 全灭后的余烬 -->
+          <g class="ember-final" opacity="0">
+            <circle cx="280" cy="165" r="60" fill="url(#emberG)"/>
+            <circle cx="280" cy="165" r="4" fill="#E0603A"/>
+          </g>
+          <text class="dead-line" x="280" y="80" text-anchor="middle" fill="#E0603A" font-size="13" letter-spacing="3" opacity="0">系统失联</text>
+        </svg>
+        <div class="cascade-legend">
+          <span>金色 · 在网</span><span>暗红 · 已灭</span><span>亮金 · 分裂/武器化</span>
+        </div>
+        <div class="cascade-ctl">
+          <button id="cascadePlay" type="button">重演级联</button>
+          <span class="cpos" id="cascadePos">等待重演 · 九执堂全量在线</span>
+        </div>
+      </div>
+      <div class="steps" id="cascadeSteps">
+        <div class="step act" data-i="0"><span class="no">1</span>禁复清单之争：<b>政策分裂</b>——扩建戴森云还是复原被封印的先一代生物技术，九执堂分成激进与守成两派。</div>
+        <div class="step" data-i="1"><span class="no">2</span>两个守典人派系各自维护一套历法，<b>时间基准分裂</b>——全星系轨道调度开始错乱。</div>
+        <div class="step" data-i="2"><span class="no">3</span>动量配额被当作<b>政治武器</b>，轨道注册局卷入派系，航道优先权政治化。</div>
+        <div class="step" data-i="3"><span class="no">4</span>采掘舰队<b>停止向敌对派系供电</b>——内轨道的"农田"开始减产。</div>
+        <div class="step" data-i="4"><span class="no">5</span><b>协调级联失效</b>：轨道站失去姿态维持、环段相继失压、恒星集能阵列失控。千年机器熄灭。</div>
+      </div>
+    </div>
+    <div class="tl-take rv">幸存者的第一手记录只有一句：<b>"我们输给了自己的机构。"</b>不是死于外部敌人，是死于内部协调的崩溃——这条教训，定义了新纪元的一切制度。</div>
+  </div>
+</section>
+
+<!-- ===== 04 制度核心：单点缺陷置换 ===== -->
+<section class="sec alt" id="s04">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">04 · 制度核心</div>
+      <h2>用一个缺陷，买断所有缺陷</h2>
+      <p class="lede">建城者做的第一件事不是修机器，是制度审计：列一张表，清点已知文明的所有死法。结论只有一个。</p>
+    </div>
+    <div class="audit">
+      <div class="rv">
+        <table class="death-table">
+          <colgroup><col style="width:22%"><col style="width:44%"><col style="width:34%"></colgroup>
+          <thead><tr><th>死法</th><th>成因</th><th>环日城邦的下场</th></tr></thead>
+          <tbody>
+            <tr class="die-row"><td>内斗</td><td>多头共治的协调成本</td><td>正是死于这个</td></tr>
+            <tr><td>篡权</td><td>权力真空与交替危机</td><td>继承期必乱</td></tr>
+            <tr><td>腐败</td><td>官员有自主裁量空间</td><td>无约束的中间层</td></tr>
+            <tr><td>叛乱</td><td>底层无出路</td><td>阶层固化</td></tr>
+            <tr><td>经济危机</td><td>自由市场的周期</td><td>计划分配可消</td></tr>
+            <tr><td>技术反噬</td><td>复原失控</td><td>禁复清单可防</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--ink3);margin-top:12px;letter-spacing:.03em">制度审计 · 新纪元第一版 · 示意清单</p>
+      </div>
+      <div class="pillar-fig rv">
+        <svg viewBox="0 0 520 380" role="img" aria-label="单点承重结构示意">
+          <defs>
+            <linearGradient id="pillG2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#F0D48A"/><stop offset="1" stop-color="#D9A441" stop-opacity=".55"/>
+            </linearGradient>
+          </defs>
+          <!-- 文明层（倒金字塔） -->
+          <polygon points="90,40 430,40 300,150 220,150" fill="rgba(217,164,65,.07)" stroke="rgba(217,164,65,.4)" stroke-width="1.2"/>
+          <line x1="100" y1="68" x2="420" y2="68" stroke="rgba(234,240,250,.12)"/>
+          <line x1="112" y1="96" x2="408" y2="96" stroke="rgba(234,240,250,.12)"/>
+          <line x1="128" y1="124" x2="392" y2="124" stroke="rgba(234,240,250,.12)"/>
+          <text x="260" y="27" text-anchor="middle" fill="#A7B3C6" font-size="11" letter-spacing="2">行政与分配</text>
+          <text x="260" y="88" text-anchor="middle" fill="#68758C" font-size="10" letter-spacing="2">铸旧 · 探墟 · 观止 · 守典</text>
+          <text x="260" y="146" text-anchor="middle" fill="#A7B3C6" font-size="11" letter-spacing="2">全体公民</text>
+          <!-- 承重柱（王） -->
+          <rect x="250" y="150" width="20" height="150" rx="6" fill="url(#pillG2)"/>
+          <rect x="250" y="150" width="20" height="150" rx="6" fill="none" stroke="rgba(240,212,138,.5)" stroke-width="1"/>
+          <circle cx="260" cy="146" r="9" fill="#F0D48A"/>
+          <text x="260" y="212" text-anchor="middle" fill="#F0D48A" font-size="12" letter-spacing="3" transform="rotate(90 260 212)">哲人王</text>
+          <!-- 被划掉的第二根柱 -->
+          <g opacity=".4">
+            <rect x="350" y="170" width="12" height="110" rx="5" fill="none" stroke="#68758C" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="342" y1="162" x2="370" y2="288" stroke="#E0603A" stroke-width="2.5"/>
+            <line x1="370" y1="162" x2="342" y2="288" stroke="#E0603A" stroke-width="2.5"/>
+            <text x="356" y="306" text-anchor="middle" fill="#68758C" font-size="10" letter-spacing="1">约束机制</text>
+          </g>
+          <!-- 基座：事实 -->
+          <path d="M180,318 Q260,296 340,318 L340,348 Q260,330 180,348 Z" fill="rgba(234,240,250,.05)" stroke="rgba(234,240,250,.16)"/>
+          <text x="260" y="356" text-anchor="middle" fill="#68758C" font-size="10" letter-spacing="3">基座 · 事实：他能托举</text>
+          <!-- 标注 -->
+          <text x="430" y="40" text-anchor="end" fill="#68758C" font-size="9.5" letter-spacing="1">多中心 = 九执堂的种子</text>
+        </svg>
+        <div class="cap">结构示意 · 文明由一根承重柱托起；任何约束机制（虚线柱）都会被制度划掉</div>
+      </div>
+    </div>
+    <div class="quote rv">"这不是因为我们相信王不会犯错。是因为任何约束王的机制——罢黜权、监督权、议政权——都意味着第二个权力中心。<b>第二个中心，就是九执堂的种子。我们已经死过一次，不接受再死一次。</b>" —— 新纪元第一条宪法 · 建城者附注</div>
+  </div>
+</section>
+
+<!-- ===== 05 王权论：事实性合法性 ===== -->
+<section class="sec" id="s05">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">05 · 王权论</div>
+      <h2>建立在事实上的王权</h2>
+      <p class="lede">这是整个设定的核心，注意因果方向：<b style="color:var(--gold2)">不是制度授予王权力，而是王先托举住文明，王位只是对这个事实的追认。</b></p>
+    </div>
+    <div class="royal">
+      <div class="royal-row rv">
+        <div class="axis">因果倒置<span class="wrong-tag">常识化</span><span class="right-tag">观复</span></div>
+        <div class="body"><b>常见写法：</b>"因为他是王，所以他的意志是法"——成员承认、制度任命，制度先于能力。<br><br><b>观复的写法：</b>"因为他托举住整个文明，他才是王。意志即法，是对这个事实的追认。"——能力先于王位，事实先于制度。"王"不是头衔，是对一个事实的描述：<b>那个让文明站住的人</b>。</div>
+      </div>
+      <div class="royal-row rv">
+        <div class="axis">重力，不是制度</div>
+        <div class="body">你从不约束重力，你只依赖它。文明成员不看王，不是敬畏，是<b>逻辑上不需要看</b>——王不是被管理的对象，是被依赖的基座。当文明运转良好，这本身就证明王还在托举。不看不是逃避，是不看也是完整的事实。</div>
+      </div>
+      <div class="royal-row rv">
+        <div class="axis">激励对齐</div>
+        <div class="body">王凭什么持续托举、不堕落？答案不是道德，是<b>激励</b>：王的全部合法性、全部利益、全部自我实现，都绑定在同一个目标上——文明复原进度。王的名号、神学地位、大图书馆最高权限，全都指向"让先纪重新点亮"。<b>王的最优策略，就是文明的最优策略</b>——权力制衡被利益绑定替代。</div>
+      </div>
+      <div class="royal-row rv">
+        <div class="axis">继承 = 能力赌注</div>
+        <div class="body">王终身制，临终指定继承人。指定不是"授权"，是"<b>认证事实</b>"——"我认为此人是下一个能托举文明的人"。但认证不能创造事实：如果继承人做不到，会出现"有名分的王、无能力的承重"的断裂期，而制度上没有任何人有权宣布这个断裂。</div>
+      </div>
+      <div class="royal-row rv">
+        <div class="axis">验证缺位</div>
+        <div class="body">王权建立在"他能托举"上，但<b>没有任何机制在确认这个事实是否仍在持续</b>——要度量"托举"，就需要度量者，而度量者就是第二个权力中心。文明必然选择"不验证"。结果：<b>王是唯一知道自己是否还是王的人</b>。如果他悄悄不再托举，文明可能等不到发现——它只是慢慢变慢。</div>
+      </div>
+    </div>
+    <div class="core-claim rv">
+      <div class="c1">缺陷不是王权的存在，是"事实不可检验"本身。</div>
+      <div class="c2">这个文明把全部赌注押在"王的能力是可持续的事实"上，并为此主动放弃了对事实的检验。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 时间宗教 ===== -->
+<section class="sec alt" id="s06">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">06 · 时间宗教</div>
+      <h2>信仰存在，且归王所有</h2>
+      <p class="lede">新纪元允许宗教——这是与"纯科技世界"的关键分岔。守典人宗院延续先纪的时间宗教，但它的位置被重新设计过。</p>
+    </div>
+    <div class="relig">
+      <div class="rc rv">
+        <h4><span class="n">Ⅰ</span>合法存在</h4>
+        <p>不拜神，拜"文明连续性"。历法与时间基准是圣物，档案与教育是圣职。信仰给文明一个比"生存"更高的理由。</p>
+      </div>
+      <div class="rc rv">
+        <h4><span class="n">Ⅱ</span>归王所有</h4>
+        <p>王是时间宗教的最高解释者——教义由王的谕令定义，宗院只负责仪轨、教育与档案。<b style="color:var(--ice)">宗教是王权的仪式系统，不是监督系统。</b></p>
+      </div>
+      <div class="rc rv">
+        <h4><span class="n">Ⅲ</span>真理在王之侧</h4>
+        <p>神学核心：王是唯一能进入大图书馆最深处、与先纪残响对话的人。这在技术上是真的——王持有最高权限密钥——被包装成了神圣事实。</p>
+      </div>
+      <div class="rc rv">
+        <h4><span class="n">Ⅳ</span>三项功能</h4>
+        <p>给王权提供神圣叙事；给公民提供精神超越的目标（"抵达先纪"）；给复原工程套上"圣工"的外衣。信仰、权力、工程完全同构。</p>
+      </div>
+      <div class="rc wide rv">
+        <h4><span class="n">Ⅴ</span>同构，而非对抗</h4>
+        <p>宗教不约束王，王定义宗教。没有政教冲突，因为宗教从一开始就不是与权力并行的第二中心——它是权力的仪式外壳。这条设计是对九执堂教训的延伸：<b style="color:var(--ink)">任何独立的机构，无论世俗还是神圣，都是潜在的第二个权力中心。</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 Childe 十条 ===== -->
+<section class="sec" id="s07">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">07 · 标准清单</div>
+      <h2>十条标准，倒着满足</h2>
+      <p class="lede">柴尔德的十条在新纪元基本全中——第 6 条甚至是反着满足的：他们不用自己的记录系统，他们在解读死人的记录。点击卡片看细节。</p>
+    </div>
+    <div class="c10-groups rv">
+      <div class="c10-group">
+        <div class="gname">壹 · 聚落与人口</div>
+        <div class="c10-grid">
+          <div class="c10-card">
+            <div class="top"><span class="no">(1)</span><h4>大型城市中心</h4></div>
+            <p class="brief">灵台城：环绕大图书馆生长的垂直塔城，人口数十万。不是平面城市，是"向上生长的书"。</p>
+            <div class="detail"><div>城市的中枢不是宫殿或市场，是档案。一切街道、供能、定居布局都围绕"能持续阅读"设计。</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="c10-group">
+        <div class="gname">贰 · 经济与交换</div>
+        <div class="c10-grid">
+          <div class="c10-card">
+            <div class="top"><span class="no">(3)</span><h4>初级生产者剩余</h4></div>
+            <p class="brief">穹顶温室 + 水培农业。剩余由中枢统一征调，不进入市场。</p>
+            <div class="detail"><div>分配按"功过/品级"而非货币。货币极弱——因为能卖的东西（前纪技术）不允许私有。</div></div>
+          </div>
+          <div class="c10-card">
+            <div class="top"><span class="no">(9)</span><h4>稳定原料进口</h4></div>
+            <p class="brief">最重要的进口不是粮与矿——是远征搜罗先纪遗物。探墟队是文明的"贸易船队"。</p>
+            <div class="detail"><div>探墟风险极高：半失灵的前纪自动防御机器仍在巡逻辐射尘区。遗物按"可复原度"定价，最高级的是完整档案核心。</div></div>
+          </div>
+          <div class="c10-card">
+            <div class="top"><span class="no">(10)</span><h4>常驻专业工匠</h4></div>
+            <p class="brief">铸旧师行会，师徒终身制，技术密不外传。</p>
+            <div class="detail"><div>专业化的尽头是把工匠连同行会、秘方、师承一起固化——与柴尔德描述的古代匠人完全同构。</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="c10-group">
+        <div class="gname">叁 · 社会与政治</div>
+        <div class="c10-grid">
+          <div class="c10-card">
+            <div class="top"><span class="no">(2)</span><h4>专门职业阶层</h4></div>
+            <p class="brief">解经人、铸旧师、探墟队、观止院执事、守典人、穹顶农师。</p>
+            <div class="detail"><div>职业声望的排序依据，是离"先纪"有多近。解经人是离得最近的。</div></div>
+          </div>
+          <div class="c10-card">
+            <div class="top"><span class="no">(5)</span><h4>统治阶级</h4></div>
+            <p class="brief">唯一哲人王。其下各司其职，无第二权力中心。</p>
+            <div class="detail"><div>这不是"一个人管一切"，是"所有分散的权都汇于一点"。九执堂是九个点互相拉扯，观复是一个点承接全部。</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="c10-group">
+        <div class="gname">肆 · 权威与文化</div>
+        <div class="c10-grid">
+          <div class="c10-card">
+            <div class="top"><span class="no">(4)</span><h4>纪念性建筑</h4></div>
+            <p class="brief">不建新纪念碑——修复成功的聚变堆、重新点亮的轨道电梯残段、大图书馆本体就是祭坛。</p>
+            <div class="detail"><div>纪念的不是神或王，是"我们还能复原"。每一次点亮前纪设备，都是一次礼拜。</div></div>
+          </div>
+          <div class="c10-card">
+            <div class="top"><span class="no">(6)</span><h4>记录系统</h4></div>
+            <p class="brief">一整套死语言——上层建筑建立在破译前纪数据库之上。</p>
+            <div class="detail"><div>反着满足：他们是解读记录的人，不是创造记录的人。记录系统对这个文明是"圣物"而非"工具"。</div></div>
+          </div>
+          <div class="c10-card">
+            <div class="top"><span class="no">(7)</span><h4>实用科学</h4></div>
+            <p class="brief">逆向工程学：复原即研究。</p>
+            <div class="detail"><div>没有"发现新原理"的冲动，只有"还原旧真理"的虔诚。会修聚变堆，但不会设计一座新的——技术等级=解读等级。</div></div>
+          </div>
+          <div class="c10-card">
+            <div class="top"><span class="no">(8)</span><h4>纪念性艺术</h4></div>
+            <p class="brief">临摹、复制、陈列先纪遗物；壁画主题是"大寂灭与复归之光"。</p>
+            <div class="detail"><div>艺术与考古共用同一套语言。最受尊重的"艺术家"是还原度最高的临摹者。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="c10-ctl rv"><button id="c10All" type="button">全部展开 / 收起</button></div>
+    <div class="c10-foot rv">十条基本全中。第 6 条的反向满足，恰恰是这个文明的缩影：<b>他们不创造自己的记录，他们继承死人的遗产——包括遗产里的全部问题。</b></div>
+  </div>
+</section>
+
+<!-- ===== 08 裂缝 ===== -->
+<section class="sec alt" id="s08">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">08 · 裂缝</div>
+      <h2>六个故事的入口</h2>
+      <p class="lede">不做成扁平乌托邦。这个文明的"完美"建立在刻意不看王的前提上——以下六条裂缝，是它所有故事的起点。</p>
+    </div>
+    <div class="fissures">
+      <div class="fiss rv">
+        <div class="fn">裂缝 01</div>
+        <h4>继承的自我腐蚀</h4>
+        <p>王指定继承人时，最接近王的人是谄媚者——敢说真话的人早被考核筛掉了。<b>最像王的人与最该为王的人，无法保证重合。</b></p>
+      </div>
+      <div class="fiss rv">
+        <div class="fn">裂缝 02</div>
+        <h4>观止院的第一次失语</h4>
+        <p>观止院能预测所有人的行为，除了王。当预测模型第一次把王标为"高风险变量"：<b>报告=违逆，不报=渎职。</b></p>
+      </div>
+      <div class="fiss rv">
+        <div class="fn">裂缝 03</div>
+        <h4>禁复清单的钥匙</h4>
+        <p>哪些先纪技术永久封印，王独享最终解释权。历史上有没有王为私利解过禁？——<b>档案里没有记录，而档案由宗院管理，宗院由王定义。没有记录，本身就是记录。</b></p>
+      </div>
+      <div class="fiss rv">
+        <div class="fn">裂缝 04</div>
+        <h4>时间宗教的裂缝</h4>
+        <p>某个守典人坚信"时间法则高于王"。他们没有武器，只有历法——<b>但历法错了，全城调度就错了。</b>和平的叛乱。</p>
+      </div>
+      <div class="fiss rv">
+        <div class="fn">裂缝 05</div>
+        <h4>大寂灭的另一个版本</h4>
+        <p>官方叙事是先纪死于傲慢。但大图书馆深处可能存着真相：<b>先纪不是崩溃，是集体撤离，九执堂只是被留下的那部分。</b></p>
+      </div>
+      <div class="fiss rv">
+        <div class="fn">裂缝 06</div>
+        <h4>没有到期日</h4>
+        <p>建城者说单王制是"重建阶段的过渡方案"，后代可自行改宪。但谁来宣布"过渡结束"？——<b>王。而无约束的王没有理由交出权力。</b></p>
+      </div>
+    </div>
+    <div class="end-block rv">
+      <div class="big">这个文明把全部赌注押在"王的能力是可持续的事实"上，<br>并为此主动放弃了对事实的检验。</div>
+      <div class="small">缺陷不是王权的存在，是"事实不可检验"本身 · 观复文明 · 课堂展示</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09 故事引擎 ===== -->
+<section class="sec" id="s09">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">09 · 故事引擎</div>
+      <h2>裂缝，长成场景</h2>
+      <p class="lede">六条裂缝，三个已成形的场景、三个触发条件。它们就是所有故事的起点——人物具体，冲突具体，落点具体。</p>
+    </div>
+    <div class="scene-grid">
+      <div class="scene rv">
+        <div class="sno">场景 A · 裂缝 02</div>
+        <h4>观止院的第一次失语</h4>
+        <div class="who">人物 · 重规，观止院首席执事，四十年没出过错</div>
+        <p>年度复算中，模型第一次把王标为黄级——"决策不可预测性上升"。但报告系统<b>没有"王"这个字段</b>，拒绝输出。上报=违逆，不上报=渎职。</p>
+        <div class="land">落点 · 他把报告改写成一封"历法勘误函"——政治问题第一次被翻译成宗教问题。</div>
+      </div>
+      <div class="scene rv">
+        <div class="sno">场景 B · 裂缝 04</div>
+        <h4>三秒的叛乱</h4>
+        <div class="who">人物 · 白榆，钟室守灯人，三十年没迟到过一次</div>
+        <p>王解禁深空通信阵列——若接通，将证明<b>先纪是撤离，不是死亡</b>。白榆没有武器，他在复归祭当夜让钟室慢了 3 秒。</p>
+        <div class="land">落点 · 历法错三秒 = 王"时间看护者"身份的第一道裂痕。和平，但比兵变更动摇根基。</div>
+      </div>
+      <div class="scene rv">
+        <div class="sno">场景 C · 裂缝 06</div>
+        <h4>评估我</h4>
+        <div class="who">人物 · 归玄，哲人王，执政第四十一年</div>
+        <p>年轻解经师重弦在禁层外复原了一台只有王能复原的设备。归玄没有压制，他发出一条从未有过的谕令：<b>"观止院，评估我。"</b></p>
+        <div class="land">落点 · 观止院接到谕令，不知道格式怎么写——格式里没有王。</div>
+      </div>
+    </div>
+    <div class="trigger">
+      <div class="tg rv"><span class="tt">触发 D · 一枚假印</span>档案里有一项<b>一级禁复技术曾被解禁</b>，解禁令有王的印，宗院记录却显示"无此谕令"。印是真的 / 印是假的 / 记录被改——三条路，每一条都是故事。而调查本身违法。</div>
+      <div class="tg rv"><span class="tt">触发 E · 少王与重弦</span>归玄晚年，候选继承人是最像他的"少王"（谄媚者）与最能托举的"重弦"（直言者）。<b>他指定谁，取决于他最后一年还信什么。</b></div>
+      <div class="tg rv"><span class="tt">触发 F · 撤离名单</span>深层钟室记录到八百年前的"撤离广播"，被时间基准误差掩盖了八百年。它说：<b>你们不在撤离名单上。</b></div>
+    </div>
+    <div class="radio-msg rv">"致所有仍在这颗行星上的单位——你们不在撤离名单上。"</div>
+  </div>
+</section>
+
+<!-- ===== 10 外部世界 ===== -->
+<section class="sec alt" id="s10">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">10 · 外部世界</div>
+      <h2>文明的边界</h2>
+      <p class="lede">观复不是废土上唯一的幸存者。它自认为"唯一文明"，但世界的边界远比灵台城的口径复杂。</p>
+    </div>
+    <div class="scene-grid">
+      <div class="scene rv">
+        <div class="sno">蛮族 · 世代船团</div>
+        <h4>没死的人，完整地记得</h4>
+        <div class="who">大寂灭时在深空航线上 · 八百年未归 · 近期信标抵城</div>
+        <p>他们保留了前纪的深空技术，但没有经历崩溃，<b>记忆是完整的</b>。信标不是入侵，是问询。遗民派视他们为祖先，警戒派视他们为另一种文明的使者——<b>两派之争，是裂缝 05 走向公开的第一步。</b></p>
+      </div>
+      <div class="scene rv">
+        <div class="sno">机械野草 · 复制危机的遗产</div>
+        <h4>不守历法，不点灯，不纪念任何一天</h4>
+        <div class="who">先纪 AI 采集群 · 崩溃后失去协调 · 自动复制至今</div>
+        <p>它们只采集物质、自我复制——像野草，也像癌。探墟队跟着它们找矿，也怕它们：个别集群会进入防御态，把人当成采集对象。<b>观复修前纪的东西，野草复制前纪的东西——区别在目的。</b></p>
+      </div>
+      <div class="scene rv">
+        <div class="sno">拾荒者与小农社</div>
+        <h4>我们读废墟</h4>
+        <div class="who">死带边缘人口 · 不在品级体系内 · 被默许存在</div>
+        <p>他们是探墟队的向导、劳力与情报来源。政策：不征召、不征税、不救济——但死带扩张时会"顺手"护住弧带。拾荒者说：<b>"城里人读书，我们读废墟。"</b>观复认为是恭维，拾荒者认为是事实。</p>
+      </div>
+    </div>
+    <div class="radio-msg rv">"野草不在时间里。" —— 时间宗教对机械野草的唯一应答</div>
+  </div>
+</section>
+
+<!-- ===== 11 短篇 · 第一炉火 ===== -->
+<section class="sec" id="s11">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">11 · 短篇</div>
+      <h2>第一炉火</h2>
+      <p class="lede">重建纪元第四十年。重弦，十八岁，解经学院学徒——多年后那个"在禁层外复原了只有王能复原的设备"的人，第一次走出灵台城。这是一次普通的探墟任务。<b>文明的十条标准没有一条缺席。</b></p>
+    </div>
+    <div class="story">
+      <div class="act rv">
+        <div class="act-no">第一幕 · 城</div>
+        <h4>晨光是被导下来的</h4>
+        <p>灵台城的中层，天还没亮，导光管已经醒了：一束从地表引下的晨曦，沿抛光铜管一路下行，在中层回廊的天花板上缓缓展开。重弦站在探墟队集散层的月台上——他看了十八年，今天才意识到自己从没离开过这道光的范围。</p>
+        <p>月台上各队正在装卸：口粮按编制领七日份合成粮——<b>中枢算过账，养得起</b>；装备是辐射探测杖、断线回响器、封存箱；守典人记录员在每份出队令上盖章，契文印记加时间基准戳，一笔一画都是政治。</p>
+        <div class="line">领队徽声检查他的封存箱，只问了一句："学院教你读机器。今天教你读人。"——出队令边角有一行小字：<b>续。</b>王看过这条任务线，批了一个字。没人解释这个字，也不需要解释。</div>
+      </div>
+      <div class="act rv">
+        <div class="act-no">第二幕 · 死带</div>
+        <h4>它在等一份永远到不了的换防命令</h4>
+        <p>辐射尘把天压成铅灰色。断线回响器发出微弱的嗡鸣——前纪设备的残余信号，来自脚下，来自八百年没有断过的电。第一台哨卫出现在正午：沿固定路径缓慢行走，像一座被慢放的行刑者。小队屏息停在废墙后，队首的扛夫把合规信标挂上旗杆——<b>编-7-4092，补给勤务单位</b>。哨卫扫过，放行。</p>
+        <p>他们跟着一丛机械野草走了两公里：野草像铁色的蛾群，遇金属沉积就停下、就地取材、把自己变长一点。野草选矿比人快，所以人学会了跟野草。</p>
+        <div class="line">重弦问："它是死了还是活着？"徽声："它一直在巡逻。八百年了，它在等一份永远到不了的换防命令。这就是我们和野草的区别——我们修好了记忆，它只能执行记忆。"</div>
+      </div>
+      <div class="act rv">
+        <div class="act-no">第三幕 · 废墟</div>
+        <h4>先纪人写给宇宙的证明</h4>
+        <p>目标是一座半埋沙下的前纪补给站。墙还在——浮雕上刻着环日城邦：主环城的环带、日冕锚塔的尖、戴森云张开的弧。学院教材管这叫"纪念性艺术"，但亲眼见到的那一刻，重弦知道教材错了：<b>这不是艺术，是证明。</b>先纪人刻这些，是为了让任何看到的人相信——他们存在过，他们值得。</p>
+        <p>铸旧师老陈蹲在炉芯前，敲、听、扫：指节敲外壳，耳朵贴上去，再扫结构。整个动作安静得像一场葬礼。"烧过的芯。冷透了。但芯体完整，可以<b>复</b>。"——在这片八百年的废墟里，"复"字比任何祷告都有力量。</p>
+      </div>
+      <div class="act rv">
+        <div class="act-no">第四幕 · 事故</div>
+        <h4>谎言被拆穿的一刻</h4>
+        <p>拆解到第三天，断线回响器变调。三台哨卫改道逼近：<b>编-7-4092 已在八百年前注销</b>，信标是伪造的。货物太重——炉芯四百公斤，拆到一半，拖着它跑不掉。老陈说："弃。"徽声说："王批了'续'。"两个词对峙了三秒。</p>
+        <p>"不弃，也不打。"重弦说。学院教过：哨卫识别的是单位，不是人。他把信标从旗杆上拆下，挂到二十步外一丛机械野草的背上——野草不反抗，它们只采集，只移动。哨卫去追一台永远不会停下的"编-7-4092"了。</p>
+        <div class="line">代价立刻兑现：信标没了。他们必须在哨卫回巡前连夜走出死带。任务簿当天最后一行：今日损失合规信标一枚。获炉芯一座。净值：正。</div>
+      </div>
+      <div class="act rv">
+        <div class="act-no">第五幕 · 归城</div>
+        <h4>灯亮了</h4>
+        <p>归城在第七天夜里。炉芯经评估、清洗、入档——契文记录：来源，前纪补给站丙级；可复原度，B+；评估人，徽声；实习评估人，重弦。他在"实习评估人"后面第一次签下自己的名字，手抖，但签了。</p>
+        <p>三天后，宗院主持点亮礼。炉芯被接入文明的时间，全场静默，然后——灯亮了。一粒金色的、稳定的、像小恒星一样的光。重弦站在人群最后，看见老陈低下头：拆过几千台机器的人，这一刻看的是那粒光，不是机器。</p>
+      </div>
+    </div>
+    <div class="radio-msg rv">"它烧过，冷过，现在又亮了。它是城，是粮，是分工，是记录，是科学，是艺术，是进口，是匠人，是王批下的那个'续'字。"<span style="display:block;margin-top:8px;font-size:12.5px;color:var(--ice)">—— 重弦的评估报告（学徒体，徽声没有改一个字）。报告呈到王面前，王在空白处写了一个字：续。</span></div>
+    <div class="arch-tbl rv">
+      <table>
+        <colgroup><col style="width:34%"><col style="width:66%"></colgroup>
+        <tr><th>十条标准</th><th>在故事里的位置</th></tr>
+        <tr><td>(1) 大型城市中心</td><td>灵台城——出发与归来的锚点，垂直的城、导下的光</td></tr>
+        <tr><td>(2) 专门职业</td><td>小队编制：解经人、铸旧师、扛夫、守典人</td></tr>
+        <tr><td>(3) 初级生产者剩余</td><td>口粮拨付——"中枢算过账，养得起"</td></tr>
+        <tr><td>(4) 纪念性建筑</td><td>补给站墙上的"万碑"：先纪人写给宇宙的证明</td></tr>
+        <tr><td>(5) 统治阶级</td><td>出队令边角的"续"——王在每一份报告的空白处</td></tr>
+        <tr><td>(6) 记录系统</td><td>出队令的契文印记与时间基准戳、任务簿、入档记录</td></tr>
+        <tr><td>(7) 实用科学</td><td>老陈的现场评估——"复"是行会话，也是文明话</td></tr>
+        <tr><td>(8) 纪念性艺术</td><td>万碑浮雕——先纪人把自己的辉煌刻在墙上</td></tr>
+        <tr><td>(9) 稳定原料进口</td><td>探墟即贸易——遗物是唯一的"进口"</td></tr>
+        <tr><td>(10) 常驻专业工匠</td><td>铸旧师行会：师徒、秘方、"复"字的传承</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <span>观复文明 · 建立在事实上的王权</span><span class="sep">·</span><span>以柴尔德"城市革命"十条为基石</span><span class="sep">·</span><span>虚构设定 · 示意内容仅供展示</span>
+</footer>
+</main>
+<script>
+(function(){
+'use strict';
+function $(s,c){return (c||document).querySelector(s)}
+function $$(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 滚动进度条 */
+var prog=$('#progress');
+function onScroll(){var h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?(scrollY/h*100)+'%':'0%')}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* 章节滚动揭示 */
+var rvs=$$('.rv');
+if('IntersectionObserver' in window&&!reduced){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.08});
+  rvs.forEach(function(el){io.observe(el)});
+}else{rvs.forEach(function(el){el.classList.add('in')})}
+
+/* 导航 scrollspy */
+var secs=['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10','s11'].map(function(id){return document.getElementById(id)});
+var navs=$$('#nav a');
+var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){navs.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(function(s){if(s)spy.observe(s)});
+
+/* hero 循环动画离屏暂停 */
+var hero=$('#s-hero');
+if(hero){
+  var heroIO=new IntersectionObserver(function(es){hero.classList.toggle('paused',es[0].intersectionRatio<0.35)},{threshold:[0,.35]});
+  heroIO.observe(hero);
+}
+
+/* 章节03：级联崩溃演示 */
+var cNodes=$$('#cascadeNodes .cnode'),cLines=$$('.nets .cline');
+var cSteps=$$('#cascadeSteps .step'),cBtn=$('#cascadePlay'),cPos=$('#cascadePos');
+var ember=$('.ember-final'),deadLine=$('.dead-line');
+var timeline=[
+  {hot:[0,2],t:'政策分裂 · 守典·甲 vs 守典·乙'},
+  {die:[0,2],t:'时间基准分裂 · 轨道调度错乱'},
+  {hot:[3],die:[4],t:'动量配额武器化 · 航道优先权政治化'},
+  {die:[6],t:'采掘舰队断供 · 内轨道减产'},
+  {die:[1,5,7,8],t:'级联失联 · 千年机器熄灭'}
+];
+var cTimer=null;
+function resetCascade(){
+  clearTimeout(cTimer);
+  cNodes.forEach(function(n){n.classList.remove('die','hot');n.classList.add('live')});
+  cLines.forEach(function(l){l.classList.remove('die')});
+  if(ember)ember.setAttribute('opacity',0);
+  if(deadLine)deadLine.setAttribute('opacity',0);
+  cSteps.forEach(function(s,i){s.classList.toggle('act',i===0)});
+  if(cPos)cPos.textContent='等待重演 · 九执堂全量在线';
+}
+function playCascade(){
+  resetCascade();
+  timeline.forEach(function(step,i){
+    cTimer=setTimeout(function(){
+      cSteps.forEach(function(s){s.classList.remove('act')});
+      if(cSteps[i])cSteps[i].classList.add('act');
+      if(cPos)cPos.textContent='第'+(i+1)+'步 · '+step.t;
+      (step.hot||[]).forEach(function(k){cNodes[k].classList.remove('live');cNodes[k].classList.add('hot')});
+      (step.die||[]).forEach(function(k){cNodes[k].classList.remove('live','hot');cNodes[k].classList.add('die')});
+      if(i===timeline.length-1){
+        setTimeout(function(){
+          if(ember)ember.setAttribute('opacity',1);
+          if(deadLine)deadLine.setAttribute('opacity',1);
+          if(cPos)cPos.textContent='系统失联 · 大寂灭';
+        },450);
+      }
+    },i*1150);
+  });
+}
+if(cBtn){cBtn.addEventListener('click',playCascade);resetCascade();}
+
+/* 章节07：十条展开 / 全部 */
+var c10=$$('.c10-card'),c10Btn=$('#c10All');
+c10.forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('open')})});
+if(c10Btn){c10Btn.addEventListener('click',function(){
+  var open=c10.some(function(c){return !c.classList.contains('open')});
+  c10.forEach(function(c){c.classList.toggle('open',open)});
+});}
+})();
+</script>
+</body>
+</html>
+</body>
+</html>
