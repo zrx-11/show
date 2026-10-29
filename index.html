@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>崆源文明 · 跨文化交际课堂展示</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C16 3 5 14 5 22a11 11 0 0 0 22 0c0-8-11-19-11-19z' fill='%236FB5A8'/%3E%3C/svg%3E">
+<style>
+/* ===== 色板：石灰岩 · 溶洞 · 暗河 ===== */
+:root{
+  --bg0:#0C0F13; --bg1:#12171D; --bg2:#1B222B; --bg3:#232C36;
+  --line:rgba(232,226,210,.13); --line2:rgba(232,226,210,.22);
+  --ink:#E8E2D2; --ink2:#A9B0BC; --ink3:#6E7684;
+  --ochre:#C96F3C; --water:#6FB5A8; --clay:#8C7B66; --dim:#4A5462;
+  --serif:Georgia,"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg0);color:var(--ink);font-family:var(--sans);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(201,111,60,.35)}
+:focus-visible{outline:2px solid var(--ochre);outline-offset:2px}
+img,svg{display:block}
+a{color:var(--water)}
+
+/* ===== 顶部导航 + 滚动进度 ===== */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--water);z-index:60;transition:width .15s linear}
+.topnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:linear-gradient(rgba(12,15,19,.92),rgba(12,15,19,.55) 70%,transparent);transition:background .3s}
+.topnav .brand{display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-weight:700;letter-spacing:.06em;color:var(--ink)}
+.topnav .brand small{font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:.28em;color:var(--water);text-transform:uppercase}
+.topnav nav{display:flex;gap:4px}
+.topnav nav a{color:var(--ink3);text-decoration:none;font-size:13px;padding:6px 10px;border-radius:6px;letter-spacing:.02em;transition:color .25s,background .25s}
+.topnav nav a.on{color:var(--water);background:rgba(111,181,168,.12)}
+@media (max-width:767px){
+  .topnav nav a span{display:none}
+  .topnav nav a{padding:6px 8px;font-size:12px}
+}
+
+/* ===== 布局 ===== */
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;position:relative}
+.sec{padding:110px 0;position:relative}
+.sec.alt{background:var(--bg1)}
+.sec-head{margin-bottom:42px}
+.sec-kicker{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:.3em;color:var(--water);text-transform:uppercase}
+.sec-kicker::before{content:"";width:34px;height:1px;background:var(--water)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(28px,4.4vw,42px);font-weight:700;letter-spacing:.02em;margin-top:12px;color:var(--ink);text-wrap:balance}
+.sec-head .lede{max-width:760px;margin-top:14px;color:var(--ink2);font-size:17px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+.note{display:inline-block;font-size:12.5px;color:var(--ink3);border:1px solid var(--line);border-radius:999px;padding:3px 12px;margin-top:18px;letter-spacing:.04em}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero svg.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .fog{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,rgba(12,15,19,.12),rgba(12,15,19,.55) 60%,rgba(12,15,19,.88))}
+.hero .stage{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:960px}
+.hero .stage h1{font-family:var(--serif);font-size:clamp(54px,10vw,112px);font-weight:700;letter-spacing:.08em;line-height:1.05;color:var(--ink);opacity:0;transform:translateY(30px);animation:titleIn 1s cubic-bezier(.22,1,.36,1) 2.15s forwards}
+.hero .stage .en{font-size:clamp(13px,1.8vw,19px);letter-spacing:.62em;text-transform:uppercase;color:var(--water);margin-top:14px;opacity:0;transform:translateY(18px);animation:titleIn .9s cubic-bezier(.22,1,.36,1) 2.75s forwards}
+.hero .stage .sub{margin-top:26px;color:var(--ink2);font-size:clamp(15px,2vw,19px);letter-spacing:.06em;opacity:0;transform:translateY(16px);animation:titleIn .9s cubic-bezier(.22,1,.36,1) 3.25s forwards}
+.hero .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:2;color:var(--ink3);font-size:12px;letter-spacing:.24em;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:titleIn 1s ease 4s forwards}
+.hero .scroll-hint::after{content:"";width:1px;height:34px;background:linear-gradient(var(--ink3),transparent);animation:hint 1.8s ease-in-out infinite}
+@keyframes titleIn{to{opacity:1;transform:none}}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:bottom}}
+/* hero 循环动画元素 */
+.drop{fill:#9FC7DE;opacity:0;transform-box:fill-box;transform-origin:center;animation:drop 2.3s linear infinite}
+.drop.d1{animation-delay:.1s}.drop.d2{animation-delay:.95s}.drop.d3{animation-delay:1.75s}
+@keyframes drop{0%{opacity:0;transform:translateY(-6px)}12%{opacity:.9}88%{opacity:.9}100%{opacity:0;transform:translateY(168px)}}
+.seep{stroke:rgba(159,199,222,.5);stroke-width:2;stroke-dasharray:5 7;opacity:0;animation:seep 2.3s linear infinite}
+.seep.s1{animation-delay:.15s}.seep.s2{animation-delay:1s}.seep.s3{animation-delay:1.8s}
+@keyframes seep{0%{opacity:0}12%{opacity:.75}88%{opacity:.75}100%{opacity:0}}
+.flow{stroke:var(--water);fill:none;stroke-linecap:round;animation:dashmove 1.15s linear infinite}
+.flow.f2{animation-duration:1.7s;animation-direction:reverse}
+@keyframes dashmove{to{stroke-dashoffset:-26}}
+.win{fill:rgba(232,226,210,.92);opacity:0;animation:winin .5s ease forwards}
+@keyframes winin{to{opacity:1}}
+.hero.paused .drop,.hero.paused .seep,.hero.paused .flow{animation-play-state:paused}
+
+/* ===== 章节01：地理基底 ===== */
+.geo-grid{display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:900px){.geo-grid{grid-template-columns:1.15fr .85fr;align-items:start}}
+.geo-svg{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:14px;position:relative}
+.geo-svg svg{width:100%;height:auto}
+.geo-modes{position:absolute;top:22px;left:22px;display:flex;gap:8px;z-index:2}
+.geo-modes button{appearance:none;border:1px solid var(--line2);background:rgba(12,15,19,.7);color:var(--ink2);font-size:13px;letter-spacing:.08em;padding:6px 14px;border-radius:999px;cursor:pointer;transition:all .25s;font-family:var(--sans)}
+.geo-modes button.on{background:rgba(111,181,168,.16);border-color:var(--water);color:var(--water)}
+.geo-layers{display:flex;flex-direction:column;gap:12px}
+.layer{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--bg2);cursor:pointer;transition:border-color .3s,background .3s}
+.layer h4{font-size:15px;letter-spacing:.05em;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.layer h4 i{width:8px;height:8px;border-radius:50%;flex:none}
+.layer p{font-size:14px;color:var(--ink2);margin-top:6px;line-height:1.7}
+.layer.on{border-color:var(--water);background:rgba(111,181,168,.07)}
+.layer.on h4{color:var(--water)}
+.layer.k1 i{background:var(--ochre)}.layer.k2 i{background:var(--water)}.layer.k3 i{background:#B08BD0}
+.layer.k3 h4 i{background:#9B7EB8}
+.geo-claim{margin-top:26px;padding:18px 22px;border-left:3px solid var(--ochre);background:var(--bg2);border-radius:0 12px 12px 0;color:var(--ink2);font-size:16px}
+.geo-claim b{color:var(--ink);font-weight:600}
+.gstat{font-size:12.5px;color:var(--ink3);margin-top:16px;letter-spacing:.03em}
+
+/* ===== 章节02：Childe 十条 ===== */
+.s10-groups{display:flex;flex-direction:column;gap:40px}
+.s10-group .gname{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.18em;color:var(--clay);margin-bottom:16px}
+.s10-group .gname::after{content:"";flex:1;height:1px;background:var(--line)}
+.s10-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:720px){.s10-grid{grid-template-columns:1fr 1fr}}
+.s10-card{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:16px 18px;cursor:pointer;transition:border-color .3s,background .3s}
+.s10-card:hover{border-color:var(--line2)}
+.s10-card.open{border-color:var(--water)}
+.s10-card .top{display:flex;align-items:flex-start;gap:12px}
+.s10-card .no{font-family:var(--serif);font-size:15px;color:var(--ochre);padding-top:2px;flex:none;width:24px}
+.s10-card h4{font-size:16px;color:var(--ink);font-weight:600;letter-spacing:.02em}
+.s10-card .badge{font-size:11px;letter-spacing:.06em;border:1px solid var(--ochre);color:var(--ochre);border-radius:999px;padding:1px 9px;margin-left:8px;vertical-align:2px;flex:none}
+.s10-card .brief{margin-top:6px;font-size:14px;color:var(--ink2);line-height:1.7}
+.s10-card .detail{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,1,.36,1);font-size:14px;color:var(--ink2);line-height:1.75}
+.s10-card .detail div{border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+.s10-card.open .detail{max-height:320px}
+.s10-ctl{margin-top:22px;display:flex;gap:10px;align-items:center}
+.s10-ctl button{appearance:none;background:none;border:1px solid var(--line2);color:var(--ink2);font-size:13px;padding:7px 16px;border-radius:999px;cursor:pointer;font-family:var(--sans);transition:all .25s}
+.s10-ctl button:hover{border-color:var(--water);color:var(--water)}
+.s10-foot{margin-top:26px;padding:16px 20px;border-left:3px solid var(--water);background:var(--bg2);border-radius:0 12px 12px 0;font-size:15px;color:var(--ink2)}
+.s10-foot b{color:var(--ink)}
+
+/* ===== 章节03：五处分野 ===== */
+.split{display:flex;flex-direction:column;gap:14px}
+.split-row{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg2)}
+@media (min-width:820px){.split-row{grid-template-columns:150px 1fr 1fr}}
+.split-row .axis{grid-column:1/-1;padding:12px 18px;background:var(--bg3);font-size:14px;font-weight:600;color:var(--ink);letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+@media (min-width:820px){.split-row .axis{grid-column:auto;justify-content:center;text-align:center;writing-mode:horizontal-tb;font-size:13.5px}}
+.split-row .side{padding:16px 18px;font-size:14px;line-height:1.75;color:var(--ink2)}
+.split-row .side .tag{display:block;font-size:11px;letter-spacing:.2em;margin-bottom:6px;text-transform:uppercase}
+.split-row .side.river .tag{color:var(--ochre)}
+.split-row .side.kong .tag{color:var(--water)}
+.split-row .side b{color:var(--ink);font-weight:600}
+.split-note{margin-top:18px;font-size:13.5px;color:var(--ink3)}
+.split-note b{color:var(--ink2);font-weight:600}
+
+/* ===== 章节04：第一次接触 ===== */
+.story-shell{border:1px solid var(--line);border-radius:16px;background:var(--bg2);overflow:hidden}
+.story-steps{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.story-steps .st{flex:1;height:3px;border-radius:3px;background:var(--bg3);transition:background .4s}
+.story-steps .st.on{background:var(--water)}
+.story-stage{padding:26px 24px;min-height:300px;position:relative}
+.story-scene{display:none}
+.story-scene.on{display:block;animation:sceneIn .55s cubic-bezier(.22,1,.36,1)}
+@keyframes sceneIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.story-scene h3{font-family:var(--serif);font-size:22px;color:var(--ink);display:flex;align-items:center;gap:12px}
+.story-scene h3 .mno{color:var(--ochre);font-size:14px;letter-spacing:.2em;font-family:var(--sans)}
+.story-scene .intro{margin-top:8px;font-size:14.5px;color:var(--ink3);letter-spacing:.02em}
+.duo{display:grid;grid-template-columns:1fr;gap:14px;margin-top:20px}
+@media (min-width:760px){.duo{grid-template-columns:1fr 1fr}}
+.duo .pane{border-radius:12px;padding:16px 18px;font-size:14.5px;line-height:1.75}
+.duo .pane .tag{display:block;font-size:11px;letter-spacing:.2em;margin-bottom:8px;text-transform:uppercase}
+.duo .guest{background:rgba(201,111,60,.09);border:1px solid rgba(201,111,60,.32)}
+.duo .guest .tag{color:var(--ochre)}
+.duo .host{background:rgba(111,181,168,.08);border:1px solid rgba(111,181,168,.3)}
+.duo .host .tag{color:var(--water)}
+.duo .pane .say{font-size:15.5px;color:var(--ink);font-family:var(--serif);line-height:1.8;margin-bottom:10px}
+.duo .pane .read{margin-top:10px}
+.duo .pane .read b{font-weight:600;color:var(--ink)}
+.story-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-top:1px solid var(--line)}
+.story-nav .pos{font-size:13px;color:var(--ink3);letter-spacing:.06em}
+.story-nav button{appearance:none;border:1px solid var(--water);background:rgba(111,181,168,.12);color:var(--water);font-size:14px;padding:9px 22px;border-radius:999px;cursor:pointer;font-family:var(--sans);letter-spacing:.05em;transition:all .25s}
+.story-nav button:hover{background:rgba(111,181,168,.24)}
+.story-nav button:disabled{opacity:.35;cursor:default;border-color:var(--line2);color:var(--ink3);background:none}
+.story-take{margin-top:20px;padding:18px 22px;border-left:3px solid var(--ochre);background:var(--bg2);border-radius:0 12px 12px 0;font-size:15.5px;color:var(--ink2)}
+.story-take b{color:var(--ink)}
+
+/* ===== 章节05：理论解码 ===== */
+.decode-grid{display:grid;grid-template-columns:1fr;gap:26px}
+@media (min-width:980px){.decode-grid{grid-template-columns:1.05fr .95fr;align-items:start}}
+.radar-box{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:18px 14px 10px}
+.radar-box .cap{font-size:12.5px;color:var(--ink3);margin:2px 10px 0;letter-spacing:.03em}
+#radar{width:100%;height:430px}
+.dim-cards{display:flex;flex-direction:column;gap:12px}
+.dim{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:14px 18px;cursor:pointer;transition:all .3s}
+.dim h4{font-size:15px;color:var(--ink);display:flex;align-items:center;gap:10px;letter-spacing:.02em}
+.dim h4 .vals{margin-left:auto;font-size:12px;color:var(--ink3);font-family:Georgia,serif;letter-spacing:.02em}
+.dim p{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,1,.36,1);font-size:14px;color:var(--ink2);line-height:1.75;margin-top:0}
+.dim.open{border-color:var(--water)}
+.dim.open p{max-height:260px;margin-top:10px}
+.dim.on{border-color:var(--ochre)}
+.decode-foot{margin-top:22px;font-size:14.5px;color:var(--ink2);padding:16px 20px;border:1px dashed var(--line2);border-radius:12px}
+.decode-foot b{color:var(--water)}
+
+/* ===== 章节06：讨论 ===== */
+.q-list{display:flex;flex-direction:column;gap:16px;counter-reset:q}
+.q{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:20px 22px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);align-items:start}
+.q .qn{width:34px;height:34px;border-radius:50%;border:1px solid var(--ochre);color:var(--ochre);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;margin-top:2px}
+.q .qt{font-size:16px;color:var(--ink);line-height:1.8;letter-spacing:.02em}
+.q .qt b{color:var(--water);font-weight:600}
+.end-block{margin-top:56px;text-align:center;padding:48px 24px;border-top:1px solid var(--line)}
+.end-block .big{font-family:var(--serif);font-size:clamp(22px,3.6vw,34px);color:var(--ink);letter-spacing:.04em;text-wrap:balance}
+.end-block .small{margin-top:14px;color:var(--ink3);font-size:14px;letter-spacing:.1em}
+footer.page-foot{padding:40px 24px 54px;text-align:center;color:var(--ink3);font-size:12.5px;letter-spacing:.06em;border-top:1px solid var(--line)}
+footer.page-foot .sep{color:var(--dim);padding:0 8px}
+
+/* ===== 低动效适配 ===== */
+@media (prefers-reduced-motion: reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .hero .stage h1,.hero .stage .en,.hero .stage .sub,.hero .scroll-hint{opacity:1;transform:none;animation:none}
+  .drop,.seep,.flow,.rd,.gflow{animation:none}
+  .win{opacity:1}
+  .story-scene.on{animation:none}
+  .hero .scroll-hint::after{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ===== 章节01：旱季状态 ===== */
+.geo-svg .pool2,.geo-svg .gl2>path,.drywater,.geo-svg .rd{transition:opacity .55s}
+.geo-svg.dry .pool2{opacity:0}
+.geo-svg.dry .rd{animation:none;opacity:0}
+.geo-svg.dry .gl2>path{opacity:.38}
+.geo-svg.dry .gflow{opacity:.55}
+.geo-svg.dry .drywater{opacity:1}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="topnav">
+  <div class="brand">崆源<small>Kongyuan</small></div>
+  <nav id="nav">
+    <a href="#s01"><b>01</b><span>&nbsp;地理</span></a>
+    <a href="#s02"><b>02</b><span>&nbsp;十条</span></a>
+    <a href="#s03"><b>03</b><span>&nbsp;分野</span></a>
+    <a href="#s04"><b>04</b><span>&nbsp;接触</span></a>
+    <a href="#s05"><b>05</b><span>&nbsp;解码</span></a>
+    <a href="#s06"><b>06</b><span>&nbsp;讨论</span></a>
+  </nav>
+</header>
+<main>
+
+<!-- ===== 开场 ===== -->
+<section class="hero" id="s-hero">
+  <svg class="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0A0E15"/><stop offset="1" stop-color="#15202C"/>
+      </linearGradient>
+      <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#232C36"/><stop offset="1" stop-color="#181F27"/>
+      </linearGradient>
+      <linearGradient id="cav" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0E1319"/><stop offset="1" stop-color="#0A0D11"/>
+      </linearGradient>
+      <linearGradient id="waterg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6FB5A8" stop-opacity=".55"/><stop offset="1" stop-color="#3E7C72" stop-opacity=".3"/>
+      </linearGradient>
+    </defs>
+    <!-- 天空 -->
+    <rect width="1440" height="150" fill="url(#sky)"/>
+    <!-- 雨滴 -->
+    <circle class="drop d1" cx="430" cy="40" r="4"/>
+    <circle class="drop d2" cx="720" cy="30" r="4"/>
+    <circle class="drop d3" cx="1000" cy="50" r="3.5"/>
+    <!-- 峰林山脊 -->
+    <path d="M0,168 L150,118 L280,152 L430,96 L590,140 L740,90 L900,134 L1050,80 L1210,132 L1360,102 L1440,150 V244 L0,244 Z" fill="#2B3542"/>
+    <path d="M0,196 L170,150 L330,184 L470,140 L620,182 L760,140 L920,184 L1070,142 L1240,184 L1440,150 L1440,244 L0,244 Z" fill="#202832" opacity=".8"/>
+    <!-- 地表水塘（雨季） -->
+    <ellipse class="pool" cx="520" cy="206" rx="64" ry="12" fill="url(#waterg)" opacity=".85"/>
+    <ellipse class="pool" cx="1000" cy="196" rx="76" ry="13" fill="url(#waterg)" opacity=".8"/>
+    <!-- 渗入裂隙 -->
+    <line class="seep s1" x1="470" y1="152" x2="452" y2="250"/>
+    <line class="seep s2" x1="720" y1="140" x2="722" y2="250"/>
+    <line class="seep s3" x1="1000" y1="150" x2="992" y2="250"/>
+    <!-- 岩层主体 -->
+    <rect x="0" y="244" width="1440" height="400" fill="url(#rock)"/>
+    <g stroke="rgba(232,226,210,.05)" stroke-width="2">
+      <line x1="0" y1="300" x2="1440" y2="300"/><line x1="0" y1="360" x2="1440" y2="360"/>
+      <line x1="0" y1="480" x2="1440" y2="480"/><line x1="0" y1="560" x2="1440" y2="560"/>
+    </g>
+    <!-- 竖井通道（地表 → 溶洞城） -->
+    <rect x="704" y="244" width="34" height="112" fill="#141B23" stroke="rgba(232,226,210,.08)"/>
+    <!-- 主溶洞腔（崆墟） -->
+    <path d="M300,628 C318,470 470,352 730,344 C990,336 1100,470 1112,628 Z" fill="url(#cav)"/>
+    <!-- 钟乳石 -->
+    <g fill="url(#rock)" stroke="rgba(232,226,210,.07)">
+      <path d="M470,366 L484,432 L496,366 Z"/><path d="M620,352 L638,430 L656,352 Z"/>
+      <path d="M840,350 L856,424 L872,350 Z"/><path d="M960,372 L974,430 L988,372 Z"/>
+    </g>
+    <!-- 石笋 -->
+    <g fill="#26303B" stroke="rgba(232,226,210,.07)">
+      <path d="M540,628 L552,572 L564,628 Z"/><path d="M900,628 L914,560 L928,628 Z"/>
+      <path d="M700,628 L710,588 L720,628 Z"/>
+    </g>
+    <!-- 崆墟建筑 -->
+    <g class="city">
+      <rect x="420" y="540" width="74" height="48" fill="#232C36" stroke="rgba(232,226,210,.14)"/>
+      <path d="M414,540 L457,510 L500,540 Z" fill="#2E3A46" stroke="rgba(232,226,210,.14)"/>
+      <rect class="win" x="432" y="552" width="10" height="10"/>
+      <rect class="win" x="452" y="552" width="10" height="10"/>
+      <rect class="win" x="472" y="552" width="10" height="10" style="animation-delay:.5s"/>
+      <rect x="560" y="556" width="66" height="42" fill="#232C36" stroke="rgba(232,226,210,.14)"/>
+      <path d="M554,556 L593,530 L632,556 Z" fill="#2E3A46" stroke="rgba(232,226,210,.14)"/>
+      <rect class="win" x="572" y="566" width="10" height="10" style="animation-delay:.75s"/>
+      <rect class="win" x="592" y="566" width="10" height="10" style="animation-delay:.9s"/>
+      <rect x="700" y="548" width="70" height="48" fill="#232C36" stroke="rgba(232,226,210,.14)"/>
+      <path d="M694,548 L735,520 L776,548 Z" fill="#2E3A46" stroke="rgba(232,226,210,.14)"/>
+      <rect class="win" x="712" y="560" width="10" height="10" style="animation-delay:1.05s"/>
+      <rect class="win" x="734" y="560" width="10" height="10" style="animation-delay:1.2s"/>
+      <rect x="840" y="554" width="66" height="42" fill="#232C36" stroke="rgba(232,226,210,.14)"/>
+      <path d="M834,554 L873,528 L912,554 Z" fill="#2E3A46" stroke="rgba(232,226,210,.14)"/>
+      <rect class="win" x="852" y="564" width="10" height="10" style="animation-delay:1.4s"/>
+      <rect class="win" x="874" y="564" width="10" height="10" style="animation-delay:1.55s"/>
+    </g>
+    <!-- 圣洞（粮仓） -->
+    <path d="M1150,628 C1156,540 1220,492 1300,492 C1380,492 1414,548 1418,628 Z" fill="#0A0D11"/>
+    <g fill="#2E3A46" stroke="rgba(232,226,210,.1)">
+      <rect x="1190" y="560" width="26" height="34"/><rect x="1224" y="540" width="26" height="54"/>
+      <rect x="1258" y="556" width="26" height="38"/>
+    </g>
+    <text x="1235" y="650" fill="rgba(232,226,210,.34)" font-size="15" letter-spacing="4" text-anchor="middle" font-family="Georgia,serif">圣洞</text>
+    <!-- 暗河 -->
+    <path d="M0,720 Q120,694 240,720 T480,720 T720,720 T960,720 T1200,720 T1440,720 L1440,760 L0,760 Z" fill="url(#waterg)"/>
+    <path class="flow" d="M-20,736 Q120,712 260,736 T520,736 T780,736 T1040,736 T1300,736 T1460,736" stroke-width="3" stroke-dasharray="12 14"/>
+    <path class="flow f2" d="M-20,754 Q120,732 260,754 T520,754 T780,754 T1040,754 T1300,754 T1460,754" stroke-width="2" stroke-dasharray="7 11" stroke="rgba(111,181,168,.55)"/>
+    <!-- 底部岩层 -->
+    <rect x="0" y="764" width="1440" height="136" fill="#0A0E13"/>
+    <g stroke="rgba(111,181,168,.14)" stroke-width="2">
+      <path d="M0,800 Q180,784 360,800 T720,800 T1080,800 T1440,800"/>
+    </g>
+  </svg>
+  <div class="fog"></div>
+  <div class="stage">
+    <h1>崆源文明</h1>
+    <div class="en">Kongyuan</div>
+    <p class="sub">一座建在暗河上的城市 · 一套没有大河的文化逻辑</p>
+  </div>
+  <div class="scroll-hint">向下滚动 · 进入崆墟</div>
+</section>
+
+<!-- ===== 01 地理基底 ===== -->
+<section class="sec" id="s01">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">01 · 地理基底</div>
+      <h2>文明长在哪，就长成什么样</h2>
+      <p class="lede">崆源没有大河。喀斯特峰林把降雨吞进岩层，汇成地下暗河。这里的技术核心问题不是治水防洪，而是<b style="color:var(--ink)">找水、取水、储水</b>。先看懂地形，才看得懂它的一切选择。</p>
+    </div>
+    <div class="geo-grid">
+      <div class="geo-svg rv">
+        <div class="geo-modes">
+          <button id="modeWet" class="on" type="button">雨季</button>
+          <button id="modeDry" type="button">旱季</button>
+        </div>
+        <svg viewBox="0 0 720 520" preserveAspectRatio="xMidYMid meet" aria-label="崆源地理剖面示意">
+          <defs>
+            <linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B1018"/><stop offset="1" stop-color="#17222E"/></linearGradient>
+            <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262F3A"/><stop offset="1" stop-color="#1A222B"/></linearGradient>
+            <linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FB5A8" stop-opacity=".6"/><stop offset="1" stop-color="#3E7C72" stop-opacity=".28"/></linearGradient>
+          </defs>
+          <rect width="720" height="520" fill="var(--bg1)"/>
+          <!-- 天空 + 雨（仅雨季） -->
+          <rect width="720" height="96" fill="url(#gs)"/>
+          <g class="rain">
+            <circle class="rd" cx="150" cy="30" r="3"/><circle class="rd" cx="330" cy="20" r="3"/>
+            <circle class="rd" cx="520" cy="40" r="3"/><circle class="rd" cx="620" cy="16" r="2.5"/>
+          </g>
+          <!-- 峰林 -->
+          <path d="M0,120 L90,74 L170,102 L260,60 L350,96 L440,58 L530,94 L620,66 L720,104 L720,150 L0,150 Z" fill="#2C3744"/>
+          <path d="M0,132 L120,92 L240,120 L340,88 L460,116 L580,86 L720,124 L720,150 L0,150 Z" fill="#232D38" opacity=".85"/>
+          <!-- 水塘：雨季显示 -->
+          <ellipse class="pool2" cx="210" cy="128" rx="52" ry="9" fill="url(#gw)"/>
+          <ellipse class="pool2" cx="520" cy="122" rx="60" ry="10" fill="url(#gw)"/>
+          <!-- 岩层 -->
+          <rect x="0" y="150" width="720" height="370" fill="url(#gr)"/>
+          <g class="dryline" stroke="rgba(232,226,210,.05)" stroke-width="2">
+            <line x1="0" y1="210" x2="720" y2="210"/><line x1="0" y1="280" x2="720" y2="280"/>
+            <line x1="0" y1="360" x2="720" y2="360"/><line x1="0" y1="430" x2="720" y2="430"/>
+          </g>
+          <!-- 竖井 -->
+          <rect x="330" y="150" width="26" height="66" fill="#141B23" stroke="rgba(232,226,210,.09)"/>
+          <!-- 溶洞层（居住城） -->
+          <g class="gl1">
+            <path d="M120,470 C134,336 240,258 360,252 C480,246 566,320 586,470 Z" fill="#0D1218"/>
+            <g fill="#262F3A" stroke="rgba(232,226,210,.1)">
+              <path d="M200,290 L212,336 L224,290 Z"/><path d="M330,262 L344,324 L358,262 Z"/><path d="M470,276 L484,330 L498,276 Z"/>
+              <path d="M250,470 L262,426 L274,470 Z"/><path d="M420,470 L434,408 L448,470 Z"/><path d="M530,470 L540,432 L550,470 Z"/>
+            </g>
+            <rect x="250" y="400" width="48" height="34" fill="#232C36" stroke="rgba(232,226,210,.12)"/>
+            <rect x="320" y="388" width="42" height="40" fill="#232C36" stroke="rgba(232,226,210,.12)"/>
+            <rect x="386" y="396" width="46" height="36" fill="#232C36" stroke="rgba(232,226,210,.12)"/>
+            <rect class="gl1win" x="260" y="410" width="8" height="8" fill="#E8E2D2"/>
+            <rect class="gl1win" x="330" y="398" width="8" height="8" fill="#E8E2D2"/>
+            <rect class="gl1win" x="396" y="406" width="8" height="8" fill="#E8E2D2"/>
+            <text x="360" y="336" fill="rgba(232,226,210,.4)" font-size="13" letter-spacing="3" text-anchor="middle">崆墟 · 中层溶洞城</text>
+          </g>
+          <!-- 深层粮仓 -->
+          <g class="gl3">
+            <path d="M640,470 C646,404 690,370 708,370 C726,370 742,404 748,470 Z" fill="#0A0D11"/>
+            <g fill="#2E3A46" stroke="rgba(232,226,210,.1)">
+              <rect x="668" y="412" width="16" height="26"/><rect x="688" y="398" width="16" height="40"/>
+              <rect x="708" y="414" width="16" height="24"/>
+            </g>
+            <text x="694" y="492" fill="rgba(232,226,210,.34)" font-size="12" letter-spacing="3" text-anchor="middle">深层粮仓</text>
+          </g>
+          <!-- 暗河 -->
+          <g class="gl2">
+            <path d="M0,500 Q90,482 180,500 T360,500 T540,500 T720,500 L720,520 L0,520 Z" fill="url(#gw)"/>
+            <path class="gflow" d="M-10,508 Q90,492 190,508 T390,508 T590,508 T730,508" stroke="#6FB5A8" stroke-width="2.5" fill="none" stroke-dasharray="6 9"/>
+            <text x="360" y="540" fill="rgba(111,181,168,.65)" font-size="13" letter-spacing="3" text-anchor="middle">暗河 · 全年不断流</text>
+          </g>
+          <!-- 旱季水位线 -->
+          <line class="drywater" x1="0" y1="512" x2="720" y2="512" stroke="#6FB5A8" stroke-width="2.5" stroke-dasharray="3 8" opacity="0"/>
+        </svg>
+        <div class="gstat">结构示意 · 为课堂演示绘制的剖面，非真实地形</div>
+      </div>
+      <div class="geo-layers rv">
+        <div class="layer k1" data-l="1">
+          <h4><i></i>地表 · 峰林坝子</h4>
+          <p>零星可耕地，土层薄而含石灰质。雨季积水成塘，旱季开裂。农业能养人，但永远不够"富余"。</p>
+        </div>
+        <div class="layer k2 on" data-l="2">
+          <h4><i></i>中层 · 溶洞城</h4>
+          <p>崆墟的主体。住人、作坊、议事厅都在这里。恒温恒湿，冬无严寒夏无酷暑，适合长期定居。</p>
+        </div>
+        <div class="layer k3" data-l="3">
+          <h4><i></i>深层 · 暗河与粮仓</h4>
+          <p>全年不断流的暗河是命脉；溶洞粮仓恒温储存块茎，可存 3–5 年。旱季越深越安全。</p>
+        </div>
+        <div class="geo-claim">地理决定了它的性格：<b>储备优先于产出，藏优于露，向下比向外可靠。</b>这套性格会在后面每一章反复出现。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 Childe 十条 ===== -->
+<section class="sec alt" id="s02">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">02 · 标准清单</div>
+      <h2>虚构文明，也要过一遍 Childe 十条</h2>
+      <p class="lede">考古学家 V. G. Childe 提出：判断一个社会是否"文明"，看十条特征是否齐备。拿崆源逐条核对——大部分能对上，但有一条打了折扣。点击卡片看细节。</p>
+    </div>
+    <div class="s10-groups rv">
+      <div class="s10-group">
+        <div class="gname">壹 · 聚落与人口</div>
+        <div class="s10-grid">
+          <div class="s10-card">
+            <div class="top"><span class="no">(1)</span><h4>大型城市中心</h4></div>
+            <p class="brief">崆墟：三层立体城市——地表市集与仪式场、中层住人与工坊、深层粮仓与墓葬。地表约 2km²，纵向向下延伸，总人口 8000–12000。</p>
+            <div class="detail"><div>城市不是平面摊开，而是向下叠加。防御不靠城墙，靠封死垂直通道的"竖井闸门"。城市化的方向本身就不一样。</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="s10-group">
+        <div class="gname">贰 · 经济与交换</div>
+        <div class="s10-grid">
+          <div class="s10-card">
+            <div class="top"><span class="no">(3)</span><h4>初级生产者能产出剩余</h4></div>
+            <p class="brief">坝子农民种芋、薯蓣、豆类；溶洞渔业捕盲鱼、贝类与水生块茎。恒温储存让块茎可存 3–5 年。</p>
+            <div class="detail"><div>剩余积累不靠"丰年囤粮"，靠溶洞的"恒温慢损耗"。每 10–15 年一次大旱，储备是全社会共识——储存在这里比产出更重要。</div></div>
+          </div>
+          <div class="s10-card">
+            <div class="top"><span class="no">(9)</span><h4>长期进口原料</h4></div>
+            <p class="brief">本地缺铜、盐、硬玉、大杉木；出口石灰容器、精磨石斧、溶洞珍珠贝。贸易线沿暗河出口与山口延伸约 300km。</p>
+            <div class="detail"><div>没有大河船运，贸易靠人力与驮畜，贵重度排序是盐 &gt; 铜 &gt; 硬玉。进口的不是奢侈品，是生存必需品。</div></div>
+          </div>
+          <div class="s10-card">
+            <div class="top"><span class="no">(10)</span><h4>常驻专业工匠</h4></div>
+            <p class="brief">中层溶洞有世袭石匠区、骨刻区，约占总人口 8–10%，不事农耕。</p>
+            <div class="detail"><div>专业化是制度性的：工匠被约束在溶洞区不得外迁。专业化与人身自由在崆源是两件事。</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="s10-group">
+        <div class="gname">叁 · 社会与政治</div>
+        <div class="s10-grid">
+          <div class="s10-card">
+            <div class="top"><span class="no">(2)</span><h4>专门职业阶层</h4></div>
+            <p class="brief">水脉师、溶洞工程师、石作匠、骨刻师、盐贩、守灯祭司。</p>
+            <div class="detail"><div>水脉师是最有声望的职业，垄断暗河测绘知识；守灯祭司管灯火与圣洞的解释权。职业声望排名的依据，是离"水"有多近。</div></div>
+          </div>
+          <div class="s10-card">
+            <div class="top"><span class="no">(5)</span><h4>统治阶级</h4></div>
+            <p class="brief">九室议事会：九个最大溶洞系统的水脉师家族首领。技术官僚寡头，重大决策九室共议。</p>
+            <div class="detail"><div>合法性来自"知道水在哪里"，不是世袭神权。没有绝对王权，但知识垄断构成事实上的门槛——平等，是在门槛之内说的。</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="s10-group">
+        <div class="gname">肆 · 权威与文化</div>
+        <div class="s10-grid">
+          <div class="s10-card">
+            <div class="top"><span class="no">(4)</span><h4>纪念性建筑</h4></div>
+            <p class="brief">地表立"风塔"（10–15m 石砌镂空塔：通风井＋瞭望台＋仪式旗杆）；地下开凿圣洞，钟乳石雕成祖先像。</p>
+            <div class="detail"><div>不建金字塔。纪念性建筑服务"气"与"水"，不服务天空与太阳——连纪念碑都是功能性的。</div></div>
+          </div>
+          <div class="s10-card">
+            <div class="top"><span class="no">(6)</span><h4>记录系统<span class="badge">部分满足</span></h4></div>
+            <p class="brief">刻符骨片、竹片：几百个表意＋数字符号，记录水位、收成、贡赋。没有发展出表音文字。</p>
+            <div class="detail"><div>管理核心是水文数据——数字＋位置符号就够用，缺少向"记录语言本身"演进的动力。这是崆源最接近印度河文明困境的地方，但成因不同。</div></div>
+          </div>
+          <div class="s10-card">
+            <div class="top"><span class="no">(7)</span><h4>实用科学的发展</h4></div>
+            <p class="brief">水文绳测洞深、蜡模拓印洞壁、暗河水位历法、石灰烧制与土壤改良、滴水钟漏计时。</p>
+            <div class="detail"><div>科学围绕"看不见的水"展开：测洞有多深、拓洞什么形、记水位怎么变。没有天文历法崇拜，有水文历法。</div></div>
+          </div>
+          <div class="s10-card">
+            <div class="top"><span class="no">(8)</span><h4>纪念性艺术</h4></div>
+            <p class="brief">洞壁壁画（红赭石＋炭黑）：水脉走向图、狩猎、祖先仪式；石笋直接雕出的半抽象"水灵"。</p>
+            <div class="detail"><div>艺术主题是水与祖先，几乎不画战争与王。可辨认的"名物"是水脉图——艺术与工程共用同一套语言。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="s10-ctl rv">
+      <button id="s10All" type="button">全部展开 / 收起</button>
+    </div>
+    <div class="s10-foot rv">判断"文明"不要求十条全中，而看是否有稳定组合。<b>崆源有城市、有国家权力与阶级、有复杂记录系统（打折）、有纪念性建筑、有长距离流通与专门化生产</b>——它在 Childe 的清单上是成立的，只是把每一条都改写成地下版本。</div>
+  </div>
+</section>
+
+<!-- ===== 03 五处分野 ===== -->
+<section class="sec" id="s03">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">03 · 五处分野</div>
+      <h2>它和大河文明，哪里不一样</h2>
+      <p class="lede">把崆源放进课堂熟悉的参照系——两河、尼罗河、黄河式的"大河文明"模型——五处根本分野一目了然。</p>
+    </div>
+    <div class="split rv">
+      <div class="split-row">
+        <div class="axis">权力来源</div>
+        <div class="side river"><span class="tag">大河模型</span>组织治水、防洪工程，工程催生集权——<b>王权因工程而存在</b>。</div>
+        <div class="side kong"><span class="tag">崆源</span>垄断地下地理知识：水脉师秘传暗河图，<b>权力来自"知道水在哪"</b>。</div>
+      </div>
+      <div class="split-row">
+        <div class="axis">城市形态</div>
+        <div class="side river"><span class="tag">大河模型</span>平面扩张＋城墙＋神庙广场，<b>向外摊开</b>。</div>
+        <div class="side kong"><span class="tag">崆源</span>纵向向下＋竖井闸门，防御靠封死垂直通道，<b>向下挖</b>。</div>
+      </div>
+      <div class="split-row">
+        <div class="axis">财富逻辑</div>
+        <div class="side river"><span class="tag">大河模型</span>神庙仓库、谷物贡赋、<b>展示性再分配</b>。</div>
+        <div class="side kong"><span class="tag">崆源</span>溶洞粮仓、<b>藏优于露</b>、雨季按需分配。</div>
+      </div>
+      <div class="split-row">
+        <div class="axis">文字</div>
+        <div class="side river"><span class="tag">大河模型</span>记录贡赋、王权与律法，<b>演进到表音文字</b>。</div>
+        <div class="side kong"><span class="tag">崆源</span>记录水文数据，表意符号够用，<b>文字停在"账本"阶段</b>。</div>
+      </div>
+      <div class="split-row">
+        <div class="axis">战争</div>
+        <div class="side river"><span class="tag">大河模型</span>围城、争地、争灌溉权，<b>攻城略地</b>。</div>
+        <div class="side kong"><span class="tag">崆源</span>争夺水源洞控制权，<b>毁一个暗河出口，比屠城更有效</b>。</div>
+      </div>
+    </div>
+    <p class="split-note rv">读法提示：五个分野不是"缺点 vs 优点"，是<b>两套不同的默认值</b>。跨文化交际课上要练的，就是看出对方那套默认，而不是用自己的默认给对方打分。</p>
+  </div>
+</section>
+
+<!-- ===== 04 第一次接触 ===== -->
+<section class="sec alt" id="s04">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">04 · 第一次接触</div>
+      <h2>使节进了崆墟</h2>
+      <p class="lede">跨文化交际的起点是：<b style="color:var(--ink)">你觉得奇怪的东西，对方觉得是常识。</b>下面三段"现场记录"，用大河文明的使节视角看崆源，逐幕推进。</p>
+    </div>
+    <div class="story-shell rv">
+      <div class="story-steps" id="storySteps">
+        <span class="st on"></span><span class="st"></span><span class="st"></span>
+      </div>
+      <div class="story-stage" id="storyStage">
+        <div class="story-scene on">
+          <h3><span class="mno">幕一</span>地图</h3>
+          <p class="intro">使节团到访崆墟的第三天，提出一个自认无害的请求。</p>
+          <div class="duo">
+            <div class="pane guest">
+              <span class="tag">使节的视角</span>
+              <p class="say">"我们想看一看你们的暗河图。作为友邦，了解彼此是合作的第一步。"</p>
+              <p class="read"><b>他的解读：</b>公开、透明、共享信息，是交往的诚意。拒绝=不信任=没有合作诚意。</p>
+            </div>
+            <div class="pane host">
+              <span class="tag">崆源人的逻辑</span>
+              <p class="say">"水的事，不外传。图在九室里，不在桌上。"</p>
+              <p class="read"><b>她的逻辑：</b>水是命，知识是命门。旱季分水靠的是秩序与信任，不靠一张谁都能看的图。</p>
+            </div>
+          </div>
+        </div>
+        <div class="story-scene">
+          <h3><span class="mno">幕二</span>礼物</h3>
+          <p class="intro">使节献上布匹与铜器，等待一场公开的答谢仪式。</p>
+          <div class="duo">
+            <div class="pane guest">
+              <span class="tag">使节的视角</span>
+              <p class="say">"三天过去，礼物进了库房，没有一个人当众夸赞，也没有回礼。"</p>
+              <p class="read"><b>他的解读：</b>轻视、失礼、不知感恩。馈赠应当被当众承认，回赠应当对等。</p>
+            </div>
+            <div class="pane host">
+              <span class="tag">崆源人的逻辑</span>
+              <p class="say">"展示招灾，存储保命。回礼要等雨季分配时按需给，不是当场对等。"</p>
+              <p class="read"><b>她的逻辑：</b>礼物不是表演，是储备。两边的"礼貌"用不同时间尺度运行，动作当然不同。</p>
+            </div>
+          </div>
+        </div>
+        <div class="story-scene">
+          <h3><span class="mno">幕三</span>议事</h3>
+          <p class="intro">使节请求面见"王"，呈递国书。</p>
+          <div class="duo">
+            <div class="pane guest">
+              <span class="tag">使节的视角</span>
+              <p class="say">"他们告诉我：没有王。九室的头人在洞厅里当众吵了两天，才给出答复。"</p>
+              <p class="read"><b>他的解读：</b>混乱、低效、没有权威。一个国家怎么可以没有单点决策？</p>
+            </div>
+            <div class="pane host">
+              <span class="tag">崆源人的逻辑</span>
+              <p class="say">"水是共有的，涉水之事当众议。谁嗓门大不重要，测过洞的人先说话。"</p>
+              <p class="read"><b>她的逻辑：</b>决策要经得起"旱季分水"的检验。公开争论，正是公信力的来源。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="story-nav">
+        <span class="pos" id="storyPos">幕一 / 共三幕</span>
+        <button id="storyNext" type="button">下一幕 →</button>
+      </div>
+    </div>
+    <div class="story-take rv">同一件事，两套默认。没有谁"更文明"，只有预设不同——<b>这就是跨文化交际要处理的起点。</b>真正的沟通不是让对方接受你的默认，而是先看见彼此的默认。</div>
+  </div>
+</section>
+
+<!-- ===== 05 理论解码 ===== -->
+<section class="sec" id="s05">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">05 · 理论解码</div>
+      <h2>用课堂框架，给崆源画像</h2>
+      <p class="lede">把故事转回理论语言：Hall 的高低语境，Hofstede 的文化维度。崆源与"大河文明"在同一坐标系里对比，点击维度卡片看解读。</p>
+    </div>
+    <div class="decode-grid">
+      <div class="radar-box rv">
+        <div id="radar" role="img" aria-label="崆源与大河文明五个文化维度对比雷达图"></div>
+        <div class="cap">示意数值 · 用于课堂讨论，非实证测量</div>
+      </div>
+      <div class="dim-cards rv">
+        <div class="dim open" data-d="0">
+          <h4>高语境倾向 <span class="vals">崆源 86 · 大河 52</span></h4>
+          <p>崆源是高语境社会：共享暗河知识圈，记录靠符号、传承靠口授，意义藏在共享经验里——话少、图多、惯例深。使节读不懂的"图不外传"，正是语境分层的表现。</p>
+        </div>
+        <div class="dim" data-d="1">
+          <h4>权力距离 <span class="vals">崆源 35 · 大河 82</span></h4>
+          <p>九室共议、没有神王，表面是低权力距离；但水脉师的知识垄断构成事实上的门槛。低权力距离≠平等——它可能是"换了门槛的等级"。</p>
+        </div>
+        <div class="dim" data-d="2">
+          <h4>不确定性规避 <span class="vals">崆源 88 · 大河 55</span></h4>
+          <p>储粮、保密水源、记录水位、防灾导向。旱季的不可预知是崆源最大的威胁，整个社会的制度都在为"未知"做准备。</p>
+        </div>
+        <div class="dim" data-d="3">
+          <h4>集体主义 <span class="vals">崆源 85 · 大河 45</span></h4>
+          <p>洞居共同体、共议决策、水文知识对内共享对外保密。"我们"先于"我"——连工匠的自由都要让位于共同体稳定。</p>
+        </div>
+        <div class="dim" data-d="4">
+          <h4>长期导向 <span class="vals">崆源 92 · 大河 50</span></h4>
+          <p>3–5 年储粮、为旱季囤积、以"旱季周期"计时间。崆源人的时间表以十年为单位，使节的时间表以"本次出访"为单位。</p>
+        </div>
+      </div>
+    </div>
+    <div class="decode-foot rv"><b>方法论提示：</b>把一套理论框架放到"反例"文明上，最能检验它的边界——哪些维度普适，哪些维度其实预设了"大河式"的社会形态。这就是虚构文明的教学价值。</div>
+  </div>
+</section>
+
+<!-- ===== 06 课堂讨论 ===== -->
+<section class="sec alt" id="s06">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-kicker">06 · 课堂讨论</div>
+      <h2>留给课堂的问题</h2>
+      <p class="lede">四道题，由浅入深。最后一题留给开放讨论。</p>
+    </div>
+    <div class="q-list rv">
+      <div class="q">
+        <div class="qn">1</div>
+        <p class="qt">崆源满足 Childe 十条中的哪几条？第 6 条"记录系统"打了折扣——<b>是能力不足，还是需求不足？</b></p>
+      </div>
+      <div class="q">
+        <div class="qn">2</div>
+        <p class="qt">使节的三次误解（地图、礼物、议事）<b>分别对应哪个文化维度？</b>如果你是使节，出发前会调整什么预期？</p>
+      </div>
+      <div class="q">
+        <div class="qn">3</div>
+        <p class="qt">"权力距离低"的崆源真的更平等吗？<b>知识垄断算不算另一种等级的萌芽？</b></p>
+      </div>
+      <div class="q">
+        <div class="qn">4</div>
+        <p class="qt">推演题：再给崆源 500 年——它会<b>发展出表音文字</b>，还是被外来青铜文明<b>吞并</b>，还是基于暗河系统<b>继续自洽演化</b>？</p>
+      </div>
+    </div>
+    <div class="end-block rv">
+      <div class="big">文明没有唯一模板。差异不是缺陷，是地理写给文化的答案。</div>
+      <div class="small">崆源文明 · 课堂展示 · 虚构案例</div>
+    </div>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <span>崆源文明 · 课堂展示</span><span class="sep">·</span><span>虚构案例</span><span class="sep">·</span><span>示意数据仅供课堂讨论</span><br>
+  <span>跨文化交际 · Intercultural Communication</span>
+</footer>
+</main>
+<script src="https://fastly.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script>
+(function(){
+'use strict';
+function $(s,c){return (c||document).querySelector(s)}
+function $$(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 滚动进度条 */
+var prog=$('#progress');
+function onScroll(){var h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?(scrollY/h*100)+'%':'0%')}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* 章节滚动揭示 */
+var rvs=$$('.rv');
+if('IntersectionObserver' in window&&!reduced){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.08});
+  rvs.forEach(function(el){io.observe(el)});
+}else{rvs.forEach(function(el){el.classList.add('in')})}
+
+/* 导航 scrollspy */
+var secs=['s01','s02','s03','s04','s05','s06'].map(function(id){return document.getElementById(id)});
+var navs=$$('#nav a');
+var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){navs.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(function(s){if(s)spy.observe(s)});
+
+/* hero 循环动画离屏暂停 */
+var hero=$('#s-hero');
+if(hero){
+  var heroIO=new IntersectionObserver(function(es){hero.classList.toggle('paused',es[0].intersectionRatio<0.35)},{threshold:[0,.35]});
+  heroIO.observe(hero);
+}
+
+/* 章节01：雨季/旱季 + 图层点选 */
+var geo=$('.geo-svg'),btnW=$('#modeWet'),btnD=$('#modeDry');
+if(geo&&btnW&&btnD){
+  btnW.addEventListener('click',function(){geo.classList.remove('dry');btnW.classList.add('on');btnD.classList.remove('on')});
+  btnD.addEventListener('click',function(){geo.classList.add('dry');btnD.classList.add('on');btnW.classList.remove('on')});
+  $$('.layer').forEach(function(l){l.addEventListener('click',function(){
+    $$('.layer').forEach(function(x){x.classList.remove('on')});l.classList.add('on');
+  })});
+}
+
+/* 章节02：十条展开 / 全部 */
+var cards=$$('.s10-card'),allBtn=$('#s10All');
+cards.forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('open')})});
+if(allBtn){allBtn.addEventListener('click',function(){
+  var open=cards.some(function(c){return !c.classList.contains('open')});
+  cards.forEach(function(c){c.classList.toggle('open',open)});
+});}
+
+/* 章节04：故事推进 */
+var scenes=$$('.story-scene'),steps=$$('.story-steps .st'),idx=0;
+var nBtn=$('#storyNext'),posEl=$('#storyPos');
+function renderStory(){
+  scenes.forEach(function(s,i){s.classList.toggle('on',i===idx)});
+  steps.forEach(function(s,i){s.classList.toggle('on',i<=idx)});
+  posEl.textContent='幕'+(idx+1)+' / 共三幕';
+  nBtn.textContent=idx<2?'下一幕 →':'重头再看';
+}
+if(nBtn){nBtn.addEventListener('click',function(){idx=idx<2?idx+1:0;renderStory()});renderStory();}
+
+/* 章节05：ECharts 雷达图 + 维度联动 */
+var radarEl=$('#radar');
+if(radarEl&&window.echarts){
+  var IND=[
+    {name:'高语境',max:100},{name:'权力距离',max:100},{name:'不确定性规避',max:100},
+    {name:'集体主义',max:100},{name:'长期导向',max:100}
+  ];
+  var chart=echarts.init(radarEl);
+  function dimStyle(active){
+    return IND.map(function(v,i){return {
+      name:v.name,max:v.max,
+      axisLine:{lineStyle:{color:active===i?'#6FB5A8':'rgba(232,226,210,.16)',width:active===i?3:1}}
+    }});
+  }
+  function renderChart(active){
+    active=typeof active==='number'?active:-1;
+    chart.setOption({
+      tooltip:{trigger:'item',confine:true},
+      legend:{bottom:2,textStyle:{color:'#A9B0BC',fontSize:12},itemWidth:14,itemHeight:8,itemGap:18},
+      radar:{indicator:dimStyle(active),radius:'62%',center:['50%','45%'],splitNumber:4,
+        axisName:{color:'#E8E2D2',fontSize:12},
+        splitLine:{lineStyle:{color:'rgba(232,226,210,.13)'}},
+        splitArea:{show:false}},
+      series:[{type:'radar',symbol:'circle',symbolSize:4,
+        data:[
+          {name:'崆源',value:[86,35,88,85,92],lineStyle:{color:'#6FB5A8',width:2.5},itemStyle:{color:'#6FB5A8'},areaStyle:{color:'rgba(111,181,168,.22)'}},
+          {name:'大河文明',value:[52,82,55,45,50],lineStyle:{color:'#C96F3C',width:2.5},itemStyle:{color:'#C96F3C'},areaStyle:{color:'rgba(201,111,60,.13)'}}
+        ]}]
+    });
+  }
+  renderChart(-1);
+  $$('.dim').forEach(function(d){
+    d.addEventListener('click',function(){
+      var wasOpen=d.classList.contains('open');
+      $$('.dim').forEach(function(x){x.classList.remove('open')});
+      if(!wasOpen){d.classList.add('open')}
+      renderChart(parseInt(d.getAttribute('data-d'),10));
+    });
+  });
+  addEventListener('resize',function(){chart.resize()});
+}
+})();
+</script>
+</body>
+</html>
