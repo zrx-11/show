@@ -50,13 +50,13 @@
   scene.add(stars);
 
   /* ---- 银河旋臂星云（双旋臂，黑金基调） ---- */
-  var NEB_N = mobile ? 1500 : 4200;
+  var NEB_N = mobile ? 1800 : 5600;
   var nebGeo = new THREE.BufferGeometry();
   var nebPos = new Float32Array(NEB_N * 3), nebCol = new Float32Array(NEB_N * 3);
   for (var i = 0; i < NEB_N; i++) {
     var arm = i % 2;
     var pr = Math.random();
-    var rad = 42 + Math.pow(pr, 1.35) * 235;
+    var rad = 42 + Math.pow(pr, 1.28) * 300;
     var th = arm * Math.PI + rad * 0.03 + (Math.random() * 0.6 - 0.3);
     var y = (Math.random() - 0.5) * 7 * (1 - pr * 0.55);
     nebPos[i*3] = Math.cos(th) * rad;
@@ -100,6 +100,12 @@
   var eyeGlow = new THREE.Mesh(new THREE.RingGeometry(19.8, 26, 64), new THREE.MeshBasicMaterial({ color: 0xE8D9A8, transparent: true, opacity: 0.1, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
   eyeGroup.add(eyeGlow);
 
+  /* ---- 超远尘埃环（第三层，极淡的金色宽环） ---- */
+  var dustRing = new THREE.Mesh(new THREE.RingGeometry(138, 152, 128), new THREE.MeshBasicMaterial({ color: 0xC9A04B, transparent: true, opacity: 0.055, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
+  dustRing.position.set(0, 26, -150);
+  dustRing.rotation.x = 0.35;
+  scene.add(dustRing);
+
   /* ---- 太阳组 ---- */
   var sunGroup = new THREE.Group();
   scene.add(sunGroup);
@@ -120,7 +126,7 @@
     return new THREE.CanvasTexture(c);
   })();
   var sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false }));
-  sunGlow.scale.set(200, 200, 1); sunGroup.add(sunGlow);
+  sunGlow.scale.set(160, 160, 1); sunGroup.add(sunGlow);
   var sunHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }));
   sunHalo.scale.set(400, 400, 1); sunGroup.add(sunHalo);
   /* 辐射射线 */
@@ -291,7 +297,7 @@
     for (var i = 0; i < PAGES_N; i++) {
       var mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.1 + Math.random() * 0.07, side: THREE.DoubleSide, depthWrite: false });
       var mesh = new THREE.Mesh(new THREE.PlaneGeometry(2.6 + Math.random() * 2.4, 3.6 + Math.random() * 3.2), mat);
-      var ang = Math.random() * Math.PI * 2, r = 34 + Math.random() * 40;
+      var ang = Math.random() * Math.PI * 2, r = 68 + Math.random() * 46;
       mesh.name = 'page';
       mesh.position.set(Math.cos(ang) * r, -8 + Math.random() * 34, Math.sin(ang) * r - 30);
       scene.add(mesh);
@@ -326,8 +332,8 @@
       rays.material.opacity = 0.8 * cur.sun;
       /* 星环旋转 */
       /* 银河旋臂缓慢旋转 */
-      nebula.rotation.y += dt * 0.014;
-      nebula.material.opacity = 0.36 + cur.speed * 0.28;
+      nebula.rotation.y += dt * 0.018;
+      nebula.material.opacity = 0.32 + cur.speed * 0.3;
       /* 流星带 */
       meteors.forEach(function (m) {
         if (!m.active) {
@@ -346,9 +352,13 @@
           m.line.material.opacity = fade * 0.9;
         }
       });
+      /* 超远尘埃环缓慢反向旋转 */
+      dustRing.rotation.z -= dt * 0.03;
+      dustRing.material.opacity = 0.045 + Math.sin(t * 0.4) * 0.018 + cur.speed * 0.02;
       /* 深空之眼 */
       eyeGroup.rotation.z += dt * 0.06;
-      eyeRing1.material.opacity = 0.4 + Math.sin(t * 0.7) * 0.1;
+      eyeRing1.material.opacity = 0.4 + Math.sin(t * 0.7) * 0.12;
+      eyeGlow.material.opacity = 0.08 + Math.sin(t * 0.55) * 0.06;
       /* 残页漂浮 */
       pages.forEach(function (pg, pi) {
         pg.ang += dt * pg.spd * (0.35 + cur.speed * 0.85);

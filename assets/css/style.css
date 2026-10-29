@@ -9,7 +9,7 @@
   --gold:#D9A441; --gold2:#F0D48A; --goldD:#8A6A2A;
   --ember:#E0603A; --rust:#A34A2C;
   --ice:#8FB6E8; --ice2:#6B8FC0;
-  --ink:#EAF0FA; --ink2:#A7B3C6; --ink3:#68758C;
+  --ink:#D6DBE6; --ink2:#8C99AE; --ink3:#56647E;
   --line:rgba(143,182,232,.16);
   --card:rgba(17,26,41,.72);
   --card2:rgba(22,35,58,.66);
@@ -48,7 +48,7 @@ body.no-three::before{content:"";position:fixed;inset:0;z-index:-2;
 }
 .brand{font-size:17px;color:var(--gold);letter-spacing:.2em;font-weight:700}
 .brand small{font-size:10px;letter-spacing:.32em;color:var(--ink3);margin-left:6px}
-.stepinfo{font-size:13px;color:var(--ink2);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.stepinfo{font-size:13px;color:var(--ink2);letter-spacing:.06em;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px rgba(0,0,0,.7)}
 .stepinfo em{color:var(--ink3);margin:0 5px;font-style:normal}
 .stepinfo .dot{margin:0 9px;color:var(--goldD)}
 .stepinfo #stepNum{color:var(--gold2);font-weight:700}
@@ -90,6 +90,8 @@ h1{
   background:linear-gradient(180deg,#FFFFFF 0%,var(--gold2) 55%,var(--gold) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   text-shadow:0 0 60px rgba(217,164,65,.18);margin-bottom:10px}
+.step-inner p,.st-lead,.st-p,.page-txt,.term,.rc,.tl,.fiss,.scene,.act,.tg,.r-item,.c10-card,.cascade-ctl,.toc-panel,.story-sheet,.book-end{text-shadow:0 1px 3px rgba(0,0,0,.6),0 0 22px rgba(0,0,0,.4)}
+.sec-head h2,.page-title,.book-front h2{text-shadow:0 2px 6px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.45)}
 .en{text-align:center;font-size:15px;letter-spacing:.5em;color:var(--ink2);
   font-family:Georgia,serif;margin-bottom:24px}
 .sub{text-align:center;font-size:17px;line-height:1.85;color:var(--ink2);max-width:760px;margin:0 auto 26px}
@@ -801,7 +803,7 @@ h1{
 @keyframes bootbreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* ===== 一键全屏（透明常驻） ===== */
-.fs-btn{position:fixed;top:16px;right:16px;z-index:100000;background:transparent;border:1px solid rgba(217,164,65,.4);
+.fs-btn{position:fixed;left:16px;bottom:16px;z-index:100000;background:transparent;border:1px solid rgba(217,164,65,.4);
   color:rgba(228,201,138,.9);font:inherit;font-size:12px;letter-spacing:.2em;padding:8px 13px;border-radius:2px;
   cursor:pointer;opacity:.5;display:flex;align-items:center;gap:7px;transition:opacity .3s,border-color .3s,box-shadow .3s;
   text-transform:uppercase}

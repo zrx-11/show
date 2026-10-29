@@ -967,6 +967,7 @@
 
   function bookOutro() {
     if (busy || cur !== steps.length - 1) return;
+    busy = true;
     opened = false;
     var stageEl = document.querySelector('.stage');
     var pg = document.querySelector('.book-page.page-1');
@@ -1008,7 +1009,7 @@
       .to(heroBook, { x: off.x, y: off.y - 30, scale: 0.22, duration: 0.9, ease: 'power2.in' })
       .to(heroBook, { y: off.y, scale: 0.06, rotationX: 0, duration: 0.55, ease: 'power2.out' })
       .to({}, { duration: 0.6 })
-      .add(function () { showEndCard(); });
+      .add(function () { showEndCard(); busy = false; });
   }
 
   function showEndCard() {
