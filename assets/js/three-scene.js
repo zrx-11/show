@@ -200,7 +200,7 @@
     var c = cur;
     c.sun = p < 0.2 ? 1 : p < 0.34 ? 1 - seg(p, 0.2, 0.34, 0, 1) : p < 0.6 ? 0 : seg(p, 0.6, 0.72, 0, 0.6);
     c.ra = p < 0.2 ? 1 : p < 0.34 ? Math.max(0.06, 1 - seg(p, 0.2, 0.34, 0, 1)) : p < 0.6 ? 0.08 : seg(p, 0.6, 0.75, 0.08, 0.92);
-    c.speed = p < 0.2 ? 0.6 : p < 0.34 ? 0.6 * (1 - seg(p, 0.2, 0.34, 0, 0.9)) : p < 0.6 ? 0.02 : seg(p, 0.6, 0.75, 0.02, 0.42);
+    c.speed = p < 0.2 ? 1.6 : p < 0.34 ? 1.6 * (1 - seg(p, 0.2, 0.34, 0, 0.92)) : p < 0.6 ? 0.12 : seg(p, 0.6, 0.75, 0.12, 1.05);
     c.rb = Math.max(0, seg(p, 0.2, 0.36, 0, 1) - seg(p, 0.62, 0.85, 0, 0.5));
     c.collapse = Math.max(0, seg(p, 0.24, 0.38, 0, 1) - seg(p, 0.5, 0.66, 0, 0.75));
     c.ruin = Math.max(0, seg(p, 0.3, 0.46, 0, 1) - seg(p, 0.7, 0.9, 0, 0.6));
@@ -217,6 +217,7 @@
     if (reduced) { curP = targetP; setProgress(curP); }
   }
   window.__guanfuSpace = { go: go, setProgress: setProgress, getP: function () { return curP; } };
+  window.__guanfuDiag = { ringA: ringA, ringB: ringB, rays: rays, planets: planets, orbit1: orbit1, orbit2: orbit2, stars: stars };
 
   /* ---- 视差 ---- */
   var mx = 0, my = 0, tx = 0, ty = 0;
@@ -240,7 +241,7 @@
       sunCore.material.opacity = Math.min(1, cur.sun * 1.15);
       sunGlow.material.opacity = cur.sun * (0.9 + pulse * 0.1);
       sunHalo.material.opacity = cur.sun * (0.35 + pulse * 0.12);
-      rays.rotation.z += dt * 0.25 * (0.3 + cur.sun);
+      rays.rotation.z += dt * 0.55 * (0.3 + cur.sun);
       rays.material.opacity = 0.8 * cur.sun;
       /* 星环旋转 */
       ringA.rotation.z += dt * cur.speed;
@@ -256,7 +257,7 @@
         var y = yBase - fall * 46;
         pl.position.set(Math.cos(planetT + pd.ph) * pd.r, Math.max(-40, y), Math.sin(planetT + pd.ph) * pd.r);
       });
-      orbit1.rotation.z += dt * 0.02; orbit2.rotation.z -= dt * 0.014;
+      orbit1.rotation.z += dt * 0.07; orbit2.rotation.z -= dt * 0.05;
       /* 崩坏粒子下落 */
       if (cur.collapse > 0) {
         var bArr = bitsGeo.attributes.position.array;
@@ -290,7 +291,7 @@
       var mix = 1 - cur.starCol;
       starColArr[0] = 1 - mix * 0.5; starColArr[1] = 1 - mix * 0.62; starColArr[2] = 1 - mix * 0.85;
       starMat.color.setRGB(starColArr[0], starColArr[1], starColArr[2]);
-      stars.rotation.y += dt * 0.006;
+      stars.rotation.y += dt * 0.025;
       /* 视差 */
       mx += (tx - mx) * 0.04; my += (ty - my) * 0.04;
       camera.position.x = mx * 40;

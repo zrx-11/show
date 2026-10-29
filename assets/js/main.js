@@ -166,6 +166,8 @@
 
     var prog = $('#progress');
     if (prog) prog.style.width = ((i + 1) / steps.length * 100) + '%';
+    var ctl = $('#stageCtl');
+    if (ctl) ctl.style.display = i === 0 ? 'none' : 'flex';
     var num = $('#stepNum'); if (num) num.textContent = String(i + 1).padStart(2, '0');
     var tot = $('#stepTotal'); if (tot) tot.textContent = String(steps.length).padStart(2, '0');
     var name = $('#stepName'); if (name) name.textContent = to.getAttribute('data-name') || '';

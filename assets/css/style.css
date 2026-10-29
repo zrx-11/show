@@ -79,7 +79,7 @@ body.no-three::before{content:"";position:fixed;inset:0;z-index:-2;
 /* ---------- 幕 1 · 序 ---------- */
 .kick{font-size:12px;letter-spacing:.28em;color:var(--gold);text-align:center;margin-bottom:18px;
   font-family:Georgia,"Noto Serif SC",serif}
-.step[data-name="序 · 观复文明"] .step-inner{text-align:center}
+.step[data-name="卷首 · 观复文明"] .step-inner{text-align:center}
 h1{
   font-size:96px;line-height:1.04;text-align:center;font-weight:800;letter-spacing:.08em;
   background:linear-gradient(180deg,#FFFFFF 0%,var(--gold2) 55%,var(--gold) 100%);
