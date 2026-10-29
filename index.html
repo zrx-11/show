@@ -4,136 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>观复文明 · 建立在事实上的王权</title>
-<meta name="description" content="观复文明：以柴尔德城市革命十条为基石的星际废土哲人王文明——完整设定动态展示">
+<meta name="description" content="观复文明：以柴尔德城市革命十条为基石的星际废土哲人王文明——点击分幕放映">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23D9A441' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%23D9A441' stroke-width='1.5' opacity='.55'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23F0D48A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fastly.jsdelivr.net">
 <link rel="stylesheet" href="assets/css/style.css">
 <script defer src="https://fastly.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script defer src="https://fastly.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script defer src="https://fastly.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script defer src="assets/js/three-scene.js"></script>
 <script defer src="assets/js/main.js"></script>
 </head>
 <body>
-<!-- ===== 全屏三维背景（three.js，随滚动演进） ===== -->
 <canvas id="space" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="topnav">
   <div class="brand">观复<small>GUANFU</small></div>
-  <nav>
-    <a href="#s01"><b>01</b><span>&nbsp;时间线</span></a>
-    <a href="#s02"><b>02</b><span>&nbsp;先纪</span></a>
-    <a href="#s03"><b>03</b><span>&nbsp;寂灭</span></a>
-    <a href="#s04"><b>04</b><span>&nbsp;制度</span></a>
-    <a href="#s05"><b>05</b><span>&nbsp;王权</span></a>
-    <a href="#s06"><b>06</b><span>&nbsp;宗教</span></a>
-    <a href="#s07"><b>07</b><span>&nbsp;十条</span></a>
-    <a href="#s08"><b>08</b><span>&nbsp;裂缝</span></a>
-    <a href="#s09"><b>09</b><span>&nbsp;故事</span></a>
-    <a href="#s10"><b>10</b><span>&nbsp;外部</span></a>
-    <a href="#s11"><b>11</b><span>&nbsp;短篇</span></a>
-  </nav>
+  <div class="stepinfo"><span id="stepNum">01</span><em>/</em><span id="stepTotal">15</span><span class="dot">·</span><span id="stepName">序 · 观复文明</span></div>
 </header>
 <div class="progress" id="progress" aria-hidden="true"></div>
 
-<main>
+<main class="stage" id="stage">
 
-<!-- ===== 开场 ===== -->
-<section class="hero" id="s-hero">
-  <div class="hero-inner">
+<!-- ===== 幕 1 · 序 ===== -->
+<section class="step on" data-p="0.05" data-name="序 · 观复文明">
+  <div class="step-inner">
     <div class="kick">以柴尔德"城市革命"十条为基石 · 星际废土 · 合并设定</div>
     <h1>观复文明</h1>
     <div class="en">GUANFU · THE RECURSION</div>
     <p class="sub">一个文明在废墟上重建，把全部权力押在<b>一个用能力证明自己、而非被制度任命</b>的哲人王身上。</p>
     <div class="hero-meta">
-      <span>先纪 · 环日城邦</span><i></i>
-      <span>大寂灭 · 文明死于自己的机构</span><i></i>
-      <span>新纪元 · 观复</span>
+      <span>先纪 · 环日城邦</span><i></i><span>大寂灭 · 文明死于自己的机构</span><i></i><span>新纪元 · 观复</span>
     </div>
+    <button class="start-btn" id="startBtn" type="button">进入文明 <span class="ar">→</span></button>
   </div>
-  <div class="scroll-hint">向下滚动 · 进入观复</div>
 </section>
 
-<!-- ===== 01 时间线 ===== -->
-<section class="sec" id="s01">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 2 · 01 时间线 ===== -->
+<section class="step" data-p="0.1" data-name="01 · 时间线">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">01 · 时间线</div>
       <h2>三个时代，一次崩溃，一个答案</h2>
       <p class="lede">先纪用恒星剩余长出了城市文明；大寂灭教会了幸存者一件事——多头共治会内耗到死；新纪元据此立下一条不可修改的宪法。</p>
     </div>
     <div class="timeline">
-      <div class="tl rv">
+      <div class="tl">
         <div class="t-badge rust">约 1200 年前 — 大寂灭</div>
         <h3>先纪 · 环日城邦</h3>
-        <p>世代飞船结束"游猎"，回头对恒星做集约化改造：主环城、戴森云、契文、冰路——剩余能量第一次多到"喂不完"，恒星尺度的城市革命发生。鼎盛期后期，九执堂共治成型。</p>
+        <p>世代飞船结束"游猎"，回头对恒星做集约化改造：主环城、戴森云、契文、冰路——剩余能量第一次多到"喂不完"。</p>
         <div class="t-tag">金色 · 恒星剩余 · 协调者自治</div>
       </div>
-      <div class="tl rv">
+      <div class="tl">
         <div class="t-badge ember">大寂灭</div>
-        <h3>崩溃 · 文明死于自己的机构</h3>
-        <p>禁复清单之争分裂九执堂，时间基准分裂、轨道调度错乱，采掘舰队断供——千年机器在无人协调的层级中失效。幸存者记录只有一句："我们输给了自己的机构。"</p>
+        <h3>崩溃 · 死于自己的机构</h3>
+        <p>禁复清单之争分裂九执堂，时间基准分裂、轨道调度错乱——千年机器在无人协调的层级中失效。</p>
         <div class="t-tag">锈色 · 协调失效 · 层级崩溃</div>
       </div>
-      <div class="tl rv">
+      <div class="tl">
         <div class="t-badge gold">重建纪元 · 现在</div>
         <h3>新纪元 · 观复文明</h3>
-        <p>残存的解经人在大图书馆遗址上重建。制度审计后，他们立下一条不可修改的宪法：王不受任何约束，王的意志即法。单点承重，各司其职。</p>
+        <p>残存的解经人在大图书馆遗址上重建，立下一条不可修改的宪法：王不受任何约束，王的意志即法。</p>
         <div class="t-tag">辉光 · 单点承重 · 事实性王权</div>
       </div>
     </div>
-    <div class="note rv">柴尔德的十条在星际尺度上一条都不用改，只需要换算单位：把"剩余粮食"换成"剩余能量"，把"冲积平原"换成"引力井"——然后，把整份答卷交给一场灾难来批改。</div>
   </div>
 </section>
 
-<!-- ===== 02 先纪 ===== -->
-<section class="sec alt" id="s02">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 3 · 02 先纪 ===== -->
+<section class="step" data-p="0.16" data-name="02 · 先纪">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">02 · 先纪</div>
       <h2>环日城邦：恒星尺度的城市革命</h2>
-      <p class="lede">柴尔德说的"农业剩余养得起不干活的人"，在先纪被换算成一句话：剩余能量养得起整颗恒星。六个名词，就是它辉煌期的全部骨架。</p>
+      <p class="lede">"农业剩余养得起不干活的人"，在先纪被换算成一句话：<b>剩余能量养得起整颗恒星。</b></p>
     </div>
     <div class="terms">
-      <div class="term rv">
-        <h4>主环城<span>PRIMARY RING</span></h4>
-        <p>环绕恒星的巨型居住环带，上千个旋转筒体段衔接而成，常驻人口以亿计。政治、金融与轨道调度的中枢——所有航线和星舰都在这里清算。</p>
-      </div>
-      <div class="term rv">
-        <h4>戴森云阵列<span>DYSON SWARM</span></h4>
-        <p>在宜居带构筑恒星能源的初期阵列——先纪的"农田"。剩余能量第一次多到"喂不完"，城市革命因此发生。</p>
-      </div>
-      <div class="term rv">
-        <h4>冰路<span>ICE ROADS</span></h4>
-        <p>从柯伊伯带与外星系星群到主环城的固定补给航道：水冰、金属、同位素常年流动，如同两河的雪松与青金石贸易。</p>
-      </div>
-      <div class="term rv">
-        <h4>契文<span>QIEWEN</span></h4>
-        <p>全文明统一的光信协议与链式共识账本。最初只为记清"谁给谁发了多少吨氘-3"，后来才长出文学、法典与史书。</p>
-      </div>
-      <div class="term rv">
-        <h4>日冕锚塔<span>CORONAL ANCHOR</span></h4>
-        <p>需要三百年工期、十代人接力的恒星工程。纪念性建筑的功能从来不是实用，是证明有组织暴力和长期信用的存在。</p>
-      </div>
-      <div class="term rv">
-        <h4>日冕歌剧<span>CORONAL OPERA</span></h4>
-        <p>调动整片卫星阵列，按乐谱变换反照率，让恒星在数光分外呈现规律的明暗呼吸——用一颗恒星演奏。艺术的第一赞助人，依然是统治阶级。</p>
-      </div>
+      <div class="term"><h4>主环城<span>PRIMARY RING</span></h4><p>环绕恒星的巨型居住环带，上千旋转筒体段衔接，常驻人口以亿计。</p></div>
+      <div class="term"><h4>戴森云阵列<span>DYSON SWARM</span></h4><p>宜居带上的恒星能源阵列——先纪的"农田"。</p></div>
+      <div class="term"><h4>冰路<span>ICE ROADS</span></h4><p>从柯伊伯带到主环城的补给航道：水冰、金属、同位素常年流动。</p></div>
+      <div class="term"><h4>契文<span>QIEWEN</span></h4><p>全文明统一的光信协议与链式账本，后来长出文学、法典与史书。</p></div>
+      <div class="term"><h4>日冕锚塔<span>CORONAL ANCHOR</span></h4><p>三百年工期、十代人接力的恒星工程——纪念性建筑的星际版本。</p></div>
+      <div class="term"><h4>日冕歌剧<span>CORONAL OPERA</span></h4><p>按乐谱变换卫星阵列反照率，让恒星明暗呼吸——用一颗恒星演奏。</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 03 大寂灭 ===== -->
-<section class="sec" id="s03">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 4 · 03 大寂灭 ===== -->
+<section class="step" data-p="0.28" data-name="03 · 大寂灭">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">03 · 大寂灭</div>
       <h2>文明死于自己的机构</h2>
-      <p class="lede">先纪鼎盛后期，九执堂——九个领域执政者共治——自诩最强的能力是"协调"。崩溃不是战争，不是技术失效，是协调失效的级联。按"重演级联"，看九执堂如何一环一环地熄灭。</p>
+      <p class="lede">九个领域执政者自诩最强的能力是"协调"。崩溃不是战争，是协调失效的级联——按"重演级联"看它如何一环一环熄灭。</p>
     </div>
     <div class="cascade">
-      <div class="net rv">
+      <div class="net">
         <div class="net-head">重演级联<span class="cpos" id="cascadePos">等待重演 · 九执堂全量在线</span></div>
         <div class="nets" id="cascadeNodes">
           <div class="cnode live" data-k="宗院"><i></i>守典·甲</div>
@@ -155,27 +119,26 @@
         </div>
       </div>
       <div class="cascade-steps">
-        <div class="step act">1 · 禁复清单之争：政策分裂——扩建戴森云还是复原被封印的先一代生物技术，九执堂分成激进与守成两派。</div>
-        <div class="step">2 · 两个守典人派系各自维护一套历法，时间基准分裂——全星系轨道调度开始错乱。</div>
-        <div class="step">3 · 动量配额被当作政治武器，轨道注册局卷入派系，航道优先权政治化。</div>
-        <div class="step">4 · 采掘舰队停止向敌对派系供电——内轨道的"农田"开始减产。</div>
-        <div class="step">5 · 协调拨款失效：轨道站失去姿态维持，环段相继失压，恒星集能阵列失控。千年机器熄灭。</div>
+        <div class="step act">1 · 禁复清单之争：政策分裂——扩建戴森云还是复原被封印的先一代生物技术。</div>
+        <div class="step">2 · 两个守典人派系各自维护一套历法，时间基准分裂——轨道调度开始错乱。</div>
+        <div class="step">3 · 动量配额被当作政治武器，航道优先权政治化。</div>
+        <div class="step">4 · 采掘舰队停止向敌对派系供电——内轨道"农田"减产。</div>
+        <div class="step">5 · 协调拨款失效，环段相继失压，千年机器熄灭。</div>
       </div>
     </div>
-    <div class="note rv">幸存者的第一手记录只有一句："我们输给了自己的机构。"不是死于外部敌人，是死于内部协调的崩溃——这条教训，定义了新纪元的一切制度。</div>
   </div>
 </section>
 
-<!-- ===== 04 制度核心 ===== -->
-<section class="sec alt" id="s04">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 5 · 04 制度核心 ===== -->
+<section class="step" data-p="0.4" data-name="04 · 制度核心">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">04 · 制度核心</div>
       <h2>用一个缺陷，买断所有缺陷</h2>
       <p class="lede">建城者做的第一件事不是修机器，是制度审计：列一张表，清点已知文明的所有死法。结论只有一个。</p>
     </div>
     <div class="audit">
-      <div class="death-table rv">
+      <div class="death-table">
         <table>
           <colgroup><col style="width:22%"><col style="width:46%"><col style="width:32%"></colgroup>
           <tr><th>死法</th><th>成因</th><th>环日城邦的下场</th></tr>
@@ -186,9 +149,8 @@
           <tr><td>经济危机</td><td>自由市场的周期</td><td>计划分配可消弭</td></tr>
           <tr><td>技术反噬</td><td>复原失控</td><td>禁复清单可防</td></tr>
         </table>
-        <div class="tbl-note">制度审计 · 新纪元第一级 · 示意清单</div>
       </div>
-      <div class="pillar-fig rv">
+      <div class="pillar-fig">
         <div class="pf">
           <div class="pillar-top">王</div>
           <div class="pillar-body"><span>基准 · 事实 · 绝对托举</span></div>
@@ -199,348 +161,193 @@
             <div class="ghost"><span>议政权</span></div>
           </div>
         </div>
-        <div class="pf-cap">结构示意 · 文明由一根承重柱托起，任何约束机制（虚线柱）都会被制度划掉</div>
       </div>
     </div>
-    <blockquote class="law rv">"这不是因为我们相信王不会犯错。是因为任何约束王的机制——罢黜权、监督权、议政权——都意味着第二个权力中心。第二个中心，就是九执堂的种子。我们已经死过一次，不接受再死一次。"<span>—— 新纪元第一条宪法 · 建城者附注</span></blockquote>
+    <blockquote class="law">"任何约束王的机制——罢黜权、监督权、议政权——都意味着第二个权力中心。第二个中心，就是九执堂的种子。我们已经死过一次，不接受再死一次。"<span>—— 新纪元第一条宪法 · 建城者附注</span></blockquote>
   </div>
 </section>
 
-<!-- ===== 05 王权论 ===== -->
-<section class="sec" id="s05">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 6 · 05 王权论 ===== -->
+<section class="step" data-p="0.5" data-name="05 · 王权论">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">05 · 王权论</div>
       <h2>建立在事实上的王权</h2>
-      <p class="lede">这是整个设定的核心，注意因果方向：不是制度授予王权力，而是王先托举住文明，王位只是对这个事实的追认。</p>
+      <p class="lede">注意因果方向：不是制度授予王权力，而是王先托举住文明，王位只是对这个事实的追认。</p>
     </div>
-    <div class="royal">
-      <div class="royal-head rv">
-        <div class="axis">因果倒置<span class="wrong-tag">常识化</span><span class="right-tag">观复</span></div>
-        <div class="cmp">
-          <div class="cmp-w"><h4>常见写法</h4><p>"因为他是王，所以他的意志是法"——成员承认，制度任命，制度先于能力。</p></div>
-          <div class="cmp-r"><h4>观止院的写法</h4><p>"因为他托举住整个文明，他才是王。意志即法，是对这个事实的追认。"——能力先于王位，事实先于制度。"王"不是头衔，是对一个事实的描述：那个让文明站住的人。</p></div>
-        </div>
+    <div class="royal-head">
+      <div class="axis">因果倒置<span class="wrong-tag">常识化</span><span class="right-tag">观复</span></div>
+      <div class="cmp">
+        <div class="cmp-w"><h4>常见写法</h4><p>"因为他是王，所以他的意志是法"——成员承认，制度任命，制度先于能力。</p></div>
+        <div class="cmp-r"><h4>观止院的写法</h4><p>"因为他托举住整个文明，他才是王。"能力先于王位，事实先于制度。"王"是对一个事实的描述。</p></div>
       </div>
-      <div class="royal-row rv">
-        <div class="r-item">
-          <h4>重力，不是制度</h4>
-          <p>你从不约束重力，你只依赖它。文明成员不看王，不是敬畏，是逻辑上不需要看——王不是被管理的对象，是被依赖的基座。当文明运转良好，这本身就证明王还在托举。不看不是逃避，是不看也是完整的事实。</p>
-        </div>
-        <div class="r-item">
-          <h4>激励对齐</h4>
-          <p>王凭什么持续托举、不堕落？答案不是道德，是激励：王的全部合法性、全部利益、全部自我实现，都绑定在同一个目标上——文明复原进度。王的名号、神学地位、大图书馆最高权限，全都指向"让先纪重新点亮"。王的最优策略，就是文明的最优策略——权力制衡被利益绑定替代。</p>
-        </div>
-      </div>
-      <div class="royal-row rv">
-        <div class="r-item">
-          <h4>继承 = 能力赌注</h4>
-          <p>王终身制，临终指定继承人。指定不是"授权"，是"认证事实"——"我认为此人是下一个能托举文明的人"。但认证不能创造事实：如果继承人做不到，会出现"有名分的王、无能力的承重"的断裂期，而制度上没有任何人有权宣布这个断裂。</p>
-        </div>
-        <div class="r-item">
-          <h4>验证缺位</h4>
-          <p>王权建立在"他能托举"上，但没有任何机制确认这个事实是否仍在持续——要度量"托举"，就需要度量者，而度量者就是第二个权力中心。文明必然选择"不验证"。结果：王是唯一知道自己是否还是王的人。如果他悄悄不再托举，文明可能等不到发现——它只是慢慢变缓。</p>
-        </div>
-      </div>
-      <div class="thesis rv">
-        <div class="big">缺陷不是王权的存在，是"事实不可检验"本身。</div>
-        <div class="small">这个文明把全部赌注押在"王的能力是可持续的事实"上，并为此主动放弃了对事实的检验。</div>
-      </div>
+    </div>
+    <div class="royal-row">
+      <div class="r-item"><h4>重力，不是制度</h4><p>你从不约束重力，你只依赖它。文明成员不看王——王不是被管理的对象，是被依赖的基座。</p></div>
+      <div class="r-item"><h4>激励对齐</h4><p>王的全部合法性、利益、自我实现都绑定在"文明复原进度"上——王的最优策略就是文明的最优策略。</p></div>
+    </div>
+    <div class="royal-row">
+      <div class="r-item"><h4>继承 = 能力赌注</h4><p>王临终指定继承人，不是"授权"，是"认证事实"。若继承人做不到，制度上没有任何人有权宣布断裂。</p></div>
+      <div class="r-item"><h4>验证缺位</h4><p>要度量"托举"就需要度量者，而度量者就是第二个权力中心。文明必然选择不验证——王是唯一知道自己是否还是王的人。</p></div>
+    </div>
+    <div class="thesis">
+      <div class="big">缺陷不是王权的存在，是"事实不可检验"本身。</div>
+      <div class="small">文明把全部赌注押在"王的能力是可持续的事实"上，并为此主动放弃了对事实的检验。</div>
     </div>
   </div>
 </section>
 
-<!-- ===== 06 时间宗教 ===== -->
-<section class="sec alt" id="s06">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 7 · 06 时间宗教 ===== -->
+<section class="step" data-p="0.58" data-name="06 · 时间宗教">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">06 · 时间宗教</div>
       <h2>信仰存在，且归王所有</h2>
       <p class="lede">新纪元允许宗教——这是与"纯科技世界"的关键分岔。守典人宗院延续先纪的时间宗教，但它的位置被重新设计过。</p>
     </div>
     <div class="relig">
-      <div class="rc rv">
-        <h4><span class="n">Ⅰ</span>合法存在</h4>
-        <p>不拜神，拜"文明连续性"。历法与时间基准是圣物，档案与教育是圣职。信仰给文明一个比"生存"更高的理由。</p>
-      </div>
-      <div class="rc rv">
-        <h4><span class="n">Ⅱ</span>归王所有</h4>
-        <p>王是时间宗教的最高解释者——教义由王的谕令定义，宗院只负责仪轨、教育与档案。<b>宗教是王权的仪式系统，不是监督系统。</b></p>
-      </div>
-      <div class="rc rv">
-        <h4><span class="n">Ⅲ</span>真理在王之侧</h4>
-        <p>神学核心：王是唯一能进入大图书馆最深处、与先纪残响对话的人。这在技术上是真的——王持有最高权限密钥——被包装成了神圣事实。</p>
-      </div>
-      <div class="rc rv">
-        <h4><span class="n">Ⅳ</span>三项功能</h4>
-        <p>给王权提供神圣叙事；给公民提供精神超越的目标（"抵达先纪"）；给复原工程套上"圣工"的外衣。信仰、权力、工程完全同构。</p>
-      </div>
-      <div class="rc wide rv">
-        <h4><span class="n">Ⅴ</span>同构，而非对抗</h4>
-        <p>宗教不约束王，王定义宗教。没有政教冲突，因为宗教从一开始就不是与权力并行的第二中心——它是权力的仪式外壳。这条设计是对九执堂教训的延伸：<b>任何独立的机构，无论世俗还是神圣，都是潜在的第二个权力中心。</b></p>
-      </div>
+      <div class="rc"><h4><span class="n">Ⅰ</span>合法存在</h4><p>不拜神，拜"文明连续性"。历法与时间基准是圣物，档案与教育是圣职。</p></div>
+      <div class="rc"><h4><span class="n">Ⅱ</span>归王所有</h4><p>王是时间宗教的最高解释者——教义由王的谕令定义。<b>宗教是王权的仪式系统，不是监督系统。</b></p></div>
+      <div class="rc"><h4><span class="n">Ⅲ</span>真理在王之侧</h4><p>王是唯一能进入大图书馆最深处与先纪残响对话的人——技术上是真的，被包装成了神圣事实。</p></div>
+      <div class="rc"><h4><span class="n">Ⅳ</span>三项功能</h4><p>给王权提供神圣叙事；给公民提供"抵达先纪"的精神目标；给复原工程套上"圣工"的外衣。</p></div>
+      <div class="rc wide"><h4><span class="n">Ⅴ</span>同构，而非对抗</h4><p>宗教不约束王，王定义宗教。没有政教冲突，因为宗教从一开始就不是与权力并行的第二中心——它是权力的仪式外壳。<b>任何独立的机构，无论世俗还是神圣，都是潜在的第二个权力中心。</b></p></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 07 Childe 十条 ===== -->
-<section class="sec" id="s07">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 8 · 07 十条 ===== -->
+<section class="step" data-p="0.66" data-name="07 · 十条标准">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">07 · 标准清单</div>
       <h2>十条标准，倒着满足</h2>
-      <p class="lede">柴尔德的十条在新纪元基本全中——第 6 条甚至是反着满足的：他们不用自己的记录系统，他们在解读死人的记录。点击卡片看细节。</p>
+      <p class="lede">柴尔德的十条在新纪元基本全中——第 6 条甚至是反着满足的：他们在解读死人的记录。点击卡片看细节。</p>
     </div>
-    <div class="c10-groups rv">
-      <div class="c10-group">
-        <div class="gname">壹 · 聚落与人口</div>
-        <div class="c10-grid">
-          <div class="c10-card">
-            <div class="top"><span class="no">(1)</span><h4>大型城市中心</h4></div>
-            <p class="brief">灵台城：环绕大图书馆生长的垂直塔城，人口数十万。不是平面城市，是"向上生长的书"。</p>
-            <div class="detail"><div>城市的中枢不是宫殿或市场，是档案。一切街道、供能、定居布局都围绕"能持续阅读"设计。</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="c10-group">
-        <div class="gname">贰 · 经济与交换</div>
-        <div class="c10-grid">
-          <div class="c10-card">
-            <div class="top"><span class="no">(3)</span><h4>初级生产者剩余</h4></div>
-            <p class="brief">穹顶温室 + 水培农业。剩余由中枢统一征调，不进入市场。</p>
-            <div class="detail"><div>分配按"功过/品级"而非货币。货币极弱——因为能卖的东西（前纪技术）不允许私有。</div></div>
-          </div>
-          <div class="c10-card">
-            <div class="top"><span class="no">(9)</span><h4>稳定原料进口</h4></div>
-            <p class="brief">最重要的进口不是粮与矿——是远征搜罗先纪遗物。探墟队是文明的"贸易船队"。</p>
-            <div class="detail"><div>探墟风险极高：半失灵的前纪自动防御机器仍在巡逻辐射尘区。遗物按"可复原度"定价，最高级的是完整档案核心。</div></div>
-          </div>
-          <div class="c10-card">
-            <div class="top"><span class="no">(10)</span><h4>常驻专业工匠</h4></div>
-            <p class="brief">铸旧师行会，师徒终身制，技术密不外传。</p>
-            <div class="detail"><div>专业化的尽头是把工匠连同行会、秘方、师承一起固化——与柴尔德描述的古代匠人完全同构。</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="c10-group">
-        <div class="gname">叁 · 社会与政治</div>
-        <div class="c10-grid">
-          <div class="c10-card">
-            <div class="top"><span class="no">(2)</span><h4>专门职业阶层</h4></div>
-            <p class="brief">解经人、铸旧师、探墟队、观止院执事、守典人、穹顶农师。</p>
-            <div class="detail"><div>职业声望的排序依据，是离"先纪"有多近。解经人是离得最近的。</div></div>
-          </div>
-          <div class="c10-card">
-            <div class="top"><span class="no">(5)</span><h4>统治阶级</h4></div>
-            <p class="brief">唯一哲人王。其下各司其职，无第二权力中心。</p>
-            <div class="detail"><div>这不是"一个人管一切"，是"所有分散的权都汇于一点"。九执堂是九个点互相拉扯，观复是一个点承接全部。</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="c10-group">
-        <div class="gname">肆 · 权威与文化</div>
-        <div class="c10-grid">
-          <div class="c10-card">
-            <div class="top"><span class="no">(4)</span><h4>纪念性建筑</h4></div>
-            <p class="brief">不建新纪念碑——修复成功的聚变堆、重新点亮的轨道电梯残段、大图书馆本体就是祭坛。</p>
-            <div class="detail"><div>纪念的不是神或王，是"我们还能复原"。每一次点亮前纪设备，都是一次礼拜。</div></div>
-          </div>
-          <div class="c10-card">
-            <div class="top"><span class="no">(6)</span><h4>记录系统</h4></div>
-            <p class="brief">一整套死语言——上层建筑建立在破译前纪数据库之上。</p>
-            <div class="detail"><div>反着满足：他们是解读记录的人，不是创造记录的人。记录系统对这个文明是"圣物"而非"工具"。</div></div>
-          </div>
-          <div class="c10-card">
-            <div class="top"><span class="no">(7)</span><h4>实用科学</h4></div>
-            <p class="brief">逆向工程学：复原即研究。</p>
-            <div class="detail"><div>没有"发现新原理"的冲动，只有"还原旧真理"的虔诚。会修聚变堆，但不会设计一座新的——技术等级=解读等级。</div></div>
-          </div>
-          <div class="c10-card">
-            <div class="top"><span class="no">(8)</span><h4>纪念性艺术</h4></div>
-            <p class="brief">临摹、复制、陈列先纪遗物；壁画主题是"大寂灭与复归之光"。</p>
-            <div class="detail"><div>艺术与考古共用同一套语言。最受尊重的"艺术家"是还原度最高的临摹者。</div></div>
-          </div>
-        </div>
-      </div>
+    <div class="c10-grid big">
+      <div class="c10-card"><div class="top"><span class="no">(1)</span><h4>大型城市中心</h4></div><p class="brief">灵台城：环绕大图书馆生长的垂直塔城。</p><div class="detail"><div>城市的中枢是档案——一切布局都围绕"能持续阅读"设计。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(2)</span><h4>专门职业</h4></div><p class="brief">解经人、铸旧师、探墟队、观止院执事、守典人、穹顶农师。</p><div class="detail"><div>职业声望按离"先纪"有多近排序。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(3)</span><h4>生产者剩余</h4></div><p class="brief">穹顶温室 + 水培农业，剩余由中枢统一征调。</p><div class="detail"><div>分配按功过品级而非货币——能卖的前纪技术不允许私有。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(4)</span><h4>纪念性建筑</h4></div><p class="brief">修复的聚变堆、点亮的轨道电梯残段、大图书馆本体就是祭坛。</p><div class="detail"><div>纪念的不是神或王，是"我们还能复原"。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(5)</span><h4>统治阶级</h4></div><p class="brief">唯一哲人王，其下各司其职，无第二权力中心。</p><div class="detail"><div>不是"一个人管一切"，是"所有分散的权都汇于一点"。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(6)</span><h4>记录系统</h4></div><p class="brief">一整套死语言——上层建筑建立在破译前纪数据库之上。</p><div class="detail"><div>反着满足：他们是解读记录的人，不是创造记录的人。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(7)</span><h4>实用科学</h4></div><p class="brief">逆向工程学：复原即研究。</p><div class="detail"><div>会修聚变堆，但不会设计一座新的——技术等级=解读等级。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(8)</span><h4>纪念性艺术</h4></div><p class="brief">临摹、复制、陈列先纪遗物；壁画主题"大寂灭与复归之光"。</p><div class="detail"><div>最受尊重的艺术家是还原度最高的临摹者。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(9)</span><h4>稳定原料进口</h4></div><p class="brief">最重要的进口是远征搜罗的先纪遗物——探墟队是"贸易船队"。</p><div class="detail"><div>遗物按"可复原度"定价，最高级的是完整档案核心。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(10)</span><h4>常驻专业工匠</h4></div><p class="brief">铸旧师行会，师徒终身制，技术密不外传。</p><div class="detail"><div>工匠连同行会、秘方、师承一起固化——与古代匠人完全同构。</div></div></div>
     </div>
-    <div class="c10-ctl rv"><button id="c10All" type="button">全部展开 / 收起</button></div>
-    <div class="c10-foot rv">十条基本全中。第 6 条的反向满足，恰恰是这个文明的缩影：<b>他们不创造自己的记录，他们继承死人的遗产——包括遗产里的全部问题。</b></div>
+    <div class="c10-ctl"><button id="c10All" type="button">全部展开 / 收起</button></div>
   </div>
 </section>
 
-<!-- ===== 08 裂缝 ===== -->
-<section class="sec alt" id="s08">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 9 · 08 裂缝 ===== -->
+<section class="step" data-p="0.74" data-name="08 · 裂缝">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">08 · 裂缝</div>
       <h2>六个故事的入口</h2>
       <p class="lede">不做成扁平乌托邦。这个文明的"完美"建立在刻意不看王的前提上——以下六条裂缝，是它所有故事的起点。</p>
     </div>
     <div class="fissures">
-      <div class="fiss rv">
-        <div class="fn">裂缝 01</div>
-        <h4>继承的自我腐蚀</h4>
-        <p>王指定继承人时，最接近王的人是谄媚者——敢说真话的人早被考核筛掉了。<b>最像王的人与最该为王的人，无法保证重合。</b></p>
-      </div>
-      <div class="fiss rv">
-        <div class="fn">裂缝 02</div>
-        <h4>观止院的第一次失语</h4>
-        <p>观止院能预测所有人的行为，除了王。当预测模型第一次把王标为"高风险变量"：<b>报告=违逆，不报=渎职。</b></p>
-      </div>
-      <div class="fiss rv">
-        <div class="fn">裂缝 03</div>
-        <h4>禁复清单的钥匙</h4>
-        <p>哪些先纪技术永久封印，王独享最终解释权。历史上有没有王为私利解过禁？——<b>档案里没有记录，而档案由宗院管理，宗院由王定义。没有记录，本身就是记录。</b></p>
-      </div>
-      <div class="fiss rv">
-        <div class="fn">裂缝 04</div>
-        <h4>时间宗教的裂缝</h4>
-        <p>某个守典人坚信"时间法则高于王"。他们没有武器，只有历法——<b>但历法错了，全城调度就错了。</b>和平的叛乱。</p>
-      </div>
-      <div class="fiss rv">
-        <div class="fn">裂缝 05</div>
-        <h4>大寂灭的另一个版本</h4>
-        <p>官方叙事是先纪死于傲慢。但大图书馆深处可能存着真相：<b>先纪不是崩溃，是集体撤离，九执堂只是被留下的那部分。</b></p>
-      </div>
-      <div class="fiss rv">
-        <div class="fn">裂缝 06</div>
-        <h4>没有到期日</h4>
-        <p>建城者说单王制是"重建阶段的过渡方案"，后代可自行改宪。但谁来宣布"过渡结束"？——<b>王。而无约束的王没有理由交出权力。</b></p>
-      </div>
-    </div>
-    <div class="end-block rv">
-      <div class="big">这个文明把全部赌注押在"王的能力是可持续的事实"上，<br>并为此主动放弃了对事实的检验。</div>
-      <div class="small">缺陷不是王权的存在，是"事实不可检验"本身 · 观复文明 · 课堂展示</div>
+      <div class="fiss"><div class="fn">裂缝 01</div><h4>继承的自我腐蚀</h4><p>最接近王的人是谄媚者——<b>最像王的人与最该为王的人，无法保证重合。</b></p></div>
+      <div class="fiss"><div class="fn">裂缝 02</div><h4>观止院的第一次失语</h4><p>模型第一次把王标为"高风险变量"：<b>报告=违逆，不报=渎职。</b></p></div>
+      <div class="fiss"><div class="fn">裂缝 03</div><h4>禁复清单的钥匙</h4><p>档案里没有王私解禁的记录，而档案由宗院管理，宗院由王定义。<b>没有记录，本身就是记录。</b></p></div>
+      <div class="fiss"><div class="fn">裂缝 04</div><h4>时间宗教的裂缝</h4><p>某个守典人坚信"时间法则高于王"。他们没有武器，只有历法——<b>但历法错了，全城调度就错了。</b></p></div>
+      <div class="fiss"><div class="fn">裂缝 05</div><h4>大寂灭的另一个版本</h4><p>官方叙事是先纪死于傲慢。但大图书馆深处可能存着真相：<b>先纪是集体撤离，九执堂只是被留下的那部分。</b></p></div>
+      <div class="fiss"><div class="fn">裂缝 06</div><h4>没有到期日</h4><p>谁来宣布"过渡结束"？——<b>王。而无约束的王没有理由交出权力。</b></p></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 09 故事引擎 ===== -->
-<section class="sec" id="s09">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 10 · 09 故事引擎 ===== -->
+<section class="step" data-p="0.8" data-name="09 · 故事引擎">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">09 · 故事引擎</div>
       <h2>裂缝，长成场景</h2>
-      <p class="lede">六条裂缝，三个已成形的场景、三个触发条件。它们就是所有故事的起点——人物具体，冲突具体，落点具体。</p>
+      <p class="lede">三条成形的场景、三个触发条件——所有故事的起点。</p>
     </div>
     <div class="scene-grid">
-      <div class="scene rv">
-        <div class="sno">场景 A · 裂缝 02</div>
-        <h4>观止院的第一次失语</h4>
-        <div class="who">人物 · 重规，观止院首席执事，四十年没出过错</div>
-        <p>年度复算中，模型第一次把王标为黄级——"决策不可预测性上升"。但报告系统<b>没有"王"这个字段</b>，拒绝输出。上报=违逆，不上报=渎职。</p>
-        <div class="land">落点 · 他把报告改写成一封"历法勘误函"——政治问题第一次被翻译成宗教问题。</div>
-      </div>
-      <div class="scene rv">
-        <div class="sno">场景 B · 裂缝 04</div>
-        <h4>三秒的叛乱</h4>
-        <div class="who">人物 · 白榆，钟室守灯人，三十年没迟到过一次</div>
-        <p>王解禁深空通信阵列——若接通，将证明<b>先纪是撤离，不是死亡</b>。白榆没有武器，他在复归祭当夜让钟室慢了 3 秒。</p>
-        <div class="land">落点 · 历法错三秒 = 王"时间看护者"身份的第一道裂痕。和平，但比兵变更动摇根基。</div>
-      </div>
-      <div class="scene rv">
-        <div class="sno">场景 C · 裂缝 06</div>
-        <h4>评估我</h4>
-        <div class="who">人物 · 归玄，哲人王，执政第四十一年</div>
-        <p>年轻解经师重弦在禁层外复原了一台只有王能复原的设备。归玄没有压制，他发出一条从未有过的谕令：<b>"观止院，评估我。"</b></p>
-        <div class="land">落点 · 观止院接到谕令，不知道格式怎么写——格式里没有王。</div>
-      </div>
+      <div class="scene"><div class="sno">场景 A · 裂缝 02</div><h4>观止院的第一次失语</h4><div class="who">重规 · 观止院首席执事 · 四十年没出过错</div><p>模型第一次把王标为黄级，但报告系统<b>没有"王"这个字段</b>，拒绝输出。</p><div class="land">落点 · 他把报告改写成一封"历法勘误函"——政治第一次被翻译成宗教。</div></div>
+      <div class="scene"><div class="sno">场景 B · 裂缝 04</div><h4>三秒的叛乱</h4><div class="who">白榆 · 钟室守灯人 · 三十年没迟到过一次</div><p>王解禁深空通信阵列——若接通，将证明<b>先纪是撤离，不是死亡</b>。白榆在复归祭当夜让钟室慢了 3 秒。</p><div class="land">落点 · 历法错三秒 = 王"时间看护者"身份的第一道裂痕。</div></div>
+      <div class="scene"><div class="sno">场景 C · 裂缝 06</div><h4>评估我</h4><div class="who">归玄 · 哲人王 · 执政第四十一年</div><p>重弦在禁层外复原了只有王能复原的设备。归玄发出一条从未有过的谕令：<b>"观止院，评估我。"</b></p><div class="land">落点 · 观止院不知道格式怎么写——格式里没有王。</div></div>
     </div>
     <div class="trigger">
-      <div class="tg rv"><span class="tt">触发 D · 一枚假印</span>档案里有一项<b>一级禁复技术曾被解禁</b>，解禁令有王的印，宗院记录却显示"无此谕令"。印是真的 / 印是假的 / 记录被改——三条路，每一条都是故事。而调查本身违法。</div>
-      <div class="tg rv"><span class="tt">触发 E · 少王与重弦</span>归玄晚年，候选继承人是最像他的"少王"（谄媚者）与最能托举的"重弦"（直言者）。<b>他指定谁，取决于他最后一年还信什么。</b></div>
-      <div class="tg rv"><span class="tt">触发 F · 撤离名单</span>深层钟室记录到八百年前的"撤离广播"，被时间基准误差掩盖了八百年。它说：<b>你们不在撤离名单上。</b></div>
+      <div class="tg"><span class="tt">触发 D · 一枚假印</span>一级禁复技术曾被解禁，印是真的 / 印是假的 / 记录被改——三条路都是故事，而调查本身违法。</div>
+      <div class="tg"><span class="tt">触发 E · 少王与重弦</span>他指定谁，取决于他最后一年还信什么：信自己的影子，还是信文明。</div>
+      <div class="tg"><span class="tt">触发 F · 撤离名单</span>八百年前的撤离广播说：<b>你们不在撤离名单上。</b></div>
     </div>
-    <div class="radio-msg rv">"致所有仍在这颗行星上的单位——你们不在撤离名单上。"</div>
   </div>
 </section>
 
-<!-- ===== 10 外部世界 ===== -->
-<section class="sec alt" id="s10">
-  <div class="wrap">
-    <div class="sec-head rv">
+<!-- ===== 幕 11 · 10 外部世界 ===== -->
+<section class="step" data-p="0.84" data-name="10 · 外部世界">
+  <div class="step-inner">
+    <div class="sec-head">
       <div class="sec-kicker">10 · 外部世界</div>
       <h2>文明的边界</h2>
       <p class="lede">观复不是废土上唯一的幸存者。它自认为"唯一文明"，但世界的边界远比灵台城的口径复杂。</p>
     </div>
     <div class="scene-grid">
-      <div class="scene rv">
-        <div class="sno">蛮族 · 世代船团</div>
-        <h4>没死的人，完整地记得</h4>
-        <div class="who">大寂灭时在深空航线上 · 八百年未归 · 近期信标抵城</div>
-        <p>他们保留了前纪的深空技术，但没有经历崩溃，<b>记忆是完整的</b>。信标不是入侵，是问询。遗民派视他们为祖先，警戒派视他们为另一种文明的使者——<b>两派之争，是裂缝 05 走向公开的第一步。</b></p>
-      </div>
-      <div class="scene rv">
-        <div class="sno">机械野草 · 复制危机的遗产</div>
-        <h4>不守历法，不点灯，不纪念任何一天</h4>
-        <div class="who">先纪 AI 采集群 · 崩溃后失去协调 · 自动复制至今</div>
-        <p>它们只采集物质、自我复制——像野草，也像癌。探墟队跟着它们找矿，也怕它们：个别集群会进入防御态，把人当成采集对象。<b>观复修前纪的东西，野草复制前纪的东西——区别在目的。</b></p>
-      </div>
-      <div class="scene rv">
-        <div class="sno">拾荒者与小农社</div>
-        <h4>我们读废墟</h4>
-        <div class="who">死带边缘人口 · 不在品级体系内 · 被默许存在</div>
-        <p>他们是探墟队的向导、劳力与情报来源。政策：不征召、不征税、不救济——但死带扩张时会"顺手"护住弧带。拾荒者说：<b>"城里人读书，我们读废墟。"</b>观复认为是恭维，拾荒者认为是事实。</p>
-      </div>
+      <div class="scene"><div class="sno">蛮族 · 世代船团</div><h4>没死的人，完整地记得</h4><div class="who">大寂灭时在深空航线上 · 八百年未归 · 信标抵城</div><p>他们保留了前纪的深空技术，<b>记忆是完整的</b>。遗民派 vs 警戒派——两派之争是裂缝 05 走向公开的第一步。</p></div>
+      <div class="scene"><div class="sno">机械野草 · 复制危机的遗产</div><h4>不守历法，不点灯，不纪念任何一天</h4><div class="who">先纪 AI 采集群 · 失去协调 · 自动复制至今</div><p>它们只采集、自我复制——像野草，也像癌。<b>观复修前纪的东西，野草复制前纪的东西——区别在目的。</b></p></div>
+      <div class="scene"><div class="sno">拾荒者与小农社</div><h4>我们读废墟</h4><div class="who">死带边缘人口 · 不在品级体系内 · 被默许存在</div><p>政策：不征召、不征税、不救济。<b>"城里人读书，我们读废墟。"</b>观复认为是恭维，拾荒者认为是事实。</p></div>
     </div>
-    <div class="radio-msg rv">"野草不在时间里。" —— 时间宗教对机械野草的唯一应答</div>
+    <div class="radio-msg">"野草不在时间里。" —— 时间宗教对机械野草的唯一应答</div>
   </div>
 </section>
 
-<!-- ===== 11 短篇 · 第一炉火 ===== -->
-<section class="sec" id="s11">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="sec-kicker">11 · 短篇</div>
-      <h2>第一炉火</h2>
-      <p class="lede">重建纪元第四十年。重弦，十八岁，解经学院学徒——多年后那个"在禁层外复原了只有王能复原的设备"的人，第一次走出灵台城。这是一次普通的探墟任务。<b>文明的十条标准没有一条缺席。</b></p>
+<!-- ===== 幕 12 · 11 短篇 · 城与死带 ===== -->
+<section class="step" data-p="0.88" data-name="11 · 第一炉火 · 上">
+  <div class="step-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">11 · 短篇 · 第一炉火</div>
+      <h2>重弦的第一次任务</h2>
+      <p class="lede">重建纪元第四十年，十八岁的解经学徒第一次走出灵台城。<b>一次普通探墟任务，文明的十条标准没有一条缺席。</b></p>
     </div>
     <div class="story">
-      <div class="act rv">
-        <div class="act-no">第一幕 · 城</div>
-        <h4>晨光是被导下来的</h4>
-        <p>灵台城的中层，天还没亮，导光管已经醒了：一束从地表引下的晨曦，沿抛光铜管一路下行，在中层回廊的天花板上缓缓展开。重弦站在探墟队集散层的月台上——他看了十八年，今天才意识到自己从没离开过这道光的范围。</p>
-        <p>月台上各队正在装卸：口粮按编制领七日份合成粮——<b>中枢算过账，养得起</b>；装备是辐射探测杖、断线回响器、封存箱；守典人记录员在每份出队令上盖章，契文印记加时间基准戳，一笔一画都是政治。</p>
-        <div class="line">领队徽声检查他的封存箱，只问了一句："学院教你读机器。今天教你读人。"——出队令边角有一行小字：<b>续。</b>王看过这条任务线，批了一个字。没人解释这个字，也不需要解释。</div>
-      </div>
-      <div class="act rv">
-        <div class="act-no">第二幕 · 死带</div>
-        <h4>它在等一份永远到不了的换防命令</h4>
-        <p>辐射尘把天压成铅灰色。断线回响器发出微弱的嗡鸣——前纪设备的残余信号，来自脚下，来自八百年没有断过的电。第一台哨卫出现在正午：沿固定路径缓慢行走，像一座被慢放的行刑者。小队屏息停在废墙后，队首的扛夫把合规信标挂上旗杆——<b>编-7-4092，补给勤务单位</b>。哨卫扫过，放行。</p>
-        <p>他们跟着一丛机械野草走了两公里：野草像铁色的蛾群，遇金属沉积就停下、就地取材、把自己变长一点。野草选矿比人快，所以人学会了跟野草。</p>
-        <div class="line">重弦问："它是死了还是活着？"徽声："它一直在巡逻。八百年了，它在等一份永远到不了的换防命令。这就是我们和野草的区别——我们修好了记忆，它只能执行记忆。"</div>
-      </div>
-      <div class="act rv">
-        <div class="act-no">第三幕 · 废墟</div>
-        <h4>先纪人写给宇宙的证明</h4>
-        <p>目标是一座半埋沙下的前纪补给站。墙还在——浮雕上刻着环日城邦：主环城的环带、日冕锚塔的尖、戴森云张开的弧。学院教材管这叫"纪念性艺术"，但亲眼见到的那一刻，重弦知道教材错了：<b>这不是艺术，是证明。</b>先纪人刻这些，是为了让任何看到的人相信——他们存在过，他们值得。</p>
-        <p>铸旧师老陈蹲在炉芯前，敲、听、扫：指节敲外壳，耳朵贴上去，再扫结构。整个动作安静得像一场葬礼。"烧过的芯。冷透了。但芯体完整，可以<b>复</b>。"——在这片八百年的废墟里，"复"字比任何祷告都有力量。</p>
-      </div>
-      <div class="act rv">
-        <div class="act-no">第四幕 · 事故</div>
-        <h4>谎言被拆穿的一刻</h4>
-        <p>拆解到第三天，断线回响器变调。三台哨卫改道逼近：<b>编-7-4092 已在八百年前注销</b>，信标是伪造的。货物太重——炉芯四百公斤，拆到一半，拖着它跑不掉。老陈说："弃。"徽声说："王批了'续'。"两个词对峙了三秒。</p>
-        <p>"不弃，也不打。"重弦说。学院教过：哨卫识别的是单位，不是人。他把信标从旗杆上拆下，挂到二十步外一丛机械野草的背上——野草不反抗，它们只采集，只移动。哨卫去追一台永远不会停下的"编-7-4092"了。</p>
-        <div class="line">代价立刻兑现：信标没了。他们必须在哨卫回巡前连夜走出死带。任务簿当天最后一行：今日损失合规信标一枚。获炉芯一座。净值：正。</div>
-      </div>
-      <div class="act rv">
-        <div class="act-no">第五幕 · 归城</div>
-        <h4>灯亮了</h4>
-        <p>归城在第七天夜里。炉芯经评估、清洗、入档——契文记录：来源，前纪补给站丙级；可复原度，B+；评估人，徽声；实习评估人，重弦。他在"实习评估人"后面第一次签下自己的名字，手抖，但签了。</p>
-        <p>三天后，宗院主持点亮礼。炉芯被接入文明的时间，全场静默，然后——灯亮了。一粒金色的、稳定的、像小恒星一样的光。重弦站在人群最后，看见老陈低下头：拆过几千台机器的人，这一刻看的是那粒光，不是机器。</p>
-      </div>
+      <div class="act"><div class="act-no">第一幕 · 城</div><h4>晨光是被导下来的</h4><p>导光管把地表晨曦引入中层回廊。月台上各队装卸：口粮按编制领七日份——<b>中枢算过账，养得起</b>；守典人在出队令上盖章，契文印记加时间基准戳。</p><div class="line">领队徽声："学院教你读机器。今天教你读人。"——出队令边角有一行小字：<b>续。</b>王看过这条任务线，批了一个字。</div></div>
+      <div class="act"><div class="act-no">第二幕 · 死带</div><h4>它在等一份永远到不了的换防命令</h4><p>辐射尘压成铅灰色的天。哨卫沿固定路径巡逻，队首把合规信标挂上旗杆——<b>编-7-4092，补给勤务单位</b>。哨卫扫过，放行。他们跟着一丛机械野草走了两公里：野草选矿比人快，所以人学会了跟野草。</p><div class="line">重弦："它是死了还是活着？"徽声："它一直在巡逻。八百年了，它在等一份永远到不了的换防命令。这就是我们和野草的区别——我们修好了记忆，它只能执行记忆。"</div></div>
     </div>
-    <div class="radio-msg rv">"它烧过，冷过，现在又亮了。它是城，是粮，是分工，是记录，是科学，是艺术，是进口，是匠人，是王批下的那个'续'字。"<span style="display:block;margin-top:8px;font-size:12.5px;color:var(--ice)">—— 重弦的评估报告（学徒体，徽声没有改一个字）。报告呈到王面前，王在空白处写了一个字：续。</span></div>
-    <div class="arch-tbl rv">
+  </div>
+</section>
+
+<!-- ===== 幕 13 · 11 短篇 · 废墟与事故 ===== -->
+<section class="step" data-p="0.92" data-name="11 · 第一炉火 · 中">
+  <div class="step-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">11 · 短篇 · 第一炉火</div>
+      <h2>废墟 · 事故</h2>
+      <p class="lede">目标是一座半埋沙下的前纪补给站。墙上的浮雕刻着环日城邦——先纪人把自己写给宇宙的证明。</p>
+    </div>
+    <div class="story">
+      <div class="act"><div class="act-no">第三幕 · 废墟</div><h4>这不是艺术，是证明</h4><p>学院教材管这叫"纪念性艺术"，但亲眼见到那一刻，重弦知道教材错了：先纪人刻这些，是为了让任何看到的人相信——他们存在过，他们值得。铸旧师老陈蹲在炉芯前，敲、听、扫："烧过的芯。冷透了。但芯体完整，可以<b>复</b>。"——在这片八百年的废墟里，"复"字比任何祷告都有力量。</p></div>
+      <div class="act"><div class="act-no">第四幕 · 事故</div><h4>谎言被拆穿的一刻</h4><p>三台哨卫改道逼近：<b>编-7-4092 已在八百年前注销</b>。炉芯四百公斤，拖着它跑不掉。老陈说："弃。"徽声说："王批了'续'。"两个词对峙了三秒。重弦把信标挂到机械野草的背上——哨卫去追一台永远不会停下的"编-7-4092"了。</p><div class="line">代价立刻兑现：信标没了。任务簿当天最后一行：今日损失合规信标一枚。获炉芯一座。净值：正。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 幕 14 · 11 短篇 · 归城 ===== -->
+<section class="step" data-p="0.95" data-name="11 · 第一炉火 · 终">
+  <div class="step-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">11 · 短篇 · 第一炉火</div>
+      <h2>归城 · 灯亮了</h2>
+      <p class="lede">炉芯入档、点亮礼——它被接入文明的时间。</p>
+    </div>
+    <div class="story">
+      <div class="act"><div class="act-no">第五幕 · 归城</div><h4>灯亮了</h4><p>契文记录：来源，前纪补给站丙级；可复原度，B+；评估人，徽声；实习评估人，重弦——他第一次签下自己的名字，手抖，但签了。三天后宗院主持点亮礼：全场静默，然后灯亮了——一粒金色的、像小恒星一样的光。拆过几千台机器的老陈，这一刻看的是那粒光，不是机器。</p></div>
+    </div>
+    <div class="radio-msg">"它烧过，冷过，现在又亮了。它是城，是粮，是分工，是记录，是科学，是艺术，是进口，是匠人，是王批下的那个'续'字。"<span style="display:block;margin-top:8px;font-size:12.5px;color:var(--ice)">—— 重弦的评估报告。报告呈到王面前，王在空白处写了一个字：续。</span></div>
+    <div class="arch-tbl">
       <table>
-        <colgroup><col style="width:34%"><col style="width:66%"></colgroup>
+        <colgroup><col style="width:30%"><col style="width:70%"></colgroup>
         <tr><th>十条标准</th><th>在故事里的位置</th></tr>
         <tr><td>(1) 大型城市中心</td><td>灵台城——出发与归来的锚点，垂直的城、导下的光</td></tr>
         <tr><td>(2) 专门职业</td><td>小队编制：解经人、铸旧师、扛夫、守典人</td></tr>
         <tr><td>(3) 初级生产者剩余</td><td>口粮拨付——"中枢算过账，养得起"</td></tr>
         <tr><td>(4) 纪念性建筑</td><td>补给站墙上的"万碑"：先纪人写给宇宙的证明</td></tr>
         <tr><td>(5) 统治阶级</td><td>出队令边角的"续"——王在每一份报告的空白处</td></tr>
-        <tr><td>(6) 记录系统</td><td>出队令的契文印记与时间基准戳、任务簿、入档记录</td></tr>
+        <tr><td>(6) 记录系统</td><td>契文印记、时间基准戳、任务簿、入档记录</td></tr>
         <tr><td>(7) 实用科学</td><td>老陈的现场评估——"复"是行会话，也是文明话</td></tr>
         <tr><td>(8) 纪念性艺术</td><td>万碑浮雕——先纪人把自己的辉煌刻在墙上</td></tr>
         <tr><td>(9) 稳定原料进口</td><td>探墟即贸易——遗物是唯一的"进口"</td></tr>
@@ -550,9 +357,28 @@
   </div>
 </section>
 
+<!-- ===== 幕 15 · 结语 ===== -->
+<section class="step" data-p="1" data-name="结语 · 观复">
+  <div class="step-inner center">
+    <div class="kick">观复文明 · 建立在事实上的王权</div>
+    <h1 class="end-title">文明的另一副样子</h1>
+    <div class="end-block">
+      <div class="big">这个文明把全部赌注押在"王的能力是可持续的事实"上，<br>并为此主动放弃了对事实的检验。</div>
+      <div class="small">缺陷不是王权的存在，是"事实不可检验"本身</div>
+    </div>
+    <div class="hero-meta">
+      <span>以柴尔德"城市革命"十条为基石</span><i></i><span>虚构设定 · 仅供展示</span>
+    </div>
+    <button class="start-btn" id="restartBtn" type="button">重新开始 <span class="ar">↺</span></button>
+  </div>
+</section>
+
 </main>
-<footer class="page-foot">
-  <span>观复文明 · 建立在事实上的王权</span><span class="sep">·</span><span>以柴尔德"城市革命"十条为基石</span><span class="sep">·</span><span>虚构设定 · 示意内容仅供展示</span>
-</footer>
+
+<div class="stage-ctl" id="stageCtl">
+  <button id="prevBtn" type="button" aria-label="上一幕">←</button>
+  <div class="ctl-hint">点击空白 / 空格 / 方向键推进</div>
+  <button id="nextBtn" type="button">下一幕 <span class="ar">→</span></button>
+</div>
 </body>
 </html>

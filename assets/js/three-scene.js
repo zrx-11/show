@@ -156,9 +156,16 @@
     cur.up = cur.pillar;
     /* 星尘色调：蓝 → 锈(崩溃) → 回蓝 */
     cur.starCol = p < 0.16 ? 1 : p < 0.32 ? 1 - seg(p, 0.16, 0.32, 0, 0.55) : p < 0.54 ? seg(p, 0.32, 0.54, 0.45, 1) : 1;
-    if (reduced) render();
   }
-  window.__guanfuSpace = { setProgress: setProgress, render: render };
+
+  /* ---- 幕驱动：目标进度 + 平滑过渡 ---- */
+  var curP = 0, targetP = 0;
+  function go(p, dur) {
+    targetP = Math.max(0, Math.min(1, p));
+    if (reduced) { curP = targetP; setProgress(curP); render(); }
+  }
+
+  window.__guanfuSpace = { go: go, setProgress: setProgress, render: render, getP: function () { return curP; } };
 
   /* ---- 视差 ---- */
   var mx = 0, my = 0, tx = 0, ty = 0;
@@ -204,11 +211,20 @@
   }
 
   function tick() {
-    if (!document.hidden) render();
+    if (!document.hidden) {
+      if (!reduced) {
+        curP += (targetP - curP) * 0.055;
+        if (Math.abs(targetP - curP) < 0.0008) curP = targetP;
+        setProgress(curP);
+      }
+      render();
+    }
     requestAnimationFrame(tick);
   }
   if (reduced) { setProgress(0); render(); }
   else { tick(); }
+  /* 初始幕 */
+  go(0.05);
 
   /* ---- 尺寸适配 ---- */
   function onResize() {
