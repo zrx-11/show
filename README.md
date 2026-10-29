@@ -1,58 +1,33 @@
-# 观复文明 · 文明史书 · 分幕放映展示页
+# 观复文明 · 野史戏谈 · 第一册（史书放映 v2）
 
-星际废土"哲人王"文明设定《观复文明》的动态展示页——以柴尔德"城市革命"十条标准为基石，**点击翻卷的文明史书**：15 卷体例（卷首 → 本纪 → 志 → 论 → 表 → 列传 → 卷末跋），每点一次自动播放当前卷的 GSAP 入场动画；three.js 三维背景（太阳 + 双层金色星环 + 轨道行星 + 崩溃粒子 + 重建光柱与塔影）随卷平滑过渡；卷末刻入哲人王谕文。
+重建于"过去"，不见于"未来"——我们的史诗只写在"现在"：当下，如愿如常。
 
-## 交互方式
+## 打开方式
+直接用浏览器打开 `index.html` 即可（无构建、无依赖，离线可用）。
 
-- **下一卷 / 重新开始**：底部中央按钮（动画播放中点击自动排队续播）
-- **点击空白处**：直接推进下一卷
-- **键盘**：`→` / `空格` / `回车` 下一卷，`←` 上一卷，`Esc` 关闭故事卷
-- **手机**：向左滑动前进，向右滑动后退
-- **故事卷**：列传·故事的入口等 15 处入口卡片悬停显示"展卷 →"，点击翻开完整篇章（共 10 篇：裂缝/场景/邻国/逸事全收录），点遮罩或右上 × 关闭
-- 幕 4 可点击"重演级联"观看九执堂逐环熄灭；幕 8 点击卡片查看十条细节
+## 页面结构
+- 开场：书架上一本书飞到眼前桌上，封面《观复文明·野史戏谈·第一册》，自动翻开进入卷首
+- 正卷：15 幕史书（卷首 → 三时代 → 环日城邦 → 大寂灭 → 观复文明 → 王权论 → 时间宗教 → 完美幻觉 → 十条对照 → 裂缝 → 列传一 → 第一炉火（上/中/终）→ 卷末·跋），点击"下一幕"或任意处推进，连点自动排队
+- 故事卷：幕中带"手抄本"的篇章点击即展卷；列传二三幕各附完整短篇《第一炉火》；卷末可"翻阅全书"（完整设定全文 389 段）
+- 收书：卷末点击"合上此书"，内容收进书里、书合上飞回书架，显示"野史戏谈·第一册·完"
 
-## 文件结构
+## 文件清单
+| 文件 | 说明 |
+| --- | --- |
+| index.html | 主页面（内联 three.js / GSAP / 双字体 base64，约 710KB） |
+| assets/css/style.css | 全部样式（含书卷、分幕、字体） |
+| assets/js/main.js | 全部逻辑（15 幕切换、故事卷、书卷交互、s1–s14 故事） |
+| assets/js/three-scene.js | 3D 背景（星环、太阳、射线、行星、星尘） |
+| assets/vendor/ | 第三方库与字体源文件（three.min.js / gsap.min.js / 两款 woff2 / fonts.css），GitHub Pages 部署时随站上传 |
+| 观复文明完整设定.md | 完整设定全文（已收录为页面内"观复书 · 全卷"） |
 
+## GitHub Pages 部署
+```bash
+git init && git add . && git commit -m "观复文明史书 v2"
+# 推送后开启 Pages（分支 main / 根目录），或：
+gh repo create guanfu-civilization --public --source=. --push
 ```
-guanfu-demo/
-├── index.html              # 页面主体（15 卷史书结构 + 全部章节内容）
-├── assets/
-│   ├── css/
-│   │   └── style.css       # 全部样式（全屏布局 / 金色主题 / 史书卷眉 / 响应式）
-│   └── js/
-│       ├── three-scene.js  # three.js 三维背景（太阳 / 双层星环 / 轨道行星 / 崩溃 / 重建塔影）
-│       └── main.js         # 分卷主控（切换 / 排队 / 故事卷十篇 / 级联 / 十条展开）
-└── README.md
-```
 
-依赖两个开源库（CDN 经 jsDelivr 引入，无需安装）：[three.js](https://github.com/mrdoob/three.js)、[GSAP](https://github.com/greensock/GSAP)。
-
-## 本地预览
-
-直接双击打开 `index.html` 即可（需要网络加载 CDN 库）。推荐用 VS Code 的 Live Server 或 `python3 -m http.server` 预览。
-
-## 部署到 GitHub Pages（约 3 分钟）
-
-1. **建仓库**：登录 GitHub → New repository → 仓库名如 `guanfu-civilization` → Public → Create。
-2. **上传文件**（二选一）：
-   - 网页方式：仓库页 → Add file → Upload files → 把 `index.html` 和整个 `assets/` 文件夹拖入（assets 会保留目录结构）→ Commit。
-   - 命令行方式：
-     ```bash
-     cd guanfu-demo
-     git init && git add index.html assets && git commit -m "观复文明展示页"
-     git branch -M main
-     git remote add origin https://github.com/<你的用户名>/<仓库名>.git
-     git push -u origin main
-     ```
-3. **启用 Pages**：仓库 → Settings → Pages → Build and deployment → Source 选 **Deploy from a branch** → Branch 选 `main` + `/ (root)` → Save。
-4. **等待 1–2 分钟**，刷新页面看到绿色提示 "Your site is live at …"。
-5. **访问**：`https://<你的用户名>.github.io/<仓库名>/`
-
-## 注意
-
-- 页面依赖 jsDelivr CDN，部署后请确认浏览器能访问 `fastly.jsdelivr.net`（国内一般可直连，必要时可自行替换为 cdnjs 镜像）。
-- three.js 加载失败时页面会自动降级为 CSS 星空背景，内容不受影响。
-- 章节内容为虚构设定，仅供展示与课堂演示使用。
-
-> 构建基石：戈登·柴尔德（V. Gordon Childe）"城市革命"十条标准
-> 状态：文明史书版 · 15 卷 · 故事卷十篇 · 2026-10-29
+## 说明
+- 页面背景动画默认随打开播放；系统"减弱动态"模式下自动降速（约 30% 速度）而非静止
+- 纯前端展示页，无后端、无数据上报；虚拟设定，仅用于课堂展示
