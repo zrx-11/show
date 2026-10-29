@@ -49,6 +49,57 @@
   var stars = new THREE.Points(starGeo, starMat);
   scene.add(stars);
 
+  /* ---- 银河旋臂星云（双旋臂，黑金基调） ---- */
+  var NEB_N = mobile ? 1500 : 4200;
+  var nebGeo = new THREE.BufferGeometry();
+  var nebPos = new Float32Array(NEB_N * 3), nebCol = new Float32Array(NEB_N * 3);
+  for (var i = 0; i < NEB_N; i++) {
+    var arm = i % 2;
+    var pr = Math.random();
+    var rad = 42 + Math.pow(pr, 1.35) * 235;
+    var th = arm * Math.PI + rad * 0.03 + (Math.random() * 0.6 - 0.3);
+    var y = (Math.random() - 0.5) * 7 * (1 - pr * 0.55);
+    nebPos[i*3] = Math.cos(th) * rad;
+    nebPos[i*3+1] = y - 8;
+    nebPos[i*3+2] = Math.sin(th) * rad - 185;
+    var b = 0.25 + pr * 0.5;
+    if (Math.random() < 0.8) { nebCol[i*3] = 0.5+b*0.5; nebCol[i*3+1] = 0.36+b*0.42; nebCol[i*3+2] = 0.18+b*0.24; }
+    else { nebCol[i*3] = 0.42+b*0.4; nebCol[i*3+1] = 0.3+b*0.3; nebCol[i*3+2] = 0.5+b*0.34; }
+  }
+  nebGeo.setAttribute('position', new THREE.BufferAttribute(nebPos, 3));
+  nebGeo.setAttribute('color', new THREE.BufferAttribute(nebCol, 3));
+  var nebMat = new THREE.PointsMaterial({ size: mobile ? 2.4 : 3.6, vertexColors: true, transparent: true, opacity: 0.42, depthWrite: false, blending: THREE.AdditiveBlending });
+  var nebula = new THREE.Points(nebGeo, nebMat);
+  nebula.position.y = 14;
+  scene.add(nebula);
+
+  /* ---- 流星带（周期性掠过的金色流光） ---- */
+  var METEOR_N = mobile ? 4 : 10;
+  var meteors = [];
+  (function () {
+    var baseMat = new THREE.LineBasicMaterial({ color: 0xE8D9A8, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+    for (var i = 0; i < METEOR_N; i++) {
+      var g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
+      var line = new THREE.Line(g, baseMat.clone());
+      scene.add(line);
+      meteors.push({ line: line, y: 34 + Math.random() * 46, len: 20 + Math.random() * 44, active: false, wait: Math.random() * 14, xx: 0, tt: 0, dur: 1.5 + Math.random() * 1.3 });
+    }
+  })();
+
+  /* ---- 深空之眼（远处金环，缓慢旋转） ---- */
+  var eyeGroup = new THREE.Group();
+  eyeGroup.position.set(88, 44, -238);
+  scene.add(eyeGroup);
+  var eyeDark = new THREE.Mesh(new THREE.CircleGeometry(15, 48), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.94, side: THREE.DoubleSide, depthWrite: false }));
+  eyeGroup.add(eyeDark);
+  var eyeRing1 = new THREE.Mesh(new THREE.RingGeometry(14.5, 16.6, 64), new THREE.MeshBasicMaterial({ color: 0xD9A441, transparent: true, opacity: 0.5, side: THREE.DoubleSide, depthWrite: false }));
+  eyeGroup.add(eyeRing1);
+  var eyeRing2 = new THREE.Mesh(new THREE.RingGeometry(18.2, 19.4, 64), new THREE.MeshBasicMaterial({ color: 0x9a7b33, transparent: true, opacity: 0.26, side: THREE.DoubleSide, depthWrite: false }));
+  eyeGroup.add(eyeRing2);
+  var eyeGlow = new THREE.Mesh(new THREE.RingGeometry(19.8, 26, 64), new THREE.MeshBasicMaterial({ color: 0xE8D9A8, transparent: true, opacity: 0.1, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }));
+  eyeGroup.add(eyeGlow);
+
   /* ---- 太阳组 ---- */
   var sunGroup = new THREE.Group();
   scene.add(sunGroup);
@@ -247,7 +298,7 @@
       pages.push({ mesh: mesh, ang: ang, r: r, spd: (Math.random() * 0.5 + 0.25) * (Math.random() < .5 ? 1 : -1), yb: mesh.position.y, ph: Math.random() * Math.PI * 2 });
     }
   })();
-  if (window.__guanfuDiag) window.__guanfuDiag.pages = PAGES_N;
+  if (window.__guanfuDiag) { window.__guanfuDiag.pages = PAGES_N; window.__guanfuDiag.nebula = NEB_N; window.__guanfuDiag.meteors = METEOR_N; }
 
   /* ---- 视差 ---- */
   var mx = 0, my = 0, tx = 0, ty = 0;
@@ -274,6 +325,30 @@
       rays.rotation.z += dt * 0.55 * (0.3 + cur.sun);
       rays.material.opacity = 0.8 * cur.sun;
       /* 星环旋转 */
+      /* 银河旋臂缓慢旋转 */
+      nebula.rotation.y += dt * 0.014;
+      nebula.material.opacity = 0.36 + cur.speed * 0.28;
+      /* 流星带 */
+      meteors.forEach(function (m) {
+        if (!m.active) {
+          m.wait -= dt;
+          if (m.wait <= 0) { m.active = true; m.xx = -95 - Math.random() * 30; m.tt = 0; m.dur = 1.5 + Math.random() * 1.3; }
+        } else {
+          m.tt += dt;
+          var k = m.tt / m.dur;
+          if (k >= 1) { m.active = false; m.wait = 7 + Math.random() * 9; m.line.material.opacity = 0; return; }
+          var x0 = m.xx + k * 250, y0 = m.y - k * 74;
+          var fade = Math.sin(Math.min(1, k * 3) * Math.PI / 2) * (1 - Math.max(0, (k - 0.72) / 0.28));
+          var arr = m.line.geometry.attributes.position.array;
+          arr[0] = x0 - m.len; arr[1] = y0 + m.len * 0.28; arr[2] = -150;
+          arr[3] = x0; arr[4] = y0; arr[5] = -150;
+          m.line.geometry.attributes.position.needsUpdate = true;
+          m.line.material.opacity = fade * 0.9;
+        }
+      });
+      /* 深空之眼 */
+      eyeGroup.rotation.z += dt * 0.06;
+      eyeRing1.material.opacity = 0.4 + Math.sin(t * 0.7) * 0.1;
       /* 残页漂浮 */
       pages.forEach(function (pg, pi) {
         pg.ang += dt * pg.spd * (0.35 + cur.speed * 0.85);

@@ -799,3 +799,13 @@ h1{
 .boot-note{font-size:11px;letter-spacing:.5em;color:rgba(217,164,65,.6);animation:bootpulse 1.8s ease-in-out infinite}
 @keyframes bootpulse{0%,100%{opacity:.35}50%{opacity:1}}
 @keyframes bootbreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ===== 一键全屏（透明常驻） ===== */
+.fs-btn{position:fixed;top:16px;right:16px;z-index:100000;background:transparent;border:1px solid rgba(217,164,65,.4);
+  color:rgba(228,201,138,.9);font:inherit;font-size:12px;letter-spacing:.2em;padding:8px 13px;border-radius:2px;
+  cursor:pointer;opacity:.5;display:flex;align-items:center;gap:7px;transition:opacity .3s,border-color .3s,box-shadow .3s;
+  text-transform:uppercase}
+.fs-btn svg{display:block}
+.fs-btn:hover{opacity:1;border-color:rgba(228,201,138,.95);box-shadow:0 0 16px rgba(217,164,65,.35)}
+.fs-btn.fs-on{border-color:rgba(228,201,138,.75);box-shadow:0 0 12px rgba(217,164,65,.3)}
+@media (max-width:720px){.fs-btn{display:none}}

@@ -1114,6 +1114,29 @@
     });
   }
 
+  /* ---- 一键全屏（透明常驻，首屏可见） ---- */
+  var fsBtn = $('#fsBtn');
+  function syncFs() {
+    var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    if (!fsBtn) return;
+    fsBtn.classList.toggle('fs-on', on);
+    var lbl = fsBtn.querySelector('span');
+    if (lbl) lbl.textContent = on ? '退出全屏' : '全屏';
+  }
+  if (fsBtn) {
+    fsBtn.addEventListener('click', function () {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        var el = document.documentElement;
+        (el.requestFullscreen || el.webkitRequestFullscreen).call(el);
+      }
+    });
+    document.addEventListener('fullscreenchange', syncFs);
+    document.addEventListener('webkitfullscreenchange', syncFs);
+    syncFs();
+  }
+
   /* ---- 首屏加载层：字体就绪后淡出，再展开书 ---- */
   var boot = $('#boot');
   function launchBook() {
