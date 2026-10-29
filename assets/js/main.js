@@ -12,7 +12,7 @@
 
   var steps = $$('.stage > .step');
   var cur = 0, busy = false, pending = null;
-  var gsapLib = (window.gsap && !reduced) ? window.gsap : null;
+  var gsapLib = window.gsap || null;
 
   /* ================= 故事卷：十篇 ================= */
   var STORIES = {
@@ -242,6 +242,7 @@
       chap: '观复书 · 志二 · 大寂灭 · 亲历者存',
       title: '大寂灭 · 最后一小时的供电记录',
       lead: '一页当年的私记：九执堂最后一次全体会议，与最后一小时的供电记录。',
+    img: 'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/OmlHbhxRcoEk1WxKqY1cuEtXnXf',
       body: [
         '<p>先纪历法第三千四百零二年，寂灭前一日。采掘舰队停止向内轨道供电，环段依次失压。档案库的应急灯亮着，九执堂的九张席位坐满了六张。</p>',
         '<p>亲历者的私记写道："第六席在争论第七席的航道优先权，第三席在计算失压后还能撑多久。没有人问：我们为什么要争论，而不是去修。"</p>',
@@ -268,6 +269,7 @@
       chap: '观复书 · 志四 · 时间宗教 · 钟室手记',
       title: '钟室手记 · 钟声落下之前',
       lead: '钟室守夜人的手记：复归祭前夜，钟声在熄灭之前最后一次响起。',
+    img: 'https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/ImkBb0LM1oTkMJxmTYdcQUmPnbg',
       body: [
         '<p>复归祭前夜，钟室守夜人在值班簿上写："今晚的钟声敲了十三下。最后一下的余音比前十二下都长，像是钟自己也不想停。"</p>',
         '<p>守夜人的职责不是守钟，是守"钟还在"这件事。他每晚校准一次误差，误差超过一弹指就要报钟室令。他做了二十七年，只报过一次——那一次是因为导光管积尘，钟慢了半下。</p>',
@@ -722,7 +724,7 @@
         busy = false;
         if (pending) { var p = pending; pending = null; setTimeout(function () { showStep(p.i, p.dir); }, 50); }
       };
-      if (reduced || !window.gsap) { doneSame(); return; }
+      if (!window.gsap) { doneSame(); return; }
       animateIn(to, dir, doneSame);
       return;
     }
@@ -733,6 +735,10 @@
     if (ctl) ctl.style.display = i === 0 ? 'none' : 'flex';
     var num = $('#stepNum'); if (num) num.textContent = String(i + 1).padStart(2, '0');
     var tot = $('#stepTotal'); if (tot) tot.textContent = String(steps.length).padStart(2, '0');
+    if (window.gsap && num) {
+      window.gsap.fromTo(num, { opacity: 0.25, scale: 1.55, color: '#e4c98a' },
+        { opacity: 1, scale: 1, color: '', duration: 0.7, ease: 'power2.out', overwrite: true });
+    }
     var name = $('#stepName'); if (name) name.textContent = to.getAttribute('data-name') || '';
     if (tocPanel && tocPanel.classList.contains('open')) renderToc();
     $('#nextBtn').innerHTML = i === steps.length - 1
@@ -744,7 +750,7 @@
       cur = i; busy = false;
       if (pending) { var p = pending; pending = null; setTimeout(function () { showStep(p.i, p.dir); }, 50); }
     };
-    if (reduced || !window.gsap) {
+    if (!window.gsap) {
       from.classList.remove('on');
       to.classList.add('on');
       done();
@@ -839,10 +845,12 @@
     if (!st || !layer) return;
     $('#sheetChap').textContent = st.chap;
     $('#sheetTitle').textContent = st.title;
-    $('#sheetBody').innerHTML = '<div class="st-lead">' + st.lead + '</div>' + st.body.join('');
+    var figSrc = st.img ? (/^https?:\/\//.test(st.img) ? st.img : 'assets/img/' + st.img) : '';
+    var fig = figSrc ? '<figure class="story-fig"><img src="' + figSrc + '" alt="' + st.title + ' · 史官插画"></figure>' : '';
+    $('#sheetBody').innerHTML = fig + '<div class="st-lead">' + st.lead + '</div>' + st.body.join('');
     layer.classList.add('open');
     layer.setAttribute('aria-hidden', 'false');
-    if (!reduced && window.gsap) {
+    if (window.gsap) {
       var sheet = document.querySelector('#storyLayer .sheet');
       gsap.fromTo(sheet, { opacity: 0, y: 30, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'power2.out', clearProps: 'transform', overwrite: true });
       var paras = $('#sheetBody').children;
@@ -888,7 +896,7 @@
     var pgR = document.querySelector('.book-page.page-1');
     var front = document.querySelector('.book-front');
     document.querySelectorAll('.book-page').forEach(function (p) { p.classList.add('open'); });
-    if (reduced || !window.gsap) {
+    if (!window.gsap) {
       bookScene.classList.add('done');
       beginStage();
       return;
@@ -921,7 +929,7 @@
   function bookIntro() {
     bookScene.classList.add('on');
     document.querySelector('.desk').classList.add('on');
-    if (reduced || !window.gsap) {
+    if (!window.gsap) {
       gsap.set(heroBook, { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 1, visibility: 'visible', opacity: 1 });
       if (bookHint) bookHint.classList.add('on');
       bookScene.addEventListener('click', function () { openBook(); }, { once: true });
@@ -1007,7 +1015,15 @@
     var end = document.querySelector('.book-end');
     if (end) end.classList.add('on');
     var again = $('#bookAgain');
-    if (again) again.addEventListener('click', function () { location.reload(); });
+    if (again) again.addEventListener('click', function () {
+      bookScene.classList.remove('on');
+      bookScene.classList.add('done');
+      if (end) end.classList.remove('on');
+      gsap.set(heroBook, { visibility: 'hidden' });
+      var stageEl = document.querySelector('.stage');
+      if (stageEl) gsap.set(stageEl, { scale: 1, opacity: 1 });
+      beginStage();
+    });
   }
 
 
@@ -1098,5 +1114,21 @@
     });
   }
 
-  bookIntro();
+  /* ---- 首屏加载层：字体就绪后淡出，再展开书 ---- */
+  var boot = $('#boot');
+  function launchBook() {
+    if (boot) {
+      if (window.gsap) {
+        gsap.to(boot, { opacity: 0, duration: 1.1, ease: 'power2.out',
+          onComplete: function () { boot.style.display = 'none'; } });
+      } else { boot.style.display = 'none'; }
+    }
+    bookIntro();
+  }
+  if (document.fonts && document.fonts.ready) {
+    var bootTimer = setTimeout(launchBook, 4000);
+    document.fonts.ready.then(function () { clearTimeout(bootTimer); launchBook(); });
+  } else {
+    launchBook();
+  }
 })();

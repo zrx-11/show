@@ -35,6 +35,7 @@
 <script defer src="assets/js/main.js"></script>
 </head>
 <body>
+<div id="boot" aria-hidden="true"><div class="boot-inner"><span class="boot-en">GUANFU &middot; THE RECURSION</span><div class="boot-mark"></div><h1 class="boot-title">观复文明</h1><span class="boot-line"></span><span class="boot-note">展卷中&hellip;</span></div></div>
 <canvas id="space" aria-hidden="true"></canvas>
 
 <!-- ===== 开场·书卷场景：书架 / 桌子 / 飞书 ===== -->
@@ -115,7 +116,7 @@
 
 <header class="topnav">
   <div class="brand">观复<small>GUANFU</small></div>
-  <div class="stepinfo"><span id="stepNum">01</span><em>/</em><span id="stepTotal">15</span><span class="dot">·</span><span id="stepName">序 · 观复文明</span></div>
+  <div class="stepinfo"><span id="stepNum">01</span><em>/</em><span id="stepTotal">20</span><span class="dot">·</span><span id="stepName">序 · 观复文明</span></div>
 </header>
 <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -142,6 +143,11 @@
       <div class="sec-kicker">本纪一 · 年表</div>
       <h2>三个时代，一次崩溃，一个答案</h2>
       <p class="lede">先纪用恒星剩余长出了城市文明；大寂灭教会了幸存者一件事——多头共治会内耗到死；新纪元据此立下一条不可修改的宪法。</p>
+    </div>
+    <div class="starline" aria-hidden="true">
+      <div class="sl-node n1"><i></i><em>约 1200 年前</em><span>先纪 · 环日城邦</span></div>
+      <div class="sl-node n2"><i></i><em>纪元断裂</em><span>大寂灭</span></div>
+      <div class="sl-node n3"><i></i><em>现在</em><span>新纪元 · 观复</span></div>
     </div>
     <div class="timeline">
       <div class="tl">
@@ -336,16 +342,16 @@
       <p class="lede">柴尔德的十条在新纪元基本全中——第 6 条甚至是反着满足的：他们在解读死人的记录。点击卡片看细节。</p>
     </div>
     <div class="c10-grid big">
-      <div class="c10-card"><div class="top"><span class="no">(1)</span><h4>大型城市中心</h4></div><p class="brief">灵台城：环绕大图书馆生长的垂直塔城。</p><div class="detail"><div>城市的中枢是档案——一切布局都围绕"能持续阅读"设计。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(2)</span><h4>专门职业</h4></div><p class="brief">解经人、铸旧师、探墟队、观止院执事、守典人、穹顶农师。</p><div class="detail"><div>职业声望按离"先纪"有多近排序。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(3)</span><h4>生产者剩余</h4></div><p class="brief">穹顶温室 + 水培农业，剩余由中枢统一征调。</p><div class="detail"><div>分配按功过品级而非货币——能卖的前纪技术不允许私有。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(4)</span><h4>纪念性建筑</h4></div><p class="brief">修复的聚变堆、点亮的轨道电梯残段、大图书馆本体就是祭坛。</p><div class="detail"><div>纪念的不是神或王，是"我们还能复原"。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(5)</span><h4>统治阶级</h4></div><p class="brief">唯一哲人王，其下各司其职，无第二权力中心。</p><div class="detail"><div>不是"一个人管一切"，是"所有分散的权都汇于一点"。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(6)</span><h4>记录系统</h4></div><p class="brief">一整套死语言——上层建筑建立在破译前纪数据库之上。</p><div class="detail"><div>反着满足：他们是解读记录的人，不是创造记录的人。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(7)</span><h4>实用科学</h4></div><p class="brief">逆向工程学：复原即研究。</p><div class="detail"><div>会修聚变堆，但不会设计一座新的——技术等级=解读等级。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(8)</span><h4>纪念性艺术</h4></div><p class="brief">临摹、复制、陈列先纪遗物；壁画主题"大寂灭与复归之光"。</p><div class="detail"><div>最受尊重的艺术家是还原度最高的临摹者。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(9)</span><h4>稳定原料进口</h4></div><p class="brief">最重要的进口是远征搜罗的先纪遗物——探墟队是"贸易船队"。</p><div class="detail"><div>遗物按"可复原度"定价，最高级的是完整档案核心。</div></div></div>
-      <div class="c10-card"><div class="top"><span class="no">(10)</span><h4>常驻专业工匠</h4></div><p class="brief">铸旧师行会，师徒终身制，技术密不外传。</p><div class="detail"><div>工匠连同行会、秘方、师承一起固化——与古代匠人完全同构。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(1)</span><h4>大型城市中心</h4></div><span class="orig">柴尔德原义 · 人口规模与密度远超以往定居点</span><p class="brief">灵台城：环绕大图书馆生长的垂直塔城。</p><div class="detail"><div>城市的中枢是档案——一切布局都围绕"能持续阅读"设计。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(2)</span><h4>专门职业</h4></div><span class="orig">柴尔德原义 · 工匠、商人、官员、祭司等专门职业脱离农牧</span><p class="brief">解经人、铸旧师、探墟队、观止院执事、守典人、穹顶农师。</p><div class="detail"><div>职业声望按离"先纪"有多近排序。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(3)</span><h4>生产者剩余</h4></div><span class="orig">柴尔德原义 · 初级生产者产出剩余，养活不直接干活的人</span><p class="brief">穹顶温室 + 水培农业，剩余由中枢统一征调。</p><div class="detail"><div>分配按功过品级而非货币——能卖的前纪技术不允许私有。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(4)</span><h4>纪念性建筑</h4></div><span class="orig">柴尔德原义 · 神庙、宫殿等公共工程——纪念性建筑</span><p class="brief">修复的聚变堆、点亮的轨道电梯残段、大图书馆本体就是祭坛。</p><div class="detail"><div>纪念的不是神或王，是"我们还能复原"。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(5)</span><h4>统治阶级</h4></div><span class="orig">柴尔德原义 · 国家机器、阶层分化与贡赋制度</span><p class="brief">唯一哲人王，其下各司其职，无第二权力中心。</p><div class="detail"><div>不是"一个人管一切"，是"所有分散的权都汇于一点"。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(6)</span><h4>记录系统</h4></div><span class="orig">柴尔德原义 · 文字或书写系统，服务于账目与行政</span><p class="brief">一整套死语言——上层建筑建立在破译前纪数据库之上。</p><div class="detail"><div>反着满足：他们是解读记录的人，不是创造记录的人。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(7)</span><h4>实用科学</h4></div><span class="orig">柴尔德原义 · 历法、几何、度量衡等实用知识</span><p class="brief">逆向工程学：复原即研究。</p><div class="detail"><div>会修聚变堆，但不会设计一座新的——技术等级=解读等级。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(8)</span><h4>纪念性艺术</h4></div><span class="orig">柴尔德原义 · 风格化的雕塑、壁画等纪念性艺术</span><p class="brief">临摹、复制、陈列先纪遗物；壁画主题"大寂灭与复归之光"。</p><div class="detail"><div>最受尊重的艺术家是还原度最高的临摹者。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(9)</span><h4>稳定原料进口</h4></div><span class="orig">柴尔德原义 · 远距离贸易，长期进口原料</span><p class="brief">最重要的进口是远征搜罗的先纪遗物——探墟队是"贸易船队"。</p><div class="detail"><div>遗物按"可复原度"定价，最高级的是完整档案核心。</div></div></div>
+      <div class="c10-card"><div class="top"><span class="no">(10)</span><h4>常驻专业工匠</h4></div><span class="orig">柴尔德原义 · 定居的专职匠人，不再从事生产</span><p class="brief">铸旧师行会，师徒终身制，技术密不外传。</p><div class="detail"><div>工匠连同行会、秘方、师承一起固化——与古代匠人完全同构。</div></div></div>
     </div>
     <div class="c10-ctl"><button id="c10All" type="button">全部展开 / 收起</button></div>
   </div>

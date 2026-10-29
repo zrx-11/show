@@ -13,7 +13,12 @@
   var mobile = window.innerWidth < 720;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !mobile, alpha: true });
+  try {
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !mobile, alpha: true });
+  } catch (err) {
+    document.body.classList.add('no-three');
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   var scene = new THREE.Scene();
@@ -29,7 +34,7 @@
 
   /* ---- 背景星尘（2000 点，整体缓慢自转） ---- */
   var starGeo = new THREE.BufferGeometry();
-  var starN = 2000, starPos = new Float32Array(starN * 3), starCol = new Float32Array(starN * 3);
+  var starN = mobile ? 900 : 2000, starPos = new Float32Array(starN * 3), starCol = new Float32Array(starN * 3);
   for (var i = 0; i < starN; i++) {
     var r = 120 + Math.random() * 320;
     var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
@@ -151,7 +156,7 @@
 
   /* ---- 废墟点阵（地面） ---- */
   var ruinGeo = new THREE.BufferGeometry();
-  var ruinN = 420, ruinPos = new Float32Array(ruinN * 3);
+  var ruinN = mobile ? 200 : 420, ruinPos = new Float32Array(ruinN * 3);
   for (var rui = 0; rui < ruinN; rui++) {
     var x = (Math.random() - 0.5) * 220, z = (Math.random() - 0.5) * 220;
     ruinPos[rui*3] = x; ruinPos[rui*3+1] = -34 + Math.random() * 5; ruinPos[rui*3+2] = z - 60;
@@ -198,7 +203,9 @@
   function setProgress(p) {
     p = Math.max(0, Math.min(1, p));
     var c = cur;
-    c.sun = p < 0.07 ? 1 : p < 0.13 ? 1 - seg(p, 0.07, 0.13, 0, 0.88) : 0.12;
+    var sun = p < 0.07 ? 1 : p < 0.13 ? 1 - seg(p, 0.07, 0.13, 0, 0.88) : 0.12;
+    /* 大寂灭幕（p 0.16–0.34）：恒星进一步熄灭至 0.03，重建后回到暗淡微光 */
+    c.sun = (p >= 0.16 && p < 0.34) ? Math.max(0.03, sun - seg(p, 0.16, 0.34, 0, 0.09)) : sun;
     c.ra = p < 0.2 ? 1 : p < 0.34 ? Math.max(0.06, 1 - seg(p, 0.2, 0.34, 0, 1)) : p < 0.6 ? 0.08 : seg(p, 0.6, 0.75, 0.08, 0.92);
     c.speed = p < 0.2 ? 1.6 : p < 0.34 ? 1.6 * (1 - seg(p, 0.2, 0.34, 0, 0.92)) : p < 0.6 ? 0.12 : seg(p, 0.6, 0.75, 0.12, 1.05);
     c.rb = Math.max(0, seg(p, 0.2, 0.36, 0, 1) - seg(p, 0.62, 0.85, 0, 0.5));
@@ -214,14 +221,37 @@
   var curP = 0, targetP = 0;
   function go(p) {
     targetP = Math.max(0, Math.min(1, p));
-    if (reduced) { curP = targetP; setProgress(curP); }
   }
   window.__guanfuSpace = { go: go, setProgress: setProgress, getP: function () { return curP; } };
   window.__guanfuDiag = { ringA: ringA, ringB: ringB, rays: rays, planets: planets, orbit1: orbit1, orbit2: orbit2, stars: stars };
 
+  /* ---- 漂浮残页（废土史书碎片） ---- */
+  var PAGES_N = mobile ? 3 : 6;
+  var pages = [];
+  (function () {
+    var c = document.createElement('canvas'); c.width = 64; c.height = 88;
+    var g = c.getContext('2d');
+    g.strokeStyle = 'rgba(217,164,65,.9)'; g.lineWidth = 1.3;
+    g.strokeRect(6, 6, 52, 76);
+    g.beginPath(); g.moveTo(6, 6); g.lineTo(38, 38); g.stroke();
+    g.fillStyle = 'rgba(217,164,65,.4)';
+    g.fillRect(15, 26, 30, 2); g.fillRect(15, 37, 22, 2); g.fillRect(15, 48, 34, 2); g.fillRect(15, 59, 18, 2);
+    var tex = new THREE.CanvasTexture(c);
+    for (var i = 0; i < PAGES_N; i++) {
+      var mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.1 + Math.random() * 0.07, side: THREE.DoubleSide, depthWrite: false });
+      var mesh = new THREE.Mesh(new THREE.PlaneGeometry(2.6 + Math.random() * 2.4, 3.6 + Math.random() * 3.2), mat);
+      var ang = Math.random() * Math.PI * 2, r = 34 + Math.random() * 40;
+      mesh.name = 'page';
+      mesh.position.set(Math.cos(ang) * r, -8 + Math.random() * 34, Math.sin(ang) * r - 30);
+      scene.add(mesh);
+      pages.push({ mesh: mesh, ang: ang, r: r, spd: (Math.random() * 0.5 + 0.25) * (Math.random() < .5 ? 1 : -1), yb: mesh.position.y, ph: Math.random() * Math.PI * 2 });
+    }
+  })();
+  if (window.__guanfuDiag) window.__guanfuDiag.pages = PAGES_N;
+
   /* ---- 视差 ---- */
   var mx = 0, my = 0, tx = 0, ty = 0;
-  if (!mobile && !reduced) {
+  if (!mobile) {
     window.addEventListener('pointermove', function (e) {
       tx = (e.clientX / window.innerWidth - .5) * 2;
       ty = (e.clientY / window.innerHeight - .5) * 2;
@@ -233,8 +263,8 @@
   var t = 0, planetT = 0;
   var starColArr = [1, 1, 1];
   function render() {
-    if (!reduced) {
-      var dt = clock.getDelta();
+    {
+      var dt = clock.getDelta() * slowK;
       t += dt;
       /* 太阳脉动与光晕 */
       var pulse = 1 + Math.sin(t * 0.8) * 0.035;
@@ -244,10 +274,16 @@
       rays.rotation.z += dt * 0.55 * (0.3 + cur.sun);
       rays.material.opacity = 0.8 * cur.sun;
       /* 星环旋转 */
-      /* 镜头呼吸微动：极缓慢漂移产生电影感 */
-      camera.position.x = Math.sin(t * 0.3) * 9;
-      camera.position.y = 2 + Math.cos(t * 0.22) * 5;
-      camera.lookAt(0, 0, 0);
+      /* 残页漂浮 */
+      pages.forEach(function (pg, pi) {
+        pg.ang += dt * pg.spd * (0.35 + cur.speed * 0.85);
+        pg.mesh.position.x = Math.cos(pg.ang) * pg.r;
+        pg.mesh.position.z = Math.sin(pg.ang) * pg.r - 30;
+        pg.mesh.position.y = pg.yb + Math.sin(t * 0.5 + pg.ph) * 5;
+        pg.mesh.rotation.y = pg.ang * 0.6;
+        pg.mesh.rotation.z = Math.sin(t * 0.4 + pg.ph) * 0.35;
+        pg.mesh.material.opacity = 0.12 * (0.5 + cur.speed) + cur.collapse * 0.08;
+      });
       ringA.rotation.z += dt * cur.speed;
       ringB.rotation.z -= dt * cur.speed * 0.35;
       ringB.material.opacity = cur.rb * 0.55;
@@ -296,28 +332,26 @@
       starColArr[0] = 1 - mix * 0.5; starColArr[1] = 1 - mix * 0.62; starColArr[2] = 1 - mix * 0.85;
       starMat.color.setRGB(starColArr[0], starColArr[1], starColArr[2]);
       stars.rotation.y += dt * 0.025;
-      /* 视差 */
+      /* 视差 + 镜头呼吸叠加 */
       mx += (tx - mx) * 0.04; my += (ty - my) * 0.04;
-      camera.position.x = mx * 40;
-      camera.position.y = 42 + my * 30;
+      camera.position.x = mx * 40 + Math.sin(t * 0.3) * 9;
+      camera.position.y = 42 + my * 30 + Math.cos(t * 0.22) * 5;
     }
     camera.lookAt(0, 18, -80);
     renderer.render(scene, camera);
   }
 
+  var slowK = reduced ? 0.45 : 1;
   function tick() {
     if (!document.hidden) {
-      if (!reduced) {
-        curP += (targetP - curP) * 0.055;
-        if (Math.abs(targetP - curP) < 0.0008) curP = targetP;
-        setProgress(curP);
-      }
+      curP += (targetP - curP) * 0.055 * slowK;
+      if (Math.abs(targetP - curP) < 0.0008) curP = targetP;
+      setProgress(curP);
       render();
     }
     requestAnimationFrame(tick);
   }
-  if (reduced) { setProgress(0); render(); }
-  else { tick(); }
+  tick();
   go(0.02);
 
   /* ---- 尺寸适配 ---- */
