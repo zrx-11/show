@@ -52,7 +52,7 @@ body.no-three::before{content:"";position:fixed;inset:0;z-index:-2;
 .stepinfo em{color:var(--ink3);margin:0 5px;font-style:normal}
 .stepinfo .dot{margin:0 9px;color:var(--goldD)}
 .stepinfo #stepNum{color:var(--gold2);font-weight:700}
-.progress{position:fixed;top:0;left:0;height:2px;width:6.7%;z-index:21;
+.progress{position:fixed;top:0;left:0;height:2px;width:5%;z-index:21;
   background:linear-gradient(90deg,var(--goldD),var(--gold),var(--gold2));
   box-shadow:0 0 12px rgba(217,164,65,.7);transition:width .5s ease}
 
@@ -537,7 +537,7 @@ h1{
 .desk-leg-l{left:8%}.desk-leg-r{right:8%}
 
 /* 书（3D 模型） */
-.book{position:absolute;left:50%;top:50%;width:520px;height:700px;transform-style:preserve-3d;
+.book{position:absolute;left:50%;top:50%;width:520px;height:700px;transform-style:preserve-3d;perspective:1500px;
   visibility:hidden;opacity:0;transform:translate(-50%,-50%) scale(.001)}
 .book-front,.book-back{position:absolute;inset:0;border-radius:8px 16px 16px 8px;transform-style:preserve-3d;
   background:linear-gradient(135deg,#1A120A 0%,#241A0E 38%,#171009 78%,#0E0A06 100%);
@@ -553,7 +553,7 @@ h1{
   box-shadow:0 30px 70px rgba(0,0,0,.5),inset 0 0 60px rgba(120,90,40,.16);
   color:#3A2E1C;display:none;flex-direction:column}
 .book-page.pg-left{left:0;width:50%;border-radius:16px 0 0 16px;align-items:flex-end;text-align:right;
-  padding:46px 30px 40px 34px}
+  transform-origin:right center;padding:46px 30px 40px 34px}
 .book-page.pg-left .pg-left-inner{max-width:180px;text-align:left;align-self:flex-start}
 .book-page.page-1{left:50%;width:50%;border-radius:0 16px 16px 0;padding:52px 34px 40px 58px}
 .book-page.open{display:flex}

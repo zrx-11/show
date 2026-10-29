@@ -199,6 +199,58 @@
         '<p class="st-dialogue">——第一炉火不是火。它是"下一次仍然愿意点火"的约定。城市把这约定写进历法，写进钟声，写进每一份"净值：正"的任务簿。</p>'
       ]
     },
+    s15: {
+      chap: '观复书 · 本纪二 · 王的一天',
+      title: '王的一天 · 晨钟五响之后',
+      lead: '王权的合法性来自事实——这份事实，需要他每一天重新做到。',
+      body: [
+        '<p>导光管未亮，观止院的呈文已经排在御案。三份勘误复核、一份探墟预算、一份谏书归档。执事按规矩放正：呈文不许折角，不许垫纸，不许压上别的东西。</p>',
+        '<p>王逐件批。勘误复核批"可"，预算批"续"，谏书归档只盖印不批字。侍钟官在一旁记录时辰——他的职责不是看王批什么，是记王批了多久。时间本身，是档案。</p>',
+        '<p>批完，王在日历上勾掉"今日"。这个动作没有观众，侍钟官也只是记下它。但观止院知道：王在位一日，即完成文明一日的工作——此记不称颂，只存档。</p>',
+        '<p>午刻，探墟队出队令送呈。王看罢，在边角写了一个字：续。没有解释。队伍因此成行，也因此记住：他们的存在是被一个事实允许的——这个事实是王记得他们。</p>',
+        '<p>子夜，王独自走进钟室，校准全城的钟。误差归零的瞬间，钟声敲响——像整个文明的心跳。守典人记下这一笔，存档，不评。</p>',
+        '<p class="st-dialogue">观止院簿记："王不解释他的校准。他做了，钟就准了。钟准了，城就照常运转。这就是全部。"</p>'
+      ]
+    },
+    s16: {
+      chap: '观复书 · 志六 · 复归祭',
+      title: '复归祭 · 全城静默的一昼夜',
+      lead: '每年寂灭日，灵台城熄灯一昼夜。拂晓，重新点亮所有修复设备。',
+      body: [
+        '<p>钟室熄灯，全城随之。没有钟声，只有默诵——念先纪历法上最后一年的名字，念那一年每一个在岗位上熄灭的人。市场停市，探墟停队，观止院封卷。</p>',
+        '<p>静默从钟室出发，像水一样漫过每一条回廊。厨灶停火，炉芯保温，灯不点，门不锁——观复人相信，一夜不锁门，比一百条门规更记得住"我们曾经熄灭过"。</p>',
+        '<p>拾荒者小农社在这一夜把多余的收成送进城，不说话，放下就走。他们不参加祭典，但他们知道城里人每年有一天不点灯，所以他们在城外点了一盏灯——让城在静默里仍能看见一点别人的光。</p>',
+        '<p>蛮族使节头一次获准在寂灭日入境。他没有进城，在城门外点了一盏自己的灯，隔着导光管的断面，和城里人对望了一整夜。</p>',
+        '<p>拂晓，晨光沿导光管进入钟室。王亲手点亮第一盏灯，然后钟声从钟室向外漫开——一盏灯接一盏灯，全城在钟声里重新亮起。修复设备随点灯依次重启，误差归零。</p>',
+        '<p class="st-dialogue">仪式不属于任何神。它属于一件事：我们曾经熄灭过，而我们选择记住它。时间宗教合法存在，归王所有——因为复归祭祭的不是神，是熄灭本身。</p>'
+      ]
+    },
+    s17: {
+      chap: '观复书 · 志七 · 观止院簿',
+      title: '观止院簿 · 一日之簿，千日之律',
+      lead: '观止院的一天，就是文明自我修正的一天。',
+      body: [
+        '<p>辰时，谏书分两柜登记：署名柜入正册，匿名柜入杂册。执事依规誊录，不评、不改、不注。重规留下的规矩是：谏书的价值不取决于署名，取决于它是否被完整地保存。</p>',
+        '<p>新执事第一天总问：匿名谏书为什么不销毁？老执事带他到档案库最里面的柜子，打开，里面是三十年的匿名谏书，装订整齐。老执事说："这三十年里，观止院改过十七条规矩，有十一条是从这里来的。"</p>',
+        '<p>巳时，历法勘误函进入复核：守典人宗院复核、钟室比对、观止院归档。三枚印章缺一不可——这是先纪九执堂用崩溃换来的教训：一票否决，不如三票互校。</p>',
+        '<p>午时，探墟队回来交卷宗。出队令上的"续"字被誊进卷首，附注时间基准戳。卷宗和勘误函同柜，锁上。锁没有钥匙——观止院的档案只进不删。</p>',
+        '<p>酉时，封卷。执事点验今日卷宗数，报给守典人，守典人报给钟室，钟室在历法上记一笔"今日卷清"。全城唯一知道观止院每天做了什么的，是历法上那些从不被读的小字。</p>',
+        '<p class="st-dialogue">没有人知道观止院在防什么。观止院自己知道：它防的不是敌人，是遗忘。将来某一天，如果文明需要知道自己哪里错，这些卷宗就是唯一的证据。</p>'
+      ]
+    },
+    s18: {
+      chap: '观复书 · 列传三 · 第二炉火',
+      title: '第二炉火 · 废墟里住着人',
+      lead: '十年后，重弦带队探墟。这一次，废墟里住着人。',
+      body: [
+        '<p>探墟队按旧图进发。出城三里，老队员停了——机械野草的巡逻路径多了一条支线，通向一片被清理过的洼地。野草不会绕路，除非有东西改变了它的矿区边界。</p>',
+        '<p>洼地中央有一堆灰烬，还温着。灰烬旁边码着两排"战利品"：拆开的旧线路板、洗过的玻璃瓶、一根绑着红绳的金属管——像集市上摆放的货物，一样一样，都很干净。</p>',
+        '<p>徽声老了，在队尾压阵。他蹲下来看了看灰烬，只说了一句："野草不捡柴。有人。"队伍就地扎营，等。</p>',
+        '<p>天黑以后，营地的人从洼地四周走出来。他们没有武器，只有火——每人手里一支火把，火光照见他们的脸：有老人，有孩子，有断了一只手的中年人。领头的女人说："我们不是来抢的。我们想看看，你们那本书上，写没写我们。"</p>',
+        '<p>一个孩子追上来，把一块磨得发亮的废电路板塞进重弦手里："这是我们的书。你会读字，请你看看。"重弦接过来，翻来覆去看了很久，说："我会带回去。放不进档案库，就放在钟室里。"</p>',
+        '<p class="st-dialogue">回城报告，重弦在任务簿上写："获炉芯一座。另获他者之书一部，未释读。"白榆在批注栏添了一行："第一炉火点给城市。第二炉火，点给别人。"</p>'
+      ]
+    },
     s14: {
       chap: '观复书 · 全卷 · 完整设定',
       title: '观复文明 · 全书纲目与设定全文',
@@ -719,22 +771,35 @@
   function openBook() {
     if (opened) return; opened = true;
     if (bookHint) bookHint.classList.remove('on');
-    gsap.to(document.querySelector('.book-front'), {
-      rotateY: -158, duration: 1.15, ease: 'power2.inOut',
-      transformOrigin: 'left center', overwrite: true
-    });
-    var pg = document.querySelector('.book-page.page-1');
+    var pgL = document.querySelector('.book-page.pg-left');
+    var pgR = document.querySelector('.book-page.page-1');
+    var front = document.querySelector('.book-front');
     document.querySelectorAll('.book-page').forEach(function (p) { p.classList.add('open'); });
-    setTimeout(function () {
-      if (pg) {
-        gsap.fromTo(pg.querySelectorAll('.page-kick,.page-title,.page-line,.page-txt'),
-          { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12 });
-      }
-    }, 260);
-    setTimeout(function () {
+    if (reduced || !window.gsap) {
       bookScene.classList.add('done');
       beginStage();
-    }, 1850);
+      return;
+    }
+    var scaleOpen = window.innerWidth < 720 ? 1.12 : 1.56;
+    var lItems = pgL ? pgL.querySelectorAll('.page-kick,.page-title,.page-line,.page-txt') : null;
+    var tl = gsap.timeline();
+    /* 封面缓缓翻起 */
+    tl.to(front, { rotateY: -163, duration: 1.05, ease: 'power3.inOut', transformOrigin: 'left center', overwrite: true }, 0);
+    /* 摊开：书整体放大前倾，左右页自书脊向外摊平 */
+    tl.to(heroBook, { scale: scaleOpen, y: -30, rotationX: -5, duration: 1.5, ease: 'power3.inOut' }, 0.45);
+    if (pgR) tl.to(pgR, { rotateY: -9, duration: 1.5, ease: 'power3.inOut', transformOrigin: 'left center' }, 0.45);
+    if (pgL) tl.to(pgL, { rotateY: 9, duration: 1.5, ease: 'power3.inOut', transformOrigin: 'right center' }, 0.45);
+    /* 左页内容浮现 */
+    if (lItems && lItems.length) tl.fromTo(lItems, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.14, ease: 'power2.out' }, 1.6);
+    /* 停留，让读者读完扉页 */
+    tl.to({}, { duration: 1.15 });
+    /* 内容滑入舞台：书向后退去淡出，正卷同时浮现 */
+    tl.to(heroBook, { y: 110, scale: 1.05, opacity: 0, duration: 1.0, ease: 'power2.in' }, '+=0.1')
+      .add(function () {
+        gsap.set(heroBook, { scale: 1, y: 0, rotationX: 0, opacity: 1 });
+        bookScene.classList.add('done');
+        beginStage();
+      }, '+=0.25');
   }
 
   function bookIntro() {
@@ -752,14 +817,22 @@
       visibility: 'visible', opacity: 0
     });
     var tl = gsap.timeline();
-    tl.to(heroBook, { x: 0, y: 0, scale: 1, opacity: 1, duration: 1.9, ease: 'expo.out', overwrite: true })
-      .to(bookHint, { opacity: 1, duration: 0.7 }, '-=0.4')
-      .to({}, { duration: 2.2 })
+    /* 1) 从书架"拿起"：轻抬离架，书略放大 */
+    tl.to(heroBook, { opacity: 1, y: off.y - 52, scale: 0.2, rotationX: -14, duration: 0.6, ease: 'power2.out', overwrite: true })
+      /* 2) 拿向桌前：向屏幕中心平移，途中继续长大 */
+      .to(heroBook, { x: 0, y: off.y - 70, scale: 0.55, duration: 1.05, ease: 'power2.out' })
+      /* 3) 放落桌面：落低、放大到台面尺寸 */
+      .to(heroBook, { y: 0, scale: 1, rotationX: 0, duration: 0.8, ease: 'power3.out' })
+      /* 4) 落桌微弹：轻微压实，像真的搁在桌上 */
+      .to(heroBook, { y: 7, duration: 0.1, ease: 'power2.out' })
+      .to(heroBook, { y: 0, duration: 0.2, ease: 'power2.inOut' })
+      .to(bookHint, { opacity: 1, duration: 0.7 })
+      .to({}, { duration: 2.1 })
       .add(function () { openBook(); });
     bookScene.addEventListener('click', function () {
       if (opened) return;
       tl.pause();
-      gsap.set(heroBook, { x: 0, y: 0, scale: 1, opacity: 1 });
+      gsap.set(heroBook, { x: 0, y: 0, scale: 1, rotationX: 0, opacity: 1 });
       openBook();
     }, { once: true });
   }
@@ -767,11 +840,18 @@
   function bookOutro() {
     if (busy || cur !== steps.length - 1) return;
     opened = false;
-    gsap.to(document.querySelector('.stage'), { opacity: 0, duration: 0.8 });
-    bookScene.classList.remove('done'); bookScene.classList.add('on');
-    gsap.set(heroBook, { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 1, visibility: 'visible', opacity: 1 });
+    var stageEl = document.querySelector('.stage');
     var pg = document.querySelector('.book-page.page-1');
-    document.querySelectorAll('.book-page').forEach(function (p) { p.classList.add('open'); });
+    var pgL = document.querySelector('.book-page.pg-left');
+    var front = document.querySelector('.book-front');
+    var pages = document.querySelectorAll('.book-page');
+    /* 书先回到桌面（翻开待命） */
+    bookScene.classList.remove('done'); bookScene.classList.add('on');
+    gsap.set(heroBook, { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 1, rotationX: 0, visibility: 'visible', opacity: 1 });
+    gsap.set(pg, { rotateY: -9, transformOrigin: 'left center' });
+    gsap.set(pgL, { rotateY: 9, transformOrigin: 'right center' });
+    gsap.set(front, { rotateY: -158, transformOrigin: 'left center' });
+    pages.forEach(function (p) { p.classList.add('open'); });
     if (pg) {
       pg.innerHTML =
         '<div class="page-kick">卷末 · 跋</div>' +
@@ -779,15 +859,27 @@
         '<div class="page-line"></div>' +
         '<p class="page-txt">我们的文明，重建于"过去"，不见于"未来"，我们的史诗只写在"现在"——当下，如愿如常。</p>';
     }
-    gsap.set(document.querySelector('.book-front'), { rotateY: -158, transformOrigin: 'left center' });
     var off = shelfOffset();
     var tl = gsap.timeline();
-    tl.fromTo(pg ? pg.querySelectorAll('*') : [], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 })
-      .to({}, { duration: 2.0 })
-      .to(document.querySelector('.book-front'), { rotateY: 0, duration: 1.0, ease: 'power2.inOut' })
-      .to({}, { duration: 0.5 })
-      .to(heroBook, { x: off.x, y: off.y, scale: 0.06, duration: 1.4, ease: 'power2.in' })
-      .to({}, { duration: 0.7 })
+    /* 1) 内容收进书里：舞台向书心缩小淡出，书页上的跋文同时浮现 */
+    tl.to(stageEl, { scale: 0.7, opacity: 0, duration: 1.0, ease: 'power2.in', transformOrigin: '50% 50%' }, 0);
+    tl.fromTo(pg ? pg.querySelectorAll('*') : [], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 }, 0.25)
+      .to({}, { duration: 1.9 })
+      /* 2) 合书：封面合拢与两页翻回书脊同步 */
+      .to(front, { rotateY: 0, duration: 0.95, ease: 'power2.inOut' }, '<')
+      .to(pg, { rotateY: -95, duration: 0.95, ease: 'power2.inOut', transformOrigin: 'left center' }, '<')
+      .to(pgL, { rotateY: 95, duration: 0.95, ease: 'power2.inOut', transformOrigin: 'right center' }, '<')
+      .add(function () {
+        pages.forEach(function (p) { p.classList.remove('open'); });
+        if (stageEl) stageEl.style.pointerEvents = 'none';
+      })
+      .to({}, { duration: 0.45 })
+      /* 3) 拿起：合好的书从桌面轻轻抬起 */
+      .to(heroBook, { y: -50, scale: 1.02, rotationX: -8, duration: 0.6, ease: 'power2.out' })
+      /* 4) 放回书架：移向书架原位并缩小，最后轻轻落定 */
+      .to(heroBook, { x: off.x, y: off.y - 30, scale: 0.22, duration: 0.9, ease: 'power2.in' })
+      .to(heroBook, { y: off.y, scale: 0.06, rotationX: 0, duration: 0.55, ease: 'power2.out' })
+      .to({}, { duration: 0.6 })
       .add(function () { showEndCard(); });
   }
 
