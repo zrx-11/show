@@ -701,6 +701,7 @@
       ]
     }
   };
+  window.STORIES = STORIES;
 
   /* ---- 幕切换（含排队：动画未完成时点击自动续播，连点按次数累进） ---- */
   function requestStep(i, dir) {
@@ -824,7 +825,13 @@
     var show = typeof force === 'boolean' ? force : !tocPanel.classList.contains('open');
     tocPanel.classList.toggle('open', show);
     tocPanel.setAttribute('aria-hidden', String(!show));
-    if (show) renderToc();
+    if (show) {
+      renderToc();
+      if (tocList) {
+        var curLi = tocList.querySelector('.toc-item.cur');
+        if (curLi) { try { curLi.scrollIntoView({ block: 'center' }); } catch (e) { curLi.scrollIntoView(); } }
+      }
+    }
   }
   var tocBtn = $('#tocBtn');
   if (tocBtn) tocBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleToc(); });
@@ -930,7 +937,10 @@
     bookScene.classList.add('on');
     document.querySelector('.desk').classList.add('on');
     if (!window.gsap) {
-      gsap.set(heroBook, { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 1, visibility: 'visible', opacity: 1 });
+      var st = heroBook.style;
+      st.visibility = 'visible'; st.opacity = '1';
+      st.left = '50%'; st.top = '50%';
+      st.transform = 'translate(-50%,-50%) scale(1) rotateX(0deg)';
       if (bookHint) bookHint.classList.add('on');
       bookScene.addEventListener('click', function () { openBook(); }, { once: true });
       return;
@@ -969,6 +979,7 @@
     if (busy || cur !== steps.length - 1) return;
     busy = true;
     opened = false;
+    if (layer && layer.classList.contains('open')) closeStory();
     var stageEl = document.querySelector('.stage');
     var pg = document.querySelector('.book-page.page-1');
     var pgL = document.querySelector('.book-page.pg-left');
@@ -1015,16 +1026,24 @@
   function showEndCard() {
     var end = document.querySelector('.book-end');
     if (end) end.classList.add('on');
+    var full = $('#bookFull');
+    if (full && !full._bound) {
+      full._bound = true;
+      full.addEventListener('click', function (e) { e.stopPropagation(); openStory('s14'); });
+    }
     var again = $('#bookAgain');
-    if (again) again.addEventListener('click', function () {
-      bookScene.classList.remove('on');
-      bookScene.classList.add('done');
-      if (end) end.classList.remove('on');
-      gsap.set(heroBook, { visibility: 'hidden' });
-      var stageEl = document.querySelector('.stage');
-      if (stageEl) gsap.set(stageEl, { scale: 1, opacity: 1 });
-      beginStage();
-    });
+    if (again && !again._bound) {
+      again._bound = true;
+      again.addEventListener('click', function () {
+        bookScene.classList.remove('on');
+        bookScene.classList.add('done');
+        if (end) end.classList.remove('on');
+        gsap.set(heroBook, { visibility: 'hidden' });
+        var stageEl = document.querySelector('.stage');
+        if (stageEl) gsap.set(stageEl, { scale: 1, opacity: 1 });
+        beginStage();
+      });
+    }
   }
 
 
@@ -1140,7 +1159,9 @@
 
   /* ---- 首屏加载层：字体就绪后淡出，再展开书 ---- */
   var boot = $('#boot');
+  var launched = false;
   function launchBook() {
+    if (launched) return; launched = true;
     if (boot) {
       if (window.gsap) {
         gsap.to(boot, { opacity: 0, duration: 1.1, ease: 'power2.out',
