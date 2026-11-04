@@ -11,7 +11,7 @@
     "mobile": {
       "revealed": 0,
       "screenshot": "/home/user/Doubao/chats/38450149417436674/guanfu-demo/_shots/index_mobile.jpg",
-      "screenshotBytes": 19936,
+      "screenshotBytes": 20036,
       "truncated": false,
       "structure": {
         "title": "观复文明 · 建立在事实上的王权",
@@ -25,36 +25,36 @@
           "h": 844
         },
         "counts": {
-          "section": 20,
+          "section": 25,
           "h1": 3,
-          "h2": 18,
+          "h2": 23,
           "img": 0,
           "canvas": 1,
-          "svg": 1,
+          "svg": 3,
           "links": 0,
-          "buttons": 13
+          "buttons": 16
         }
       },
       "consoleErrors": [],
       "consoleWarnings": [
         {
           "type": "warning",
-          "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+          "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
           "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
         },
         {
           "type": "warning",
-          "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+          "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
           "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
         },
         {
           "type": "warning",
-          "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+          "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
           "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
         },
         {
           "type": "warning",
-          "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+          "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
           "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
         }
       ],
@@ -64,7 +64,7 @@
   },
   "engine": "playwright",
   "chromiumExec": "/opt/vm/preinstall/ms-playwright/chromium-1169/chrome-linux/chrome",
-  "elapsedSec": 3.58,
+  "elapsedSec": 3.59,
   "schemaVersion": 2,
   "status": "warning",
   "engineInfo": {
@@ -79,7 +79,7 @@
     "protocol": "file",
     "cwd": "/home/user/Doubao/chats/38450149417436674/guanfu-demo",
     "mediaMode": {
-      "reducedMotion": false
+      "reducedMotion": true
     }
   },
   "artifacts": {
@@ -87,7 +87,7 @@
       {
         "viewport": "mobile",
         "path": "/home/user/Doubao/chats/38450149417436674/guanfu-demo/_shots/index_mobile.jpg",
-        "size": 19936,
+        "size": 20036,
         "visualCoverage": {
           "complete": true,
           "reason": null
@@ -110,7 +110,7 @@
       "selector": null,
       "evidence": {
         "type": "warning",
-        "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
         "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
       },
       "dedupeKey": "consoleWarnings|mobile||0"
@@ -123,7 +123,7 @@
       "selector": null,
       "evidence": {
         "type": "warning",
-        "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
         "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
       },
       "dedupeKey": "consoleWarnings|mobile||1"
@@ -136,7 +136,7 @@
       "selector": null,
       "evidence": {
         "type": "warning",
-        "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
         "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
       },
       "dedupeKey": "consoleWarnings|mobile||2"
@@ -149,7 +149,7 @@
       "selector": null,
       "evidence": {
         "type": "warning",
-        "text": "[.WebGL-0xdf401d4c600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+        "text": "[.WebGL-0x326c00652200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
         "location": "file:///home/user/Doubao/chats/38450149417436674/guanfu-demo/index.html"
       },
       "dedupeKey": "consoleWarnings|mobile||3"

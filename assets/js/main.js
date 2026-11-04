@@ -305,6 +305,30 @@
         '<p class="st-dialogue">回城报告，重弦在任务簿上写："获炉芯一座。另获他者之书一部，未释读。"白榆在批注栏添了一行："第一炉火点给城市。第二炉火，点给别人。"</p>'
       ]
     },
+    s23: {
+      chap: '观复书 · 志八 · 居民生活志',
+      title: '灯下的人 · 功过账与阶',
+      lead: '这座城不记事，只记人。人记得日子，日子记得功过。',
+      body: [
+        '<p>晨光从最高的回廊一层一层往下传。住得越靠近地表的人，越早见到光——分层的顺序就是品级的顺序。灯下的人不看灯，他们看表：领光之后是领粮，领粮之后是上工，钟声不等人。</p>',
+        '<p>城里没有钱币，只有功过账。口粮按品级配额，配额按上一季的账目换算：复原的贡献、探墟的收获、教仪的出勤，三笔并一笔。账目由执事誊录，一日一核——粮食不是恩赐，是账目，而账目可以查。</p>',
+        '<p>十岁学徒遴选，二十岁首考，此后每四阶一评：丙、乙、甲、御，逐级可降。婚配看品级资格，退休时账目清零、阶位保留。均等的大门开着，门槛的位置不一样——入学机会受家庭品级影响，这是观止院登记在案、从未修补的暗缝。</p>',
+        '<p>观止院的观察名单常年挂在案头：黄级约占居民千分之三，红级介入每年约万分之二。安置所不设门锁——它不叫监狱，因为文明认为自己没有监狱。判断的依据是预防性模型给出的确定性，而阈值的名义值，从未有人复核过。</p>',
+        '<p class="st-dialogue">品级可以降。降下去的人，不会记得自己是在哪一天升上来的——但账目记得。账目什么都记得。</p>'
+      ]
+    },
+    s24: {
+      chap: '观复书 · 表二 · 世系谱',
+      title: '三任王 · 一次评估',
+      lead: '王位不是权力的转移，是能力的赌注。',
+      body: [
+        '<p>建城王立宪：废九执堂，定时间宗教，编禁复清单。合法性原话——"他首先是哲人王做到了能托举整个文明他才是\'王\'，并不是因为文明成员承认他才是王。"他主动制造制度性缺陷，使其他缺陷最小化；官方叙事里他毫无缺点，这本身就是最大的破绽。</p>',
+        '<p>守成王复原中期：钟室原子钟群修复、四境修行定型、探墟队六至八人编制成形。史官对他记载少得反常——野史说不是漏记，是他要求不记："王不需要被记得，需要被看见。"当王不做任何事时文明完美运转，守成王是这道命题唯一一次实证。</p>',
+        '<p>归玄，重建元年即位，执政四十一年。三十九年谕令《钟律依旧，岁月自王》；四十年冬钟室慢三秒；四十一年发"观止院，评估我"——文明史上第一道评估王的谕令。观止院的报告系统没有"王"这个字段，拒绝输出。归玄用四十一年让文明第一次有了"王的影子"。</p>',
+        '<p>继承规则五条：临终指定即认证；认证不可复核；认证不公示，继任者从王口得知；王未说出则无人有权宣布，九席守印、观止院守历、钟室守时；唯一检验在继承之后——文明是否继续存在，这是唯一的、也是迟到的检验。</p>',
+        '<p class="st-dialogue">四桩悬案未封卷：少王与重弦 · 评估我的结局 · 守成王的真名 · 悬置期是否发生过。史官说：世系史不是英雄谱，是一个文明把"谁能托举我"永远留在台面上。</p>'
+      ]
+    },
     s14: {
       chap: '观复书 · 全卷 · 完整设定',
       title: '观复文明 · 全书纲目与设定全文',
@@ -1056,7 +1080,7 @@
   var restartBtn = $('#restartBtn'); if (restartBtn) restartBtn.addEventListener('click', function () { requestStep(0, -1); });
 
   /* 点击空白推进：排除按钮、故事卡与故事卷 */
-  var clickable = 'button, .c10-card, .c10-ctl, .cascade-ctl, .start-btn, a, [data-story], .story-layer, .toc-panel, .toc-btn';
+  var clickable = 'button, .c10-card, .c10-ctl, .cascade-ctl, .start-btn, a, [data-story], .story-layer, .toc-panel, .toc-btn, .zone, .tlx-node, .arc-card, .case-card, .concl-opt, .reader-close, .reader-nav-btn, #readerOverlay';
   document.addEventListener('click', function (e) {
     if (busy || !layer || layer.classList.contains('open')) return;
     var t = e.target;
@@ -1156,6 +1180,142 @@
     document.addEventListener('webkitfullscreenchange', syncFs);
     syncFs();
   }
+
+  /* ---- 幕内交互：舆图地点 / 年表节点 / 档案卡 ---- */
+  document.querySelectorAll('.sysmap .zone, .tlx-node').forEach(function (el) {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-expanded', 'false');
+  });
+  document.querySelectorAll('.case-card, .concl-opt').forEach(function (el) {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+  });
+  document.querySelectorAll('.case-card').forEach(function (el) {
+    el.setAttribute('aria-expanded', 'false');
+  });
+  document.querySelectorAll('.arc-card').forEach(function (el) {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-expanded', 'false');
+  });
+
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    var zone = t.closest ? t.closest('.zone') : null;
+    if (zone) {
+      document.querySelectorAll('.sysmap .zone.on').forEach(function (z) { if (z !== zone) z.classList.remove('on'); });
+      zone.classList.toggle('on');
+      return;
+    }
+    var node = t.closest ? t.closest('.tlx-node') : null;
+    if (node) { node.classList.toggle('on'); return; }
+    var card = t.closest ? t.closest('.arc-card') : null;
+    if (card) {
+      var i = parseInt(card.getAttribute('data-open').replace(/[^0-9]/g, ''), 10) - 1;
+      openReader(i);
+      return;
+    }
+  });
+
+  /* ---- 档案阅读器：四类文书全文卷宗 + 涂黑代入感 ---- */
+  var READER_DOCS = [
+    {
+      no: 'GF-POL-001', type: '王权谕令', title: '钟律依旧，岁月自王',
+      tag: 'official', tagText: '正史', src: '来源 · 钟室谕令簿 · 可核',
+      body: '<p>归玄谕令（重建三十九年 · 钟室抄本）：</p>' +
+        '<blockquote>朕谕：钟律依旧，岁月自王。司钟者守其器，司历者守其文，司民者守其职。禁复之目，永世不开；敢议者，以叛论。</blockquote>' +
+        '<p>成文当日，钟室以七分钞誊正、四分钞存档。三份存于钟室，四份存于观止院。通篇无一处异议记录——谕令文辞即法，无需复核。</p>' +
+        '<p>档案注：谕令无复核程序。王命即法——不是因为承认，而是因为托举。此乃制度之缺陷，亦制度之选择。</p>'
+    },
+    {
+      no: 'GF-ARC-001', type: '观止院密档', title: '三秒之变 · 勘误暂结',
+      tag: 'official', tagText: '档案', src: '来源 · 观止院密档 · 勘三封存',
+      body: '<p>观止院密档（勘三 · 未封）：白榆司钟，钟慢三秒。</p>' +
+        '<p>一勘：机枢积垢。二勘：人为。三勘：复核两歧——两席判"事出故障"，两席判"有人为之"，一席弃权。三秒或误一船窗，或误一轨补给。</p>' +
+        '<p class="redact-line">此处行文被墨涂没，仅余一角可见"……关联者……已另册" <span class="redact">██████████████████████</span></p>' +
+        '<p>档案只进不删，勘而不改。永久封卷之议已起，王未准。</p>'
+    },
+    {
+      no: 'GF-TEC-001', type: '契文记录', title: '灵台城能源中枢 · 季度契文',
+      tag: 'official', tagText: '档案', src: '来源 · 能源中枢契文 · 可核',
+      body: '<p>契文摘要（重建四十年 · 冬）：</p>' +
+        '<p class="data-line">聚变出力 94.2%（额定 1.4 GW） · 轨道辐照 0.31 阈 · 冰路运量 1,204 车次 · 居民登记 51,877 口 · 常备探墟队 14 支 · 粮仓储期 9 月 · 拾荒者入城 0 · 禁复申请 0 · 深空通信 0 次</p>' +
+        '<p>契文按旬碑刻于能源中枢东廊。数据不解释，只记录。对照上年冬契文：聚变出力 96.8%——今冬较之低 2.6 个百分点，未附原因。额定出力约等于先纪标准城域一级中枢的百分之三十七，诸司均称足用。</p>' +
+        '<p>存疑注：契文无改动痕迹。但契文亦只记"可记之事"。</p>'
+    },
+    {
+      no: 'GF-CHR-002', type: '亲历者手抄', title: '大寂灭前夜 · 撤离广播',
+      tag: 'folk', tagText: '野史', src: '来源 · 亲历者手抄 · 未经确认',
+      body: '<p>手抄残页（出土于死带边缘 · 无名者）：</p>' +
+        '<blockquote>…那夜，全城的钟都响了。广播说，往冰路去。我没有去。我听见了，可我没有去。后来没有人提起过那夜有广播。是我记错了吗？</blockquote>' +
+        '<p class="redact-line">此后数行被墨涂没。仅余一行小字：<span class="redact-note">此条不存。</span><span class="redact">██████████████████████████</span></p>' +
+        '<p>无名者姓名、身份、年代均不可考。手抄纸为新纪元所造，墨迹无先纪特征——若非伪造，则广播记忆确曾在民间流传。野史不担保真，只担保在。</p>'
+    }
+  ];
+  var readerOpen = false, readerIdx = 0;
+  function renderReader() {
+    var d = READER_DOCS[readerIdx];
+    document.getElementById('readerNo').textContent = d.no;
+    document.getElementById('readerTitle').textContent = d.title;
+    document.getElementById('readerType').textContent = d.type;
+    var tag = document.getElementById('readerTag');
+    tag.textContent = d.tagText;
+    tag.className = d.tag === 'official' ? 'tag-official' : 'tag-folk';
+    document.getElementById('readerSrc').textContent = d.src;
+    document.getElementById('readerBody').innerHTML = d.body;
+    document.getElementById('readerCount').textContent = (readerIdx + 1) + ' / ' + READER_DOCS.length;
+  }
+  function openReader(i) {
+    readerIdx = Math.max(0, Math.min(READER_DOCS.length - 1, i));
+    renderReader();
+    document.getElementById('readerOverlay').setAttribute('aria-hidden', 'false');
+    document.getElementById('readerOverlay').classList.add('on');
+    readerOpen = true;
+  }
+  function closeReader() {
+    document.getElementById('readerOverlay').classList.remove('on');
+    document.getElementById('readerOverlay').setAttribute('aria-hidden', 'true');
+    readerOpen = false;
+  }
+  function readerNav(dir) { openReader(readerIdx + dir); }
+  document.getElementById('readerClose').addEventListener('click', function (e) { e.stopPropagation(); closeReader(); });
+  document.getElementById('readerPrev').addEventListener('click', function (e) { e.stopPropagation(); readerNav(-1); });
+  document.getElementById('readerNext').addEventListener('click', function (e) { e.stopPropagation(); readerNav(1); });
+  document.getElementById('readerOverlay').addEventListener('click', function (e) {
+    if (e.target === this) { closeReader(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!readerOpen) return;
+    if (e.key === 'Escape') closeReader();
+    if (e.key === 'ArrowLeft') readerNav(-1);
+    if (e.key === 'ArrowRight') readerNav(1);
+  });
+
+  /* ---- 幕 22 · 大寂灭调查：逐份启封，全读后下结论 ---- */
+  var caseCards = document.querySelectorAll('.case-card');
+  var conclBox = document.getElementById('caseConcl');
+  function caseTick() {
+    var n = 0;
+    document.querySelectorAll('.case-card').forEach(function (c) { if (!c.classList.contains('locked')) n++; });
+    if (n === caseCards.length && conclBox && !conclBox.classList.contains('ready')) {
+      conclBox.classList.add('ready');
+    }
+  }
+  document.querySelectorAll('.case-card').forEach(function (c) {
+    c.addEventListener('click', function () {
+      if (!c.classList.contains('locked')) return;
+      c.classList.remove('locked');
+      c.setAttribute('aria-expanded', 'true');
+      caseTick();
+    });
+  });
+  document.querySelectorAll('.concl-opt').forEach(function (o) {
+    o.addEventListener('click', function () {
+      document.querySelectorAll('.concl-opt').forEach(function (x) { x.classList.remove('on'); });
+      o.classList.add('on');
+    });
+  });
 
   /* ---- 首屏加载层：字体就绪后淡出，再展开书 ---- */
   var boot = $('#boot');

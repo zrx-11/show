@@ -813,3 +813,157 @@ h1{
 .fs-btn:hover{opacity:1;border-color:rgba(228,201,138,.95);box-shadow:0 0 16px rgba(217,164,65,.35)}
 .fs-btn.fs-on{border-color:rgba(228,201,138,.75);box-shadow:0 0 12px rgba(217,164,65,.3)}
 @media (max-width:720px){.fs-btn{display:none}}
+
+/* ============================================================
+   幕 2 · 文明舆图 / 幕 21 · 档案室（建议落地：地图 · 年表 · 四类文书）
+   ============================================================ */
+.map-step .sec-head{margin-bottom:10px}
+.map-block{margin-bottom:22px}
+.map-title{font-size:16px;color:var(--gold2);letter-spacing:.12em;margin-bottom:8px;font-weight:700;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.arc-no{font-family:Georgia,serif;font-size:12px;color:var(--ink3);letter-spacing:.08em;border:1px solid var(--line);padding:2px 9px;border-radius:20px}
+.sysmap{width:100%;max-width:880px;display:block;border-radius:14px;box-shadow:0 0 34px rgba(0,0,0,.4),inset 0 0 60px rgba(0,0,0,.35)}
+.sysmap .zone{cursor:pointer;transition:filter .25s ease}
+.sysmap .zone rect,.sysmap .zone path{transition:filter .25s ease,stroke .25s ease}
+.sysmap .zone:hover rect,.sysmap .zone:hover path{filter:brightness(1.55)}
+.sysmap .zone:hover{filter:drop-shadow(0 0 8px rgba(231,188,107,.55))}
+.map-note{font-size:12.5px;color:var(--ink3);letter-spacing:.05em;margin-top:4px;line-height:1.8}
+
+/* ---- 历史时间轴 ---- */
+.tlx{display:flex;gap:0;margin:2px 0 0;flex-wrap:wrap;background:rgba(17,26,41,.55);border:1px solid var(--line);border-radius:14px;padding:14px 10px 6px}
+.tlx-node{position:relative;flex:1 1 130px;min-width:130px;padding:6px 10px 4px;cursor:pointer;border-right:1px solid rgba(143,182,232,.12)}
+.tlx-node:last-child{border-right:none}
+.tlx-node b{display:block;font-size:13.5px;color:var(--ink);letter-spacing:.04em;margin-top:8px}
+.tlx-node i{display:block;font-style:normal;font-size:11px;color:var(--gold);letter-spacing:.1em;margin-top:2px}
+.tlx-dot{position:absolute;top:0;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px rgba(231,188,107,.8)}
+.tlx-card{display:none;margin-top:6px;font-size:12.2px;line-height:1.75;color:var(--ink2);background:rgba(8,13,24,.66);border:1px solid var(--line);border-radius:10px;padding:10px 12px;letter-spacing:.02em}
+.tlx-node.on .tlx-card{display:block;animation:tlxIn .35s ease both}
+@keyframes tlxIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.tlx-node.on b{color:var(--gold2)}
+.tlx-node:not(:last-child)::after{content:"";position:absolute;right:0;top:34%;height:22%;width:1px;background:rgba(143,182,232,.18)}
+@media (max-width:720px){
+  .tlx{flex-direction:column;gap:2px;padding:10px}
+  .tlx-node{border-right:none;border-bottom:1px solid rgba(143,182,232,.1);padding:8px 4px 6px}
+  .tlx-node:last-child{border-bottom:none}
+  .tlx-node:not(:last-child)::after{display:none}
+  .tlx-dot{left:14px;transform:none;top:18px}
+  .tlx-node b{margin-top:0;padding-left:22px}
+  .tlx-node i{padding-left:22px}
+  .tlx-card{margin-left:22px}
+}
+
+/* ---- 档案室 · 四类文书 ---- */
+.arc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:26px}
+.arc-card{position:relative;background:rgba(17,26,41,.72);border:1px solid var(--line);border-radius:14px;padding:18px 20px 14px;cursor:pointer;transition:transform .25s ease,border-color .25s ease;box-shadow:0 4px 22px rgba(0,0,0,.35)}
+.arc-card:hover{transform:translateY(-2px);border-color:rgba(231,188,107,.4)}
+.arc-card h4{font-size:16px;color:var(--ink);letter-spacing:.06em;margin:10px 0 6px;font-weight:700}
+.arc-brief{font-size:13px;line-height:1.7;color:var(--ink2)}
+.arc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.arc-type{font-size:12px;letter-spacing:.24em;color:var(--gold);font-weight:600}
+.arc-seal{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;letter-spacing:.06em;color:#E7BC6B;border:1.6px solid rgba(231,188,107,.7);transform:rotate(8deg);font-family:Georgia,serif}
+.arc-seal.seal-blue{color:#8FB6E8;border-color:rgba(143,182,232,.65)}
+.arc-seal.seal-green{color:#9DBE92;border-color:rgba(157,190,146,.6)}
+.arc-seal.seal-rust{color:#C97B5F;border-color:rgba(201,123,95,.65)}
+.arc-card.edict{border-left:3px solid rgba(231,188,107,.65)}
+.arc-card.secret{border-left:3px solid rgba(143,182,232,.6)}
+.arc-card.record{border-left:3px solid rgba(157,190,146,.55)}
+.arc-card.hearsay{border-left:3px solid rgba(201,123,95,.6)}
+.arc-open{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.arc-open p{font-size:12.5px;color:var(--ink3);margin-bottom:6px;letter-spacing:.04em}
+.arc-open blockquote{font-size:14px;line-height:1.9;color:var(--ink);font-style:italic;border-left:2px solid var(--gold);padding-left:14px;margin:6px 0 10px}
+.arc-note{font-size:12px;color:var(--ink3);line-height:1.7}
+.arc-card.open .arc-open{display:block;animation:tlxIn .3s ease both}
+.arc-card.open h4{color:var(--gold2)}
+
+/* ---- 可信度标记 ---- */
+.tag-official,.tag-folk{display:inline-block;font-style:normal;font-size:11px;letter-spacing:.14em;padding:2px 10px;border-radius:20px;margin-right:6px}
+.tag-official{color:#F0D48A;border:1px solid rgba(231,188,107,.5)}
+.tag-folk{color:#C97B5F;border:1px solid rgba(201,123,95,.5)}
+
+/* ---- 大寂灭 · 三种记忆 ---- */
+.tri-mem{margin-top:4px}
+.tri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 8px}
+.tri-card{background:rgba(17,26,41,.66);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.tri-card h5{font-size:15px;color:var(--ink);letter-spacing:.08em;margin:8px 0 6px}
+.tri-card p{font-size:13px;line-height:1.75;color:var(--ink2)}
+.tri-src{display:block;margin-top:8px;font-size:11px;color:var(--ink3);letter-spacing:.06em}
+@media (max-width:720px){
+  .arc-grid{grid-template-columns:1fr;gap:12px}
+  .tri-grid{grid-template-columns:1fr;gap:12px}
+  .map-title{font-size:15px}
+}
+.map-grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:26px}
+.map-grid2 .map-block{margin-bottom:0}
+@media (max-width:900px){.map-grid2{grid-template-columns:1fr;gap:0}}
+@media (max-width:720px){
+  .map-grid2{grid-template-columns:1fr}
+  .sysmap{max-width:640px}
+}
+
+.step[data-name="文明舆图"]{padding-top:48px;padding-bottom:52px}
+
+.step[data-name="文明舆图"] .step-inner{max-width:940px}
+
+/* ---- 幕 22 · 大寂灭 · 证据卷宗 ---- */
+.case-step .sec-head{margin-bottom:14px}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.case-card{position:relative;background:rgba(17,26,41,.72);border:1px solid var(--line);border-radius:12px;padding:12px 14px 10px;cursor:pointer;transition:border-color .25s ease,background .25s ease,box-shadow .25s ease}
+.case-card h4{font-size:13.5px;color:var(--ink2);letter-spacing:.05em;margin:8px 0 4px}
+.case-top{display:flex;align-items:center;gap:8px}
+.case-no{font-family:Georgia,serif;font-size:11px;color:var(--ink3);letter-spacing:.06em}
+.case-lock{margin-left:auto;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#C97B5F;border:1px solid rgba(201,123,95,.55);background:rgba(60,20,14,.35)}
+.case-body{display:none;font-size:12.5px;line-height:1.75;color:var(--ink2)}
+.case-clash{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:600;color:#C97B5F;letter-spacing:.06em}
+.case-src{display:none;margin-top:6px;font-size:10.5px;color:var(--ink3);letter-spacing:.05em}
+.case-card.locked .case-body,.case-card.locked .case-src{display:none}
+.case-card:not(.locked) .case-body,.case-card:not(.locked) .case-src{display:block;animation:tlxIn .35s ease both}
+.case-card:not(.locked){background:rgba(20,30,48,.82);border-color:rgba(231,188,107,.55);box-shadow:0 0 18px rgba(231,188,107,.14)}
+.case-card:not(.locked) h4{color:var(--gold2)}
+.case-card:not(.locked) .case-lock{display:none}
+.case-card:hover{border-color:rgba(231,188,107,.4)}
+.case-concl{margin-top:2px;padding:12px 16px;background:rgba(8,13,24,.55);border:1px solid var(--line);border-radius:12px}
+.concl-hint{font-size:12.5px;color:var(--ink3);letter-spacing:.04em;text-align:center}
+.concl-opts{display:none;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.concl-opt{background:rgba(17,26,41,.72);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:center;transition:border-color .25s ease,transform .25s ease}
+.concl-opt i{display:block;font-style:normal;font-size:10.5px;letter-spacing:.2em;color:var(--gold);margin-bottom:4px}
+.concl-opt b{display:block;font-size:14px;color:var(--ink);letter-spacing:.06em}
+.concl-opt span{display:block;font-size:11px;color:var(--ink3);margin-top:4px;line-height:1.6}
+.concl-opt:hover{transform:translateY(-2px);border-color:rgba(231,188,107,.45)}
+.concl-opt.on{border-color:var(--gold);background:rgba(231,188,107,.12);box-shadow:0 0 16px rgba(231,188,107,.18)}
+.concl-opt.on b{color:var(--gold2)}
+.case-concl.ready .concl-hint{display:none}
+.case-concl.ready .concl-opts{display:grid;animation:tlxIn .4s ease both}
+@media (max-width:900px){.case-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){
+  .case-grid{grid-template-columns:1fr;gap:10px}
+  .concl-opts{grid-template-columns:1fr}
+  .case-step .sec-head{margin-bottom:10px}
+}
+
+/* ---- 档案阅读器（全屏卷宗）---- */
+.reader-overlay{position:fixed;inset:0;z-index:520;background:rgba(2,4,8,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.reader-overlay.on{opacity:1;pointer-events:auto}
+.reader-frame{position:relative;width:min(780px,92vw);max-height:86vh;overflow-y:auto;background:linear-gradient(160deg,#14181f 0%,#0d1117 55%,#10151c 100%);border:1px solid rgba(231,188,107,.45);border-radius:14px;padding:30px 38px 22px;box-shadow:0 0 60px rgba(231,188,107,.12),0 24px 60px rgba(0,0,0,.6);transform:translateY(14px) scale(.985);transition:transform .3s ease}
+.reader-overlay.on .reader-frame{transform:translateY(0) scale(1)}
+.reader-close{position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(142,156,180,.4);background:transparent;color:var(--ink2);font-size:18px;line-height:1;cursor:pointer;transition:border-color .2s,color .2s}
+.reader-close:hover{border-color:var(--gold);color:var(--gold2)}
+.reader-head{border-bottom:1px solid rgba(231,188,107,.3);padding-bottom:14px;margin-bottom:16px}
+.reader-kick{font-family:Georgia,serif;font-size:12px;letter-spacing:.22em;color:var(--gold);margin-bottom:6px}
+.reader-head h3{font-size:20px;color:var(--gold2);letter-spacing:.1em;margin:0 0 8px}
+.reader-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.reader-src{font-size:11.5px;color:var(--ink3);letter-spacing:.05em}
+.reader-body{font-size:15px;line-height:1.95;color:var(--ink)}
+.reader-body p{margin:0 0 12px}
+.reader-body blockquote{margin:0 0 12px;padding:10px 16px;border-left:3px solid rgba(231,188,107,.5);background:rgba(231,188,107,.05);color:var(--ink2);font-size:14.5px;line-height:1.9}
+.data-line{font-family:Georgia,serif;font-variant-numeric:tabular-nums;letter-spacing:.03em;color:var(--gold2)}
+.redact-line{color:var(--ink3);font-size:13px}
+.redact{display:inline-block;background:#0a0e16;color:#0a0e16;border-radius:3px;padding:0 8px;box-shadow:inset 0 0 0 1px rgba(142,156,180,.16);user-select:none;cursor:not-allowed}
+.redact-note{color:#8E9CB4;font-size:11.5px;letter-spacing:.18em;font-family:Georgia,serif}
+.reader-nav{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid rgba(142,156,180,.18)}
+.reader-nav-btn{background:transparent;border:1px solid rgba(142,156,180,.35);border-radius:8px;color:var(--ink2);font-size:12.5px;letter-spacing:.08em;padding:7px 14px;cursor:pointer;transition:border-color .2s,color .2s}
+.reader-nav-btn:hover{border-color:var(--gold);color:var(--gold2)}
+.reader-count{font-family:Georgia,serif;font-size:12px;color:var(--ink3);letter-spacing:.15em}
+@media (max-width:720px){
+  .reader-frame{padding:22px 18px 16px;max-height:88vh}
+  .reader-body{font-size:14px}
+  .reader-head h3{font-size:17px}
+}

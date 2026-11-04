@@ -122,14 +122,14 @@
 
 <header class="topnav">
   <div class="brand">观复<small>GUANFU</small></div>
-  <div class="stepinfo"><span id="stepNum">01</span><em>/</em><span id="stepTotal">20</span><span class="dot">·</span><span id="stepName">序 · 观复文明</span></div>
+  <div class="stepinfo"><span id="stepNum">01</span><em>/</em><span id="stepTotal">25</span><span class="dot">·</span><span id="stepName">序 · 观复文明</span></div>
 </header>
 <div class="progress" id="progress" aria-hidden="true"></div>
 
 <main class="stage" id="stage">
 
 <!-- ===== 幕 1 · 序 ===== -->
-<section class="step on" data-p="0.05" data-name="卷首 · 观复文明">
+<section class="step on" data-p="0.040" data-name="卷首 · 观复文明">
   <div class="step-inner">
     <div class="kick">以柴尔德"城市革命"十条为基石 · 星际废土 · 合并设定</div>
     <h1>观复文明</h1>
@@ -142,8 +142,143 @@
   </div>
 </section>
 
+<!-- ===== 幕 2 · 文明舆图（恒星系地图 · 灵台城剖面 · 历史时间轴）===== -->
+<section class="step" data-p="0.080" data-name="文明舆图">
+  <div class="step-inner map-step">
+    <div class="sec-head">
+      <div class="sec-kicker">CHART · 舆图</div>
+      <h2>观复舆图</h2>
+      <p class="lede">先走进这座文明，再看它的制度。两幅舆图与一部年表：空间如何组织，时间如何断裂，档案如何编号。</p>
+    </div>
+
+    <div class="map-grid2">
+    <div class="map-block">
+      <h3 class="map-title">一 · 恒星系舆图 <span class="arc-no">GF-GEO-001 ~ 009</span></h3>
+      <svg class="sysmap" viewBox="0 0 900 430" role="img" aria-label="观复文明恒星系舆图">
+        <defs>
+          <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFF3D0"/><stop offset="55%" stop-color="#F0D48A"/><stop offset="100%" stop-color="#E7BC6B"/>
+          </radialGradient>
+          <radialGradient id="coreG" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F8E3AC"/><stop offset="100%" stop-color="rgba(231,188,107,0)"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="900" height="430" fill="rgba(8,13,24,.55)" rx="14"/>
+        <circle cx="450" cy="215" r="205" fill="none" stroke="rgba(232,238,244,.08)" stroke-dasharray="2 10"/>
+        <circle cx="450" cy="215" r="150" fill="none" stroke="rgba(232,238,244,.1)" stroke-dasharray="2 8"/>
+        <path d="M70 340 Q 210 250 300 300" fill="none" stroke="rgba(160,70,50,.55)" stroke-width="26"/>
+        <text x="300" y="318" font-size="12" fill="#C97B5F">死带 GF-GEO-009</text>
+        <path d="M640 350 A 240 110 0 0 0 850 330" fill="none" stroke="rgba(190,86,52,.4)" stroke-width="18" stroke-dasharray="3 6"/>
+        <text x="700" y="372" font-size="12" fill="#D08A62">机械野草分布区 GF-GEO-008</text>
+        <circle cx="450" cy="215" r="60" fill="url(#coreG)" opacity=".8"/>
+        <circle cx="450" cy="215" r="26" fill="url(#sunG)"/>
+        <text x="450" y="180" font-size="12" fill="#F0D48A" text-anchor="middle">戴森云 GF-GEO-003</text>
+        <ellipse cx="450" cy="215" rx="300" ry="120" fill="none" stroke="#E7BC6B" stroke-width="2.2"/>
+        <ellipse cx="450" cy="215" rx="286" ry="112" fill="none" stroke="#E7BC6B" stroke-width="1" opacity=".55"/>
+        <ellipse cx="450" cy="215" rx="250" ry="98" fill="none" stroke="#E7BC6B" stroke-width=".9" stroke-dasharray="4 8" opacity=".55"/>
+        <ellipse cx="450" cy="215" rx="214" ry="84" fill="none" stroke="#E7BC6B" stroke-width=".9" stroke-dasharray="4 8" opacity=".4"/>
+        <text x="668" y="310" font-size="12" fill="#C2CDDD">轨道交通网络（主环城内网）</text>
+        <text x="742" y="128" font-size="12" fill="#C2CDDD">主环城 GF-GEO-002</text>
+        <path d="M482 168 L 470 155 L 494 152 Z" fill="#E7BC6B"/>
+        <path d="M408 262 L 402 248 L 420 258 Z" fill="#E7BC6B" opacity=".8"/>
+        <path d="M530 258 L 522 244 L 542 252 Z" fill="#E7BC6B" opacity=".6"/>
+        <text x="520" y="226" font-size="12" fill="#C2CDDD">日冕锚塔 ×3 GF-GEO-004</text>
+        <circle cx="664" cy="167" r="7" fill="#F8E3AC"/>
+        <circle cx="664" cy="167" r="14" fill="rgba(248,227,172,.18)"/>
+        <text x="686" y="171" font-size="13" fill="#F8E3AC">灵台城 GF-GEO-001</text>
+        <path d="M664 167 L 780 300" stroke="#C2CDDD" stroke-width="1.6" stroke-dasharray="5 7" opacity=".75"/>
+        <path d="M780 300 L 770 295 M 780 300 L 778 310" stroke="#C2CDDD" stroke-width="1.4"/>
+        <text x="782" y="292" font-size="12" fill="#C2CDDD">冰路 GF-GEO-005</text>
+        <ellipse cx="450" cy="215" rx="380" ry="160" fill="none" stroke="#8FB6E8" stroke-width="1.3" stroke-dasharray="2 9" opacity=".6"/>
+        <text x="56" y="96" font-size="12" fill="#8FB6E8">柯伊伯带 GF-GEO-006</text>
+        <path d="M810 60 L 830 45 M 810 60 L 828 66 M 810 60 L 806 44" stroke="#8FB6E8" stroke-width="1.6"/>
+        <circle cx="810" cy="60" r="3" fill="#8FB6E8"/>
+        <text x="806" y="44" font-size="12" fill="#8FB6E8">深空通信阵列 GF-GEO-007</text>
+        <text x="450" y="420" font-size="11" fill="#8E9CB4" text-anchor="middle">图例：金环=主环城轨道 · 金虚线=轨网 · 亮星=灵台城 · 虚线=冰路 · 锈色区=野草与死带 · 蓝点=外带与深空</text>
+      </svg>
+    </div>
+
+    <div class="map-block">
+      <h3 class="map-title">二 · 灵台城剖面 <span class="arc-no">GF-CITY-001 ~ 009</span></h3>
+      <svg class="sysmap" viewBox="0 0 900 500" role="img" aria-label="灵台城纵向剖面">
+        <rect x="0" y="0" width="900" height="500" fill="rgba(8,13,24,.55)" rx="14"/>
+        <g class="zone" data-arc="GF-CITY-001" data-zone="大图书馆">
+          <rect x="60" y="24" width="780" height="62" fill="rgba(231,188,107,.16)" stroke="#E7BC6B" stroke-width="1.4" rx="6"/>
+          <text x="450" y="58" font-size="15" fill="#F8E3AC" text-anchor="middle" letter-spacing=".2em">大图书馆</text>
+          <text x="76" y="58" font-size="11" fill="#C2CDDD">GF-CITY-001</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-002" data-zone="王宫与钟室">
+          <rect x="60" y="96" width="780" height="56" fill="rgba(232,238,244,.09)" stroke="#C2CDDD" stroke-width="1.1" rx="6"/>
+          <path d="M450 96 L 462 74 L 438 74 Z" fill="#F0D48A" opacity=".85"/>
+          <text x="450" y="128" font-size="15" fill="#EEF2F8" text-anchor="middle" letter-spacing=".2em">王宫与钟室</text>
+          <text x="76" y="128" font-size="11" fill="#C2CDDD">GF-CITY-002</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-003" data-zone="观止院">
+          <rect x="60" y="162" width="780" height="52" fill="rgba(143,182,232,.13)" stroke="#8FB6E8" stroke-width="1.1" rx="6"/>
+          <text x="450" y="191" font-size="15" fill="#C6D9F2" text-anchor="middle" letter-spacing=".2em">观止院</text>
+          <text x="76" y="191" font-size="11" fill="#C2CDDD">GF-CITY-003</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-004" data-zone="守典人宗院">
+          <rect x="60" y="224" width="780" height="52" fill="rgba(232,238,244,.07)" stroke="#C2CDDD" stroke-width="1" rx="6"/>
+          <text x="450" y="253" font-size="15" fill="#E4E9F1" text-anchor="middle" letter-spacing=".2em">守典人宗院</text>
+          <text x="76" y="253" font-size="11" fill="#C2CDDD">GF-CITY-004</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-005" data-zone="学院">
+          <rect x="60" y="286" width="780" height="50" fill="rgba(232,238,244,.09)" stroke="#C2CDDD" stroke-width="1" rx="6"/>
+          <text x="450" y="314" font-size="15" fill="#E4E9F1" text-anchor="middle" letter-spacing=".2em">学院</text>
+          <text x="76" y="314" font-size="11" fill="#C2CDDD">GF-CITY-005</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-006" data-zone="居住区">
+          <rect x="60" y="346" width="780" height="54" fill="rgba(232,238,244,.11)" stroke="#C2CDDD" stroke-width="1" rx="6"/>
+          <text x="450" y="376" font-size="15" fill="#E4E9F1" text-anchor="middle" letter-spacing=".2em">居住区</text>
+          <text x="76" y="376" font-size="11" fill="#C2CDDD">GF-CITY-006</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-007" data-zone="穹顶农业区">
+          <path d="M60 410 Q 450 336 840 410" fill="rgba(124,170,120,.14)" stroke="#9DBE92" stroke-width="1.3"/>
+          <rect x="60" y="410" width="780" height="34" fill="rgba(124,170,120,.10)" stroke="#9DBE92" stroke-width="1" rx="6"/>
+          <text x="450" y="433" font-size="15" fill="#BED6B4" text-anchor="middle" letter-spacing=".2em">穹顶农业区</text>
+          <text x="76" y="433" font-size="11" fill="#C2CDDD">GF-CITY-007</text>
+        </g>
+        <g class="zone" data-arc="GF-CITY-008" data-zone="工业修复区">
+          <rect x="60" y="444" width="780" height="34" fill="rgba(163,74,44,.22)" stroke="#A34A2C" stroke-width="1.2" rx="6"/>
+          <text x="450" y="466" font-size="14" fill="#D8A08A" text-anchor="middle" letter-spacing=".2em">工业修复区</text>
+          <text x="76" y="466" font-size="11" fill="#C2CDDD">GF-CITY-008</text>
+        </g>
+        <text x="450" y="492" font-size="11" fill="#8E9CB4" text-anchor="middle">底 · 城市能源中枢 GF-CITY-009（聚变供能，契文 GF-TEC-001 可核）</text>
+      </svg>
+    </div>
+    </div>
+
+    <div class="map-block tlx-wrap">
+      <h3 class="map-title">三 · 文明年表 <span class="arc-no">GF-HIS-001 ~ 004</span></h3>
+      <div class="tlx">
+        <div class="tlx-node on" data-tlx="1"><span class="tlx-dot"></span><b>先纪 · 环日城邦</b><i>环日纪元 · 距今约八百载</i>
+          <div class="tlx-card">戴森云建设 · 主环城发展 · 契文普及 · 九执堂形成。寂灭日为环日纪元第三千四百零二年，距今约八百一十二年。</div>
+        </div>
+        <div class="tlx-node" data-tlx="2"><span class="tlx-dot"></span><b>大寂灭</b><i>纪元断裂</i>
+          <div class="tlx-card">禁复争议 · 时间基准分裂 · 资源调度中断 · 文明崩溃。正史、档案与野史各存一说，见档案室。</div>
+        </div>
+        <div class="tlx-node" data-tlx="3"><span class="tlx-dot"></span><b>新纪元 · 重建初期</b><i>元年起</i>
+          <div class="tlx-card">建立事实性王权 · 重建档案系统 · 确立时间宗教。王不因制度而为王，王因托举文明而为王。</div>
+        </div>
+        <div class="tlx-node" data-tlx="4"><span class="tlx-dot"></span><b>重建四十年</b><i>重弦十八岁</i>
+          <div class="tlx-card">重弦第一次探墟，发现先纪遗物，契文初展。列传二·第一炉火。</div>
+        </div>
+        <div class="tlx-node" data-tlx="5"><span class="tlx-dot"></span><b>重建四十一年</b><i>归玄执政四十一年</i>
+          <div class="tlx-card">归玄发"观止院，评估我"谕令——文明史上第一道。格式里没有王。见档案室密档 GF-ARC-001。</div>
+        </div>
+        <div class="tlx-node" data-tlx="6"><span class="tlx-dot"></span><b>重建五十年</b><i>重弦再出城</i>
+          <div class="tlx-card">重弦再次出城，接触拾荒者——第一次意识到城市之外也有文明价值。列传三·第二炉火。</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="map-note">编号规则：GF-HIS 史 · GF-POL 政 · GF-REL 教 · GF-TEC 技 · GF-CHR 人 · GF-GEO 地。凡条目，可互引互链。</p>
+  </div>
+</section>
+
 <!-- ===== 幕 2 · 01 时间线 ===== -->
-<section class="step" data-p="0.1" data-name="本纪一 · 三时代">
+<section class="step" data-p="0.120" data-name="本纪一 · 三时代">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">本纪一 · 年表</div>
@@ -179,7 +314,7 @@
 </section>
 
 <!-- ===== 幕 3 · 02 先纪 ===== -->
-<section class="step" data-p="0.15" data-name="志一 · 环日城邦">
+<section class="step" data-p="0.160" data-name="志一 · 环日城邦">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志一 · 环日城邦</div>
@@ -198,7 +333,7 @@
 </section>
 
 <!-- ===== 幕 4 · 03 大寂灭 ===== -->
-<section class="step" data-p="0.2" data-name="志二 · 大寂灭">
+<section class="step" data-p="0.200" data-name="志二 · 大寂灭">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志二 · 灾异志 · 大寂灭</div>
@@ -242,7 +377,7 @@
 </section>
 
 <!-- ===== 幕 5 · 04 制度核心 ===== -->
-<section class="step" data-p="0.25" data-name="志三 · 制度核心">
+<section class="step" data-p="0.240" data-name="志三 · 制度核心">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志三 · 职官志 · 制度核心</div>
@@ -280,7 +415,7 @@
 </section>
 
 <!-- ===== 幕 6 · 05 王权论 ===== -->
-<section class="step" data-p="0.3" data-name="论一 · 王权论">
+<section class="step" data-p="0.280" data-name="论一 · 王权论">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">论一 · 王权论</div>
@@ -313,7 +448,7 @@
 </section>
 
 <!-- ===== 幕 7 · 06 时间宗教 ===== -->
-<section class="step" data-p="0.35" data-name="志四 · 时间宗教">
+<section class="step" data-p="0.320" data-name="志四 · 时间宗教">
   <div class="step-inner">
     <div class="kalos" aria-hidden="true">
       <div class="kalos-ring kr1"></div>
@@ -340,7 +475,7 @@
 </section>
 
 <!-- ===== 幕 8 · 07 十条 ===== -->
-<section class="step" data-p="0.4" data-name="表一 · 十条对照">
+<section class="step" data-p="0.360" data-name="表一 · 十条对照">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">表一 · 十条对照</div>
@@ -363,8 +498,25 @@
   </div>
 </section>
 
+<!-- ===== 幕 10 · 世系谱 ===== -->
+<section class="step" data-p="0.400" data-name="表二 · 世系谱">
+  <div class="step-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">表二 · 世系谱</div>
+      <h2>三任王，一次评估</h2>
+      <p class="lede">王位不是权力的转移，是能力的赌注。三任王用各自的方式把这道题留在台面上。</p>
+    </div>
+    <div class="story" data-story="s24">
+      <div class="act"><div class="act-no">第一任 · 建城王</div><h4>立宪者，把自己的缺点设计进制度</h4><p>寂灭废墟上立王：废九执堂、定时间宗教、编禁复清单，写下合法性原话——"他首先是哲人王做到了能托举整个文明他才是'王'，并不是因为文明成员承认他才是王。"他主动制造制度性缺陷，使其他缺陷最小化。官方叙事里他毫无缺点，这本身就是最大的破绽。</p></div>
+      <div class="act"><div class="act-no">第二任 · 守成王</div><h4>史载最少，因为无事可记</h4><p>复原中期：钟室原子钟群修复、四境修行定型、探墟队六至八人编制成形。野史说他的记载少不是漏记，是他要求不记——"王不需要被记得，需要被看见。"他是"不刻意看王时文明表现完美"这道命题的唯一实证。</p></div>
+      <div class="act"><div class="act-no">第三任 · 归玄</div><h4>执政四十一年，第一次把王当作问题</h4><p>重建元年即位。三十九年谕令《钟律依旧，岁月自王》；四十一年发"观止院，评估我"——文明史上第一道评估王的谕令。观止院没有"王"这个字段，报告写不下去。归玄用四十一年让文明第一次有了"王的影子"。</p><div class="line">认证只存在于王的最后一念。这念一起，王位便定；此念无从复核，因为验证它需要一个不存在的第二中心。</div></div>
+    </div>
+    <div class="small">四桩悬案未封卷：少王与重弦 · 评估我的结局 · 守成王的真名 · 悬置期是否发生过——详见《世系与继承史》卷。</div>
+  </div>
+</section>
+
 <!-- ===== 幕 9 · 08 裂缝 ===== -->
-<section class="step" data-p="0.45" data-name="志五 · 六裂缝">
+<section class="step" data-p="0.440" data-name="志五 · 六裂缝">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志五 · 隐志 · 六裂缝</div>
@@ -383,7 +535,7 @@
 </section>
 
 <!-- ===== 幕 10 · 09 故事引擎 ===== -->
-<section class="step" data-p="0.5" data-name="本纪二 · 王的一天">
+<section class="step" data-p="0.480" data-name="本纪二 · 王的一天">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">本纪二 · 王的一天</div>
@@ -399,7 +551,7 @@
   </div>
 </section>
 
-<section class="step" data-p="0.55" data-name="志六 · 复归祭">
+<section class="step" data-p="0.520" data-name="志六 · 复归祭">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志六 · 复归祭</div>
@@ -415,7 +567,7 @@
   </div>
 </section>
 
-<section class="step" data-p="0.6" data-name="志七 · 观止院簿">
+<section class="step" data-p="0.560" data-name="志七 · 观止院簿">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志七 · 观止院簿</div>
@@ -431,7 +583,23 @@
   </div>
 </section>
 
-<section class="step" data-p="0.65" data-name="列传一 · 故事的入口">
+<section class="step" data-p="0.600" data-name="志八 · 居民生活志">
+  <div class="step-inner">
+    <div class="sec-head">
+      <div class="sec-kicker">志八 · 居民生活志</div>
+      <h2>一日的光，一生的阶</h2>
+      <p class="lede">这座城不记事，只记人。人记得日子，日子记得功过。</p>
+    </div>
+    <div class="story" data-story="s23">
+      <div class="act"><div class="act-no">辰时 · 领光</div><h4>光从头顶的导光管落下来</h4><p>晨光先在最高的回廊亮起，再一层一层往下传。住得越靠近地表的人，越早见到光——分层的顺序，就是品级的顺序。灯下的人不看灯，他们看表：领光之后是领粮，领粮之后是上工，钟声不等人。</p></div>
+      <div class="act"><div class="act-no">午时 · 口粮</div><h4>功过账记着每一口饭的来处</h4><p>城里没有钱币，只有功过账。口粮按品级配额，配额按上一季的账目换算：复原的贡献、探墟的收获、教仪的出勤，三笔并一笔。账目由执事誊录，一日一核——粮食不是恩赐，是账目，而账目可以查。</p></div>
+      <div class="act"><div class="act-no">一生 · 品级</div><h4>出生登记到退休，是一条看得见的阶</h4><p>十岁学徒遴选，二十岁首考，此后每四阶一评：丙、乙、甲、御，四阶升迁，逐级可降。婚配看品级资格，退休时账目清零、阶位保留——人可以不服老，账目会提醒他该休息了。均等的大门开着，门槛的位置不一样。</p><div class="line">品级可以降。降下去的人，不会记得自己是在哪一天升上来的——但账目记得。账目什么都记得。</div></div>
+    </div>
+    <div class="small">登记居民五万一千八百七十七口（重建四十年冬）。粮仓常储九月之量，复归祭即演练。观止院黄级观察名单约占居民千分之三，红级介入每年约万分之二。城中无货币，亦无监狱。</div>
+  </div>
+</section>
+
+<section class="step" data-p="0.640" data-name="列传一 · 故事的入口">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">列传一 · 故事的入口</div>
@@ -452,7 +620,7 @@
 </section>
 
 <!-- ===== 幕 11 · 10 外部世界 ===== -->
-<section class="step" data-p="0.7" data-name="志六 · 邻国">
+<section class="step" data-p="0.680" data-name="志六 · 邻国">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">志六 · 邻国传</div>
@@ -472,7 +640,7 @@
 </section>
 
 <!-- ===== 幕 12 · 11 短篇 · 城与死带 ===== -->
-<section class="step" data-p="0.75" data-name="列传二 · 第一炉火 · 上">
+<section class="step" data-p="0.720" data-name="列传二 · 第一炉火 · 上">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">列传二 · 第一炉火</div>
@@ -487,7 +655,7 @@
 </section>
 
 <!-- ===== 幕 13 · 11 短篇 · 废墟与事故 ===== -->
-<section class="step" data-p="0.8" data-name="列传二 · 第一炉火 · 中">
+<section class="step" data-p="0.760" data-name="列传二 · 第一炉火 · 中">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">列传二 · 第一炉火</div>
@@ -502,7 +670,7 @@
 </section>
 
 <!-- ===== 幕 14 · 11 短篇 · 归城 ===== -->
-<section class="step" data-p="0.85" data-name="列传二 · 第一炉火 · 终">
+<section class="step" data-p="0.800" data-name="列传二 · 第一炉火 · 终">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">列传二 · 第一炉火</div>
@@ -533,7 +701,7 @@
 </section>
 
 <!-- ===== 幕 15 · 结语 ===== -->
-<section class="step" data-p="0.9" data-name="列传三 · 第二炉火">
+<section class="step" data-p="0.840" data-name="列传三 · 第二炉火">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">列传三 · 第二炉火</div>
@@ -549,7 +717,7 @@
   </div>
 </section>
 
-<section class="step" data-p="0.95" data-name="终章 · 史笔与将来">
+<section class="step" data-p="0.880" data-name="终章 · 史笔与将来">
   <div class="step-inner">
     <div class="sec-head">
       <div class="sec-kicker">终章 · 史笔与将来</div>
@@ -565,7 +733,150 @@
   </div>
 </section>
 
-<section class="step" data-p="1.0" data-name="卷末 · 跋">
+<!-- ===== 幕 21 · 档案室（四类文书 · 大寂灭三种记忆）===== -->
+<section class="step" data-p="0.920" data-name="档案室 · 四类文书">
+  <div class="step-inner arc-step">
+    <div class="sec-head">
+      <div class="sec-kicker">ARCHIVE · 档案室</div>
+      <h2>四类文书</h2>
+      <p class="lede">正史纪官方所承，档案存可核之实，野史存未经确认的经历与异见。凡文书，各有编号，可互引互链。点击即阅。</p>
+    </div>
+
+    <div class="arc-grid">
+      <div class="arc-card edict" data-open="edict1">
+        <div class="arc-top"><span class="arc-type">王权谕令</span><span class="arc-no">GF-POL-001</span></div>
+        <div class="arc-seal">谕</div>
+        <h4>钟律依旧，岁月自王</h4>
+        <p class="arc-brief">时间基准谕令。禁复之目，永世不开。王命即法——不是因为承认，而是因为托举。</p>
+        <div class="arc-open" id="edict1">
+          <p>归玄谕令（重建三十九年·钟室抄本）：</p>
+          <blockquote>朕谕：钟律依旧，岁月自王。司钟者守其器，司历者守其文，司民者守其职。禁复之目，永世不开；敢议者，以叛论。</blockquote>
+          <p class="arc-note"><i class="tag-official">正史</i> 来源：钟室谕令簿 · 可核。谕令文辞即法，无复核程序——此乃制度之缺陷，亦制度之选择。</p>
+        </div>
+      </div>
+
+      <div class="arc-card secret" data-open="sec2">
+        <div class="arc-top"><span class="arc-type">观止院密档</span><span class="arc-no">GF-ARC-001</span></div>
+        <div class="arc-seal seal-blue">封卷</div>
+        <h4>三秒之变 · 勘误暂结</h4>
+        <p class="arc-brief">钟室慢了三秒。三重勘误，仍无定论。档案只进不删，勘而不改。</p>
+        <div class="arc-open" id="sec1">
+          <p>观止院密档（勘三 · 未封）：</p>
+          <blockquote>白榆司钟，钟慢三秒。一勘：机枢积垢；二勘：人为；三勘：复核两歧。三秒或误一船窗，或误一轨补给——档案存而不决。永久封卷之议已起，王未准。</blockquote>
+          <p class="arc-note"><i class="tag-official">档案</i> 来源：观止院密档 · 勘三封存。档案可存事实，不可自改法律。</p>
+        </div>
+      </div>
+
+      <div class="arc-card record" data-open="rec3">
+        <div class="arc-top"><span class="arc-type">契文记录</span><span class="arc-no">GF-TEC-001</span></div>
+        <div class="arc-seal seal-green">数据</div>
+        <h4>灵台城能源中枢 · 季度契文</h4>
+        <p class="arc-brief">聚变出力、轨道辐照、冰路运量。契文即数据的碑刻。</p>
+        <div class="arc-open" id="rec1">
+          <p>契文摘要（重建四十年·冬）：</p>
+          <blockquote>聚变出力 94.2%（额定） · 轨道辐照 0.31 阈 · 冰路运量 1,204 车次 · 居民登记 51,877 口 · 拾荒者入城 0。</blockquote>
+          <p class="arc-note"><i class="tag-official">档案</i> 来源：能源中枢契文 · 可核。数据不解释，只记录。</p>
+        </div>
+      </div>
+
+      <div class="arc-card hearsay" data-open="hea4">
+        <div class="arc-top"><span class="arc-type">亲历者手抄</span><span class="arc-no">GF-CHR-002</span></div>
+        <div class="arc-seal seal-rust">野史</div>
+        <h4>大寂灭前夜 · 撤离广播</h4>
+        <p class="arc-brief">无名拾荒者口述：曾闻广播，其言不详。野史不担保真，只担保在。</p>
+        <div class="arc-open" id="hea1">
+          <p>手抄残页（出土于死带边缘·无名者）：</p>
+          <blockquote>…那夜，全城的钟都响了。广播说，往冰路去。我没有去。我听见了，可我没有去。后来没有人提起过那夜有广播。是我记错了吗？</blockquote>
+          <p class="arc-note"><i class="tag-folk">野史</i> 来源：亲历者手抄 · 未经确认。若真——大寂灭或非内斗，而是撤离。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tri-mem">
+      <h3 class="map-title">大寂灭 · 三种记忆</h3>
+      <div class="tri-grid">
+        <div class="tri-card">
+          <i class="tag-official">正史</i><h5>九执堂内斗</h5>
+          <p>九哲各执其道，权力内斗致资源调度中断，文明崩溃于自身机构。</p>
+          <span class="tri-src">来源 · 本纪·志二</span>
+        </div>
+        <div class="tri-card">
+          <i class="tag-official">档案</i><h5>最后一小时的数据</h5>
+          <p>能源曲线骤降、通信中断、轨道调度异常。数据不叙因果，只留残响。</p>
+          <span class="tri-src">来源 · 观止院密档残页</span>
+        </div>
+        <div class="tri-card">
+          <i class="tag-folk">野史</i><h5>撤离广播</h5>
+          <p>有人声称大寂灭之前听见过撤离广播。史官不载，亲历者手抄存之。</p>
+          <span class="tri-src">来源 · 亲历者手抄</span>
+        </div>
+      </div>
+      <p class="map-note">同一件事，三个版本。读者自判——正史纪官方所承，档案存可核之实，野史存未经确认的经历与异见。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 幕 22 · 大寂灭 · 证据卷宗（调查交互）===== -->
+<section class="step" data-p="0.960" data-name="大寂灭 · 证据卷宗">
+  <div class="step-inner case-step">
+    <div class="sec-head">
+      <div class="sec-kicker">CASE · 调查</div>
+      <h2>大寂灭 · 证据卷宗</h2>
+      <p class="lede">大寂灭究竟是文明内部崩溃，还是一次被掩盖的集体撤离？逐步启封六份证据——它们彼此矛盾。读完全部，自己下结论。</p>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card locked" data-case="1">
+        <div class="case-top"><span class="case-no">GF-POL-002</span><span class="case-tag tag-official">正史</span><span class="case-lock">密</span></div>
+        <h4>九执堂最后一次会议记录</h4>
+        <p class="case-body">九席为"禁复是否永久"争执七昼夜，末席摔门而去。与会者无一人提及"撤离"。<b class="case-clash">与档案时间线冲突</b></p>
+        <span class="case-src">来源 · 王室档案抄本</span>
+      </div>
+      <div class="case-card locked" data-case="2">
+        <div class="case-top"><span class="case-no">GF-TEC-002</span><span class="case-tag tag-official">档案</span><span class="case-lock">密</span></div>
+        <h4>最后一小时能源数据</h4>
+        <p class="case-body">能源出力 100% → 13%，骤降先于任何内斗通报。<b class="case-clash">骤降先于内斗</b></p>
+        <span class="case-src">来源 · 观止院密档</span>
+      </div>
+      <div class="case-card locked" data-case="3">
+        <div class="case-top"><span class="case-no">GF-TEC-003</span><span class="case-tag tag-official">档案</span><span class="case-lock">密</span></div>
+        <h4>冰路运输记录</h4>
+        <p class="case-body">大寂灭前 72 小时，冰路运量达日常三倍，方向出城，无返程记录。<b class="case-clash">指向撤离</b></p>
+        <span class="case-src">来源 · 冰路调度簿</span>
+      </div>
+      <div class="case-card locked" data-case="4">
+        <div class="case-top"><span class="case-no">GF-TEC-004</span><span class="case-tag tag-official">档案</span><span class="case-lock">密</span></div>
+        <h4>深空通信残响</h4>
+        <p class="case-body">中断前 4 分钟，一道长程信号发往柯伊伯带外。内容无人知晓。<b class="case-clash">无法判定</b></p>
+        <span class="case-src">来源 · 通信阵列残存</span>
+      </div>
+      <div class="case-card locked" data-case="5">
+        <div class="case-top"><span class="case-no">GF-CHR-003</span><span class="case-tag tag-folk">野史</span><span class="case-lock">密</span></div>
+        <h4>蛮族船团口述</h4>
+        <p class="case-body">船团先民坚持"是城主动送我们走"，与正史"趁乱逃离"相反。<b class="case-clash">与正史相反</b></p>
+        <span class="case-src">来源 · 亲历者手抄</span>
+      </div>
+      <div class="case-card locked" data-case="6">
+        <div class="case-top"><span class="case-no">GF-ARC-002</span><span class="case-tag tag-official">档案</span><span class="case-lock">密</span></div>
+        <h4>王室档案 · 一处涂黑</h4>
+        <p class="case-body">禁复清单中"撤离预案"条目编号完整，正文被墨涂没，只余一行小字：此条不存。<b class="case-clash">有东西被抹去</b></p>
+        <span class="case-src">来源 · 禁复清单（涂黑）</span>
+      </div>
+    </div>
+
+    <div class="case-concl" id="caseConcl">
+      <div class="concl-hint" id="conclHint">证据不足——你尚未读完全部六份证据。逐一启封后再下结论。</div>
+      <div class="concl-opts" id="conclOpts">
+        <div class="concl-opt" data-concl="a"><i>正史</i><b>内部崩溃</b><span>九执堂内斗致资源调度中断</span></div>
+        <div class="concl-opt" data-concl="b"><i>证据</i><b>集体撤离</b><span>四条异常证据指向"城主动送走"</span></div>
+        <div class="concl-opt" data-concl="c"><i>野史</i><b>无法确定</b><span>档案不完整，证据互斥；调查继续</span></div>
+      </div>
+      <p class="map-note">无标准答案。每条证据皆有编号，可互引互链——正如档案室所言：野史不担保真，只担保在。</p>
+    </div>
+  </div>
+</section>
+
+<section class="step" data-p="1.000" data-name="卷末 · 跋">
   <div class="step-inner center">
     <div class="kick">卷末 · 跋 · 观复文明</div>
     <h1 class="end-title">文明的另一副样子</h1>
@@ -609,7 +920,30 @@
     <button class="toc-close" id="tocClose" type="button" aria-label="关闭">×</button>
   </div>
   <ol class="toc-list" id="tocList"></ol>
-  <div class="toc-foot">野史戏谈 · 第一册 · 二十幕</div>
+  <div class="toc-foot">野史戏谈 · 第一册 · 二十五幕</div>
 </nav>
+
+<!-- ===== 档案阅读器（全屏卷宗）===== -->
+<div class="reader-overlay" id="readerOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="reader-frame" id="readerFrame">
+    <button class="reader-close" id="readerClose" type="button" aria-label="合卷关闭">×</button>
+    <div class="reader-head">
+      <div class="reader-kick" id="readerNo">GF-POL-001</div>
+      <h3 id="readerTitle">钟律依旧，岁月自王</h3>
+      <div class="reader-meta">
+        <span class="arc-type" id="readerType">王权谕令</span>
+        <i class="tag-official" id="readerTag">正史</i>
+        <span class="reader-src" id="readerSrc">来源 · 钟室谕令簿 · 可核</span>
+      </div>
+    </div>
+    <div class="reader-body" id="readerBody"></div>
+    <div class="reader-nav">
+      <button class="reader-nav-btn" id="readerPrev" type="button" aria-label="上一份">‹ 上一份</button>
+      <span class="reader-count" id="readerCount">1 / 4</span>
+      <button class="reader-nav-btn" id="readerNext" type="button" aria-label="下一份">下一份 ›</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
